@@ -7,87 +7,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="863b6b9d-c788-4002-974d-69d158208350" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/epam/Path.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/epam/Path.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/epam/action/ActionFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/epam/action/ActionFactory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/epam/action/LoginAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/epam/action/LoginAction.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/epam/action/OrderAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/epam/action/OrderAction.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/epam/action/OrderCarAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/epam/action/OrderCarAction.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/epam/action/RegisterAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/epam/action/RegisterAction.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/epam/action/ShowAllCarsAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/epam/action/ShowAllCarsAction.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/epam/action/ShowAvailableCarsAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/epam/action/ShowAvailableCarsAction.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/epam/dao/CarDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/epam/dao/CarDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/epam/dao/DAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/epam/dao/DAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/epam/dao/OrderDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/epam/dao/OrderDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/epam/dao/UserDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/epam/dao/UserDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/epam/entity/Car.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/epam/entity/Car.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/epam/entity/Driver.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/epam/entity/Driver.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/epam/entity/DrivingLicence.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/epam/entity/DrivingLicence.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/epam/entity/Invoice.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/epam/entity/Invoice.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/epam/entity/Order.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/epam/entity/Order.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/epam/entity/Passport.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/epam/entity/Passport.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/epam/entity/Role.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/epam/entity/Role.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/epam/entity/Status.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/epam/entity/Status.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/epam/entity/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/epam/entity/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/epam/filter/ServletSecurityFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/epam/filter/ServletSecurityFilter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/common/header.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/common/header.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/home.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/home.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/user/cars.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/user/cars.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/user/order.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/user/order.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/car-rental-webapp/WEB-INF/classes/com/epam/Path.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/car-rental-webapp/WEB-INF/classes/com/epam/Path.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/car-rental-webapp/WEB-INF/classes/com/epam/action/ActionFactory.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/car-rental-webapp/WEB-INF/classes/com/epam/action/ActionFactory.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/car-rental-webapp/WEB-INF/classes/com/epam/action/LoginAction.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/car-rental-webapp/WEB-INF/classes/com/epam/action/LoginAction.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/car-rental-webapp/WEB-INF/classes/com/epam/action/OrderAction.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/car-rental-webapp/WEB-INF/classes/com/epam/action/OrderAction.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/car-rental-webapp/WEB-INF/classes/com/epam/action/OrderCarAction.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/car-rental-webapp/WEB-INF/classes/com/epam/action/OrderCarAction.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/car-rental-webapp/WEB-INF/classes/com/epam/action/PaymentAction.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/car-rental-webapp/WEB-INF/classes/com/epam/action/PaymentAction.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/car-rental-webapp/WEB-INF/classes/com/epam/action/RegisterAction.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/car-rental-webapp/WEB-INF/classes/com/epam/action/RegisterAction.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/car-rental-webapp/WEB-INF/classes/com/epam/action/ShowAllCarsAction.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/car-rental-webapp/WEB-INF/classes/com/epam/action/ShowAllCarsAction.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/car-rental-webapp/WEB-INF/classes/com/epam/action/ShowAvailableCarsAction.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/car-rental-webapp/WEB-INF/classes/com/epam/action/ShowAvailableCarsAction.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/car-rental-webapp/WEB-INF/classes/com/epam/action/ShowUnpaidOrdersAction.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/car-rental-webapp/WEB-INF/classes/com/epam/action/ShowUnpaidOrdersAction.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/car-rental-webapp/WEB-INF/classes/com/epam/dao/CarDAO.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/car-rental-webapp/WEB-INF/classes/com/epam/dao/CarDAO.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/car-rental-webapp/WEB-INF/classes/com/epam/dao/DAO.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/car-rental-webapp/WEB-INF/classes/com/epam/dao/DAO.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/car-rental-webapp/WEB-INF/classes/com/epam/dao/OrderDAO.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/car-rental-webapp/WEB-INF/classes/com/epam/dao/OrderDAO.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/car-rental-webapp/WEB-INF/classes/com/epam/dao/UserDAO.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/car-rental-webapp/WEB-INF/classes/com/epam/dao/UserDAO.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/car-rental-webapp/WEB-INF/classes/com/epam/entity/Car.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/car-rental-webapp/WEB-INF/classes/com/epam/entity/Car.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/car-rental-webapp/WEB-INF/classes/com/epam/entity/Driver.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/car-rental-webapp/WEB-INF/classes/com/epam/entity/Driver.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/car-rental-webapp/WEB-INF/classes/com/epam/entity/DrivingLicence.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/car-rental-webapp/WEB-INF/classes/com/epam/entity/DrivingLicence.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/car-rental-webapp/WEB-INF/classes/com/epam/entity/Invoice.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/car-rental-webapp/WEB-INF/classes/com/epam/entity/Invoice.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/car-rental-webapp/WEB-INF/classes/com/epam/entity/Order.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/car-rental-webapp/WEB-INF/classes/com/epam/entity/Order.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/car-rental-webapp/WEB-INF/classes/com/epam/entity/Passport.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/car-rental-webapp/WEB-INF/classes/com/epam/entity/Passport.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/car-rental-webapp/WEB-INF/classes/com/epam/entity/Role.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/car-rental-webapp/WEB-INF/classes/com/epam/entity/Role.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/car-rental-webapp/WEB-INF/classes/com/epam/entity/Status.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/car-rental-webapp/WEB-INF/classes/com/epam/entity/Status.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/car-rental-webapp/WEB-INF/classes/com/epam/entity/User.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/car-rental-webapp/WEB-INF/classes/com/epam/entity/User.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/car-rental-webapp/WEB-INF/classes/com/epam/filter/ServletSecurityFilter.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/car-rental-webapp/WEB-INF/classes/com/epam/filter/ServletSecurityFilter.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/car-rental-webapp/common/header.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/target/car-rental-webapp/common/header.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/car-rental-webapp/home.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/target/car-rental-webapp/home.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/car-rental-webapp/user/cars.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/target/car-rental-webapp/user/cars.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/car-rental-webapp/user/order.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/target/car-rental-webapp/user/order.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/car-rental-webapp/user/unpaidOrders.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/target/car-rental-webapp/user/unpaidOrders.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/epam/Path.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/epam/Path.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/epam/action/ActionFactory.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/epam/action/ActionFactory.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/epam/action/LoginAction.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/epam/action/LoginAction.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/epam/action/OrderAction.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/epam/action/OrderAction.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/epam/action/OrderCarAction.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/epam/action/OrderCarAction.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/epam/action/PaymentAction.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/epam/action/PaymentAction.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/epam/action/RegisterAction.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/epam/action/RegisterAction.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/epam/action/ShowAllCarsAction.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/epam/action/ShowAllCarsAction.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/epam/action/ShowAvailableCarsAction.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/epam/action/ShowAvailableCarsAction.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/epam/action/ShowUnpaidOrdersAction.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/epam/action/ShowUnpaidOrdersAction.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/epam/dao/CarDAO.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/epam/dao/CarDAO.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/epam/dao/DAO.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/epam/dao/DAO.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/epam/dao/OrderDAO.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/epam/dao/OrderDAO.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/epam/dao/UserDAO.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/epam/dao/UserDAO.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/epam/entity/Car.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/epam/entity/Car.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/epam/entity/Driver.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/epam/entity/Driver.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/epam/entity/DrivingLicence.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/epam/entity/DrivingLicence.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/epam/entity/Invoice.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/epam/entity/Invoice.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/epam/entity/Order.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/epam/entity/Order.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/epam/entity/Passport.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/epam/entity/Passport.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/epam/entity/Role.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/epam/entity/Role.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/epam/entity/Status.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/epam/entity/Status.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/epam/entity/User.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/epam/entity/User.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/epam/filter/ServletSecurityFilter.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/epam/filter/ServletSecurityFilter.class" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -106,6 +26,7 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/src" />
+    <option name="ROOT_SYNC" value="SYNC" />
   </component>
   <component name="LogFilters">
     <option name="FILTER_ERRORS" value="false" />
@@ -428,7 +349,7 @@
       <workItem from="1571914408070" duration="12241000" />
       <workItem from="1571995928332" duration="18225000" />
       <workItem from="1572068012711" duration="17600000" />
-      <workItem from="1572151180123" duration="12674000" />
+      <workItem from="1572151180123" duration="13860000" />
     </task>
     <servers />
   </component>
