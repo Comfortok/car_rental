@@ -1,7 +1,8 @@
 package com.epam.action;
 
 import com.epam.Path;
-import com.epam.dao.UserDAO;
+import com.epam.dao.UserDao;
+import com.epam.dao.impl.UserDaoImpl;
 import com.epam.entity.User;
 import org.apache.log4j.Logger;
 
@@ -21,8 +22,8 @@ public class RegisterAction implements Action {
     public String execute(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
         System.out.println("register execute");
         System.out.println("creating userdao");
-        UserDAO userDAO = new UserDAO();
-        System.out.println("userdao: " + userDAO);
+        UserDaoImpl userDaoImpl = new UserDaoImpl();
+        System.out.println("userdao: " + userDaoImpl);
         forward = Path.LOGIN_PAGE;
         LOG.debug("RegisterCommand starts");
         HttpSession session = request.getSession();
@@ -51,7 +52,7 @@ public class RegisterAction implements Action {
         }
 
         System.out.println("trying to create list...(2)");
-        List<User> users = userDAO.getAll();
+        List<User> users = userDaoImpl.getAll();
         System.out.println("userlist created 2: " + users);
         for (User user2 : users) {
             System.out.println("another user: " + user2);
@@ -68,7 +69,7 @@ public class RegisterAction implements Action {
         }
 
         System.out.println("inserting user to db");
-        userDAO.insert(user);
+        userDaoImpl.insert(user);
         LOG.trace("Create new user --> " + user);
         session.setAttribute("email", user.getEmail());
         System.out.println("forwarding to login page");

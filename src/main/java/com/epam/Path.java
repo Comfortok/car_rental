@@ -14,4 +14,6 @@ public final class Path {
     public static final String ORDER_PAGE = "/user/order.jsp";
     public static final String ORDERS = "/user/unpaidOrders.jsp";
     public static final String ADMIN_PAGE = "/admin.jsp";
+    public static final String ADMIN_ORDERS_PAGE = "/admin/order_admin.jsp";
+    public static final String ADMIN_ORDERS_DETAILS_PAGE = "/admin/order_details.jsp";
 }

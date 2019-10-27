@@ -7,25 +7,8 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-*/
-/**
- *
- * @author Skakun
- * 
- * Logic for LoginCommand
- *//*
 
 public class LoginLogic {
-
-    */
-/**
-     *
-     * @param clients from database
-     * @param login entered login
-     * @param password entered password (already hashed)
-     * @param request 
-     * @return result of checking login-password combination
-     *//*
 
     public static int checkLogin(List<User> clients, String login, String password, HttpServletRequest request) {
         String login2;

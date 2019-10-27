@@ -1,22 +1,14 @@
 package com.epam.entity;
 
+import java.sql.Date;
+
 public class Passport {
     private String number;
-    private String dateOfIssue;
-    private String dateOfExpiry;
+    private Date dateOfIssue;
+    private Date dateOfExpiry;
     private String authority;
-    private Driver driver;
 
     public Passport() {
-    }
-
-    public Passport(String number, String dateOfIssue, String dateOfExpiry,
-                    String authority, Driver driver) {
-        this.number = number;
-        this.dateOfIssue = dateOfIssue;
-        this.dateOfExpiry = dateOfExpiry;
-        this.authority = authority;
-        this.driver = driver;
     }
 
     public String getNumber() {
@@ -27,19 +19,19 @@ public class Passport {
         this.number = number;
     }
 
-    public String getDateOfIssue() {
+    public Date getDateOfIssue() {
         return dateOfIssue;
     }
 
-    public void setDateOfIssue(String dateOfIssue) {
+    public void setDateOfIssue(Date dateOfIssue) {
         this.dateOfIssue = dateOfIssue;
     }
 
-    public String getDateOfExpiry() {
+    public Date getDateOfExpiry() {
         return dateOfExpiry;
     }
 
-    public void setDateOfExpiry(String dateOfExpiry) {
+    public void setDateOfExpiry(Date dateOfExpiry) {
         this.dateOfExpiry = dateOfExpiry;
     }
 
@@ -51,11 +43,11 @@ public class Passport {
         this.authority = authority;
     }
 
-    public Driver getDriver() {
-        return driver;
-    }
-
-    public void setDriver(Driver driver) {
-        this.driver = driver;
+    @Override
+    public String toString() {
+        return "Passport number: " + getNumber() + "\n"
+                + "Issue: " + getDateOfIssue() + "\n"
+                + "Expiry: " + getDateOfExpiry() + "\n"
+                + "Authority: " + getAuthority() + "\n";
     }
 }

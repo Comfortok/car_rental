@@ -19,10 +19,15 @@ public class ActionFactory {
         actionMap.put("availableCars", new ShowAvailableCarsAction());
         actionMap.put("order", new OrderAction());
         actionMap.put("orderCar", new OrderCarAction());
+        actionMap.put("userOrder", new UserOrderAction());
         actionMap.put("basket", new ShowUnpaidOrdersAction());
         actionMap.put("payAnOrder", new PaymentAction());
         actionMap.put("RU", new LanguageAction());
         actionMap.put("EN", new LanguageAction());
+        actionMap.put("showAllOrders", new ShowAllOrdersAction());
+        actionMap.put("orderDetails", new ShowOrderDetailsAction());
+        actionMap.put("orderConfirm", new ConfirmOrderAction());
+        actionMap.put("orderDecline", new DeclineOrderAction());
 
         //...
         System.out.println("AF started, size: " + actionMap.size());

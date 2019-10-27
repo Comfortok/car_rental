@@ -1,17 +1,17 @@
 package com.epam.action;
 
-import com.epam.dao.CarDAO;
-import com.epam.dao.OrderDAO;
+import com.epam.dao.CarDao;
+import com.epam.dao.impl.CarDaoImpl;
 import com.epam.entity.Car;
-import com.epam.entity.Order;
-import com.sun.org.apache.xpath.internal.operations.Or;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.sql.Date;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import static com.epam.Path.AVAILABLE_CARS_PAGE;
@@ -19,25 +19,38 @@ import static com.epam.Path.AVAILABLE_CARS_PAGE;
 public class ShowAvailableCarsAction implements Action {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
-        CarDAO carDAO;
+        CarDaoImpl carDaoImpl;
         List<Car> allCars;
         List<Car> allCarsInOrder;
         List<Car> availableCars = new ArrayList<>();
-        carDAO = new CarDAO();
+        carDaoImpl = new CarDaoImpl();
         
         System.out.println("showAvCars exe");
-        Date userStartDate = Date.valueOf(request.getParameter("startDate"));
-        Date userEndDate = Date.valueOf(request.getParameter("endDate"));
-        allCars = carDAO.getAll();
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        Date userStartDate = null;
+        Date userEndDate = null;
+        java.sql.Date startDate = null;
+        java.sql.Date endDate = null;
+        try {
+            userStartDate = format.parse(request.getParameter("startDate"));
+            userEndDate = format.parse(request.getParameter("endDate"));
+            startDate = new java.sql.Date(userStartDate.getTime());
+            endDate = new java.sql.Date(userEndDate.getTime());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        int period = endDate.getDay() - startDate.getDay();
+        allCars = carDaoImpl.getAll();
         System.out.println("allCars: " + allCars);
-        allCarsInOrder = carDAO.getAvailable();
+        allCarsInOrder = carDaoImpl.getAvailable();
         System.out.println("allCarsOrder: " + allCarsInOrder);
 
         for (Car car : allCarsInOrder) {
             System.out.println("foreach...");
             Date carStartDate = car.getStartDate();
             Date carEndDate = car.getEndDate();
-            if ((userStartDate.after(carEndDate) || userEndDate.before(carStartDate)) && (car.getIsAvailable().toLowerCase().equals("yes"))) {
+            if ((startDate.after(carEndDate) || endDate.before(carStartDate)) && (car.getIsAvailable().toLowerCase().equals("yes"))) {
                 System.out.println("This car is available: " + car.getModel());
                 availableCars.add(car);
             }
@@ -57,6 +70,9 @@ public class ShowAvailableCarsAction implements Action {
 
         System.out.println("available cars: " + availableCars);
         request.setAttribute("availableCars", availableCars);
+        request.setAttribute("period", period);
+        request.setAttribute("startDate", startDate);
+        request.setAttribute("endDate", endDate);
         return AVAILABLE_CARS_PAGE;
     }
 }

@@ -1,11 +1,12 @@
 package com.epam.entity;
 
-import java.util.Date;
+import java.sql.Date;
 import java.util.List;
 
 public class Order extends Entity {
     private User user;
     private Car car;
+    private Driver driver;
     private Status status;
     private Date startDate;
     private Date endDate;
@@ -114,6 +115,14 @@ public class Order extends Entity {
 
     public void setPaymentSum(double paymentSum) {
         this.paymentSum = paymentSum;
+    }
+
+    public Driver getDriver() {
+        return driver;
+    }
+
+    public void setDriver(Driver driver) {
+        this.driver = driver;
     }
 
     @Override

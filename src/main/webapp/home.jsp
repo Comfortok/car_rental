@@ -10,7 +10,22 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 
 <head>
-    <jsp:include page="common/header.jsp"/>
+    <c:choose>
+        <c:when test="${not empty sessionScope.user}">
+            <jsp:useBean id="roleId" scope="session" type="java.lang.Long"/>
+            <c:choose>
+            <c:when test="${roleId eq 1}">
+                <jsp:include page="common/header.jsp"/>
+            </c:when>
+            <c:otherwise>
+                <jsp:include page="admin/header_admin.jsp"/>
+            </c:otherwise>
+            </c:choose>
+        </c:when>
+        <c:otherwise>
+            <jsp:include page="common/header.jsp"/>
+        </c:otherwise>
+    </c:choose>
 </head>
 <body>
 

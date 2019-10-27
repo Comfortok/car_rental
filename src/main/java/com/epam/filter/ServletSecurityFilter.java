@@ -34,7 +34,7 @@ public class ServletSecurityFilter implements Filter {
         Role type = (Role) session.getAttribute("userType");
         String type2 = (String) req.getParameter("userType");
         if (type == null & type2 == null) {
-            type = Role.CLIENT.GUEST;
+            //type = Role.CLIENT.GUEST;
             session.setAttribute("userType", type);
             //RequestDispatcher dispatcher = request.getServletContext()
                     //.getRequestDispatcher(ConfigurationManager.getProperty("path.page.index"));

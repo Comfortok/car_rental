@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
-public interface DAO<T extends Entity> {
+public interface Dao<T extends Entity> {
     void insert(T entity) throws SQLException, IOException;
     T update(T entity) throws SQLException;
     boolean deleteById(Long id) throws SQLException;

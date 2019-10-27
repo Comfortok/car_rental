@@ -1,24 +1,9 @@
 /*
 package com.epam.util;
 
-import by.skakun.carrentalsystem.dao.CarDao;
-import by.skakun.carrentalsystem.dao.ClientDao;
-import by.skakun.carrentalsystem.dao.DaoFactory;
-import by.skakun.carrentalsystem.dao.DaoType;
-import by.skakun.carrentalsystem.dao.OrderDao;
-import by.skakun.carrentalsystem.exception.DAOException;
 import java.util.ArrayList;
 import java.util.List;
 import org.apache.log4j.Logger;
-
-*/
-/**
- *
- * @author Skakun
- * 
- * Class corresponding to the StatisticsTag tag. Provides methodes to getting lists
- * of requested information
- *//*
 
 public class StatisticsTagHandler {
 

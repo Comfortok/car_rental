@@ -1,7 +1,8 @@
 package com.epam.action;
 
 import com.epam.Path;
-import com.epam.dao.UserDAO;
+import com.epam.dao.UserDao;
+import com.epam.dao.impl.UserDaoImpl;
 import com.epam.entity.User;
 import org.apache.log4j.Logger;
 
@@ -18,8 +19,8 @@ public class LoginAction implements Action {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
         System.out.println("execute in LoginAction...");
-        UserDAO userDAO = new UserDAO();
-        System.out.println("userDAO: " + userDAO);
+        UserDaoImpl userDaoImpl = new UserDaoImpl();
+        System.out.println("userDAO: " + userDaoImpl);
         String forward = Path.HOME_PAGE;
         HttpSession session = request.getSession();
 
@@ -37,7 +38,7 @@ public class LoginAction implements Action {
             return forward;
         }
 
-            user = userDAO.getByEmail(email);
+            user = userDaoImpl.getByEmail(email);
             System.out.println("found in db user " + user);
 
             if (user == null || !password.equals(user.getPassword())) {
@@ -47,10 +48,8 @@ public class LoginAction implements Action {
                 forward = Path.ERROR_PAGE;
                 return forward;
             }
-            if (user.getRoleId() != 1) {
-                forward = Path.ADMIN_PAGE;
-            }
             session.setAttribute("user", user);
+            session.setAttribute("roleId", user.getRole().getId());
             session.setAttribute("userId", user.getId());
             System.out.println(user.getId() + user.getEmail() + user.getPassword());
         return forward;

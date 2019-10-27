@@ -3,16 +3,16 @@ package com.epam.entity;
 import java.util.Objects;
 
 public class User extends Entity {
-    private int roleId;
     private String email;
     private String password;
+    private Role role;
 
-    public int getRoleId() {
-        return roleId;
+    public Role getRole() {
+        return role;
     }
 
-    public void setRoleId(int roleId) {
-        this.roleId = roleId;
+    public void setRole(Role role) {
+        this.role = role;
     }
 
     public String getEmail() {
@@ -43,10 +43,5 @@ public class User extends Entity {
     @Override
     public int hashCode() {
         return Objects.hash(email, password);
-    }
-
-    @Override
-    public String toString() {
-        return "User id=" + getId();
     }
 }

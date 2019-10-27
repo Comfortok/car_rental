@@ -3,12 +3,6 @@ package com.epam.util;
 import java.util.regex.Pattern;
 import org.apache.log4j.Logger;
 
-/**
- *
- * @author Skakun
- *
- * server-side validation of information, which users enter into the fields
- */
 public class EnteredInfoValidator {
 
     private static final Logger LOG = Logger.getLogger(EnteredInfoValidator.class);

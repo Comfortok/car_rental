@@ -5,22 +5,11 @@ import org.apache.log4j.Logger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-/**
- *
- * @author Skakun
- * 
- * Password hashing using SHA-256 algoritm
- */
 public final class PasswordHashing {
     private static final Logger LOG = Logger.getLogger(PasswordHashing.class);
     private PasswordHashing() {
     }
 
-    /**
-     *
-     * @param password
-     * @return hash value of the password, ready to be inserted into db
-     */
     public static String getHashValue(String password) {
         MessageDigest md = null;
         try {

@@ -1,12 +1,13 @@
 package com.epam.entity;
 
+import java.sql.Date;
+
 public class DrivingLicence {
     private String number;
-    private String dateOfIssue;
-    private String dateOfExpiry;
+    private Date dateOfIssue;
+    private Date dateOfExpiry;
     private String authority;
     private String category;
-    private Driver driver;
 
     public String getNumber() {
         return number;
@@ -16,19 +17,19 @@ public class DrivingLicence {
         this.number = number;
     }
 
-    public String getDateOfIssue() {
+    public Date getDateOfIssue() {
         return dateOfIssue;
     }
 
-    public void setDateOfIssue(String dateOfIssue) {
+    public void setDateOfIssue(Date dateOfIssue) {
         this.dateOfIssue = dateOfIssue;
     }
 
-    public String getDateOfExpiry() {
+    public Date getDateOfExpiry() {
         return dateOfExpiry;
     }
 
-    public void setDateOfExpiry(String dateOfExpiry) {
+    public void setDateOfExpiry(Date dateOfExpiry) {
         this.dateOfExpiry = dateOfExpiry;
     }
 
@@ -48,11 +49,12 @@ public class DrivingLicence {
         this.category = category;
     }
 
-    public Driver getDriver() {
-        return driver;
-    }
-
-    public void setDriver(Driver driver) {
-        this.driver = driver;
+    @Override
+    public String toString() {
+        return "Licence number: " + getNumber() + "\n"
+                + "Issue: " + getDateOfIssue() + "\n"
+                + "Expiry: " + getDateOfExpiry() + "\n"
+                + "Authority: " + getAuthority() + "\n"
+                + "Category: " + getCategory() + "\n";
     }
 }

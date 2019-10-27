@@ -1,30 +1,22 @@
 package com.epam.entity;
 
+import java.sql.Date;
+
 public class Invoice extends Entity {
-    private String date;
+    private Date date;
     private Order order;
     private PaymentType paymentType;
     private double totalAmount;
-    private boolean isPaid;
+    private PaymentStatus paymentStatus;
 
     public Invoice() {
     }
 
-    public Invoice(long id, String date, Order order, PaymentType paymentType,
-                   double totalAmount, boolean isPaid) {
-        super(id);
-        this.date = date;
-        this.order = order;
-        this.paymentType = paymentType;
-        this.totalAmount = totalAmount;
-        this.isPaid = isPaid;
-    }
-
-    public String getDate() {
+    public Date getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 
@@ -52,11 +44,11 @@ public class Invoice extends Entity {
         this.totalAmount = totalAmount;
     }
 
-    public boolean isPaid() {
-        return isPaid;
+    public PaymentStatus getPaymentStatus() {
+        return paymentStatus;
     }
 
-    public void setPaid(boolean paid) {
-        isPaid = paid;
+    public void setPaymentStatus(PaymentStatus paymentStatus) {
+        this.paymentStatus = paymentStatus;
     }
 }

@@ -38,19 +38,24 @@
         <div class="collapse navbar-collapse" id="navbarNavDropdown" >
             <ul class="navbar-nav" >
                 <li class="nav-item active">
-                        <a class="nav-link" href="home.jsp"><fmt:message key="page.home" bundle="${loc}"/>
+                        <a class="nav-link" href="${pageContext.request.contextPath}/home.jsp"><fmt:message key="page.home" bundle="${loc}"/>
                             <span class="sr-only">(current)</span></a>
                 </li>
 
                 <li class="navitem">
-                    <a class="nav-link" href="${pageContext.request.contextPath}/mainServlet?command=cars"><fmt:message key="page.cars" bundle="${loc}"/></a>
+                    <a class="nav-link" href="${pageContext.request.contextPath}/mainServlet?command=cars">
+                        <fmt:message key="page.cars" bundle="${loc}"/></a>
                 </li>
 
 
                 <c:choose>
                     <c:when test="${not empty sessionScope.user}">
                         <li class="navitem">
-                            <a class="nav-link" href="${pageContext.request.contextPath}/mainServlet?command=logout"><fmt:message key="page.logout" bundle="${loc}"/></a>
+                            <a class="nav-link" href="${pageContext.request.contextPath}/mainServlet?command=logout">
+                                <fmt:message key="page.logout" bundle="${loc}"/></a>
+                        </li>
+                        <li class="navitem">
+                            <a class="nav-link" href="${pageContext.request.contextPath}/mainServlet?command=userOrder">Orders</a>
                         </li>
                     </c:when>
                     <c:otherwise>

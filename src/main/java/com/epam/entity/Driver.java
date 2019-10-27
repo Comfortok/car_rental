@@ -1,25 +1,16 @@
 package com.epam.entity;
 
+import java.sql.Date;
+
 public class Driver extends Entity {
     private String name;
     private String surname;
-    private String dateOfBirth;
+    private Date dateOfBirth;
     private String phoneNumber;
     private Passport passport;
     private DrivingLicence drivingLicence;
 
     public Driver() {
-    }
-
-    public Driver(long id, String name, String surname, String dateOfBirth, String phoneNumber,
-                  Passport passport, DrivingLicence drivingLicence) {
-        super(id);
-        this.name = name;
-        this.surname = surname;
-        this.dateOfBirth = dateOfBirth;
-        this.phoneNumber = phoneNumber;
-        this.passport = passport;
-        this.drivingLicence = drivingLicence;
     }
 
     public String getName() {
@@ -38,11 +29,11 @@ public class Driver extends Entity {
         this.surname = surname;
     }
 
-    public String getDateOfBirth() {
+    public Date getDateOfBirth() {
         return dateOfBirth;
     }
 
-    public void setDateOfBirth(String dateOfBirth) {
+    public void setDateOfBirth(Date dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
 
@@ -68,5 +59,13 @@ public class Driver extends Entity {
 
     public void setDrivingLicence(DrivingLicence drivingLicence) {
         this.drivingLicence = drivingLicence;
+    }
+
+    @Override
+    public String toString() {
+        return getName() + " " + getSurname() + ". Birth: " + getDateOfBirth() + "\n"
+                + "Phone: " + getPhoneNumber() + "\n"
+                + passport.toString() + "\n"
+                + drivingLicence.toString() + "\n";
     }
 }

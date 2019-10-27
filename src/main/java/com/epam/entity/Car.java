@@ -186,4 +186,8 @@ public class Car extends Entity {
         this.mileage = mileage;
     }
 
+    @Override
+    public String toString() {
+        return model.toString();
+    }
 }
