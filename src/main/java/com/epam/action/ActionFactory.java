@@ -1,7 +1,6 @@
 package com.epam.action;
 
 import org.apache.log4j.Logger;
-
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -10,27 +9,31 @@ public class ActionFactory {
     private static Map<String, Action> actionMap = new ConcurrentHashMap<>();
 
     static {
-        //commons
         actionMap.put("login", new LoginAction());
         actionMap.put("logout", new LogoutAction());
         actionMap.put("emptyAction", new EmptyAction());
         actionMap.put("register", new RegisterAction());
-        actionMap.put("cars", new ShowAllCarsAction());
+        actionMap.put("allCars", new ShowAllCarsAction());
         actionMap.put("availableCars", new ShowAvailableCarsAction());
-        actionMap.put("order", new OrderAction());
+        actionMap.put("orderForm", new OrderFormAction());
         actionMap.put("orderCar", new OrderCarAction());
-        actionMap.put("userOrder", new UserOrderAction());
-        actionMap.put("basket", new ShowUnpaidOrdersAction());
-        actionMap.put("payAnOrder", new PaymentAction());
+        actionMap.put("userOrders", new ShowUserOrdersAction());
+        actionMap.put("orderPayment", new OrderPaymentAction());
         actionMap.put("RU", new LanguageAction());
         actionMap.put("EN", new LanguageAction());
-        actionMap.put("showAllOrders", new ShowAllOrdersAction());
+        actionMap.put("showAllOrders", new ShowAllAdminOrdersAction());
         actionMap.put("orderDetails", new ShowOrderDetailsAction());
         actionMap.put("orderConfirm", new ConfirmOrderAction());
         actionMap.put("orderDecline", new DeclineOrderAction());
+        actionMap.put("orderArchive", new ArchiveOrderAction());
+        actionMap.put("addCar", new AddCarAction());
+        actionMap.put("addCarForm", new AddCarFormAction());
+        actionMap.put("changeCarImage", new UpdateCarImageAction());
+        actionMap.put("updateCarImageForm", new UpdateCarImageFormAction());
+        actionMap.put("updateCar", new UpdateCarAction());
+        actionMap.put("updateCarForm", new UpdateCarFormAction());
+        actionMap.put("orderPayForm", new OrderPaymentFormAction());
 
-        //...
-        System.out.println("AF started, size: " + actionMap.size());
         LOG.debug("ActionFactory has successfully started.");
         LOG.trace("Actions count: " + actionMap.size());
     }

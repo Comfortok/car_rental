@@ -18,12 +18,17 @@ public class Car extends Entity {
     private int doorAmount;
     private double fuelConsumption;
     private String productionYear;
-    private String image;
+    private String imageName;
     private int mileage;
     private Date startDate;
     private Date endDate;
 
-    public Car() {
+    public String getImageName() {
+        return imageName;
+    }
+
+    public void setImageName(String imageName) {
+        this.imageName = imageName;
     }
 
     public Date getStartDate() {
@@ -170,14 +175,6 @@ public class Car extends Entity {
         this.productionYear = productionYear;
     }
 
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
-    }
-
     public int getMileage() {
         return mileage;
     }
@@ -189,5 +186,18 @@ public class Car extends Entity {
     @Override
     public String toString() {
         return model.toString();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof Car) {
+            return ((Car) o).getId() == getId();
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return (int) this.getId();
     }
 }

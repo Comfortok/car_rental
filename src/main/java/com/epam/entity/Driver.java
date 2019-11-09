@@ -10,9 +10,6 @@ public class Driver extends Entity {
     private Passport passport;
     private DrivingLicence drivingLicence;
 
-    public Driver() {
-    }
-
     public String getName() {
         return name;
     }

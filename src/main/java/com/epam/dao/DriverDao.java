@@ -2,33 +2,28 @@ package com.epam.dao;
 
 import com.epam.entity.Driver;
 import com.epam.entity.Order;
-import com.epam.pool.ConnectionPool;
 
-import java.io.IOException;
-import java.sql.*;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.List;
 
 public interface DriverDao extends Dao<Driver> {
     @Override
-    void insert(Driver entity) throws SQLException, IOException;
+    void insert(Driver entity);
 
     @Override
-    Driver update(Driver entity) throws SQLException;
+    void update(Driver entity);
 
     @Override
-    boolean deleteById(Long id) throws SQLException;
+    boolean deleteById(Long id);
 
     @Override
-    Driver getById(Long id) throws SQLException;
+    Driver getById(Long id);
 
     @Override
-    List<Driver> getAll() throws SQLException, IOException;
+    List<Driver> getAll();
 
     void insertOrderDriver(Driver driver, Order order);
 
     void insertDriverInfo(Driver driver);
 
-    Driver getDriverByPhone(Driver driver) throws SQLException;
+    Driver getDriverByPhone(Driver driver);
 }

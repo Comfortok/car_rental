@@ -4,39 +4,33 @@ import com.epam.dao.UserDao;
 import com.epam.entity.Role;
 import com.epam.entity.User;
 import com.epam.pool.ConnectionPool;
-
-import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import static com.epam.action.ConstantField.*;
 
 public class UserDaoImpl implements UserDao {
+    private static final String SELECT_USER_BY_EMAIL = "SELECT * FROM user where email = ?";
+    private final String SQL_INSERT_NEW_USER = "INSERT INTO user(email, password) VALUES(?, ?)";
+    private final String SELECT_ALL_FROM_USER = "SELECT * FROM user";
+    private final ConnectionPool connectionPool = ConnectionPool.getInstance();
+
     @Override
     public void insert(User user) {
-        System.out.println("insert method starts...");
-        ConnectionPool connectionPool = ConnectionPool.getInstance();
-        Connection connection;
-        connection = connectionPool.getConnection();
-        System.out.println("con is: " + connection);
-        try {
-            System.out.println("try starts...");
-            PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO user(email, password) VALUES(?, ?)");
+        Connection connection = connectionPool.getConnection();
+        try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_INSERT_NEW_USER)) {
             preparedStatement.setString(1, user.getEmail());
             preparedStatement.setString(2, user.getPassword());
-            System.out.println("before ps.executeQuery()... user info: " + user.getEmail() + ", " + user.getPassword());
             preparedStatement.executeUpdate();
-            System.out.println("query executed!");
         } catch (SQLException e) {
             e.printStackTrace();
-            System.out.println("catch in insert(");
         } finally {
             connectionPool.freeConnection(connection);
         }
     }
 
     @Override
-    public User update(User entity) {
-        return null;
+    public void update(User entity) {
     }
 
     @Override
@@ -50,61 +44,56 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public List<User> getAll() throws SQLException, IOException {
-        System.out.println("getAll method starts...");
-        ConnectionPool connectionPool = ConnectionPool.getInstance();
-        System.out.println("CP.getInstance()");
-        Connection connection;
-        connection = connectionPool.getConnection();
-        System.out.println("C.getCon() " + connection);
+    public List<User> getAll() {
         List<User> userList = new ArrayList<>();
+        Connection connection = connectionPool.getConnection();
         try (Statement statement = connection.createStatement()) {
-            try (ResultSet resultSet = statement.executeQuery("SELECT * FROM user")) {
+            try (ResultSet resultSet = statement.executeQuery(SELECT_ALL_FROM_USER)) {
                 while (resultSet.next()) {
-                    System.out.println("another while...");
                     userList.add(getUserInfo(resultSet));
                 }
+            } catch (SQLException e) {
+                e.printStackTrace();
             }
+        } catch (SQLException e) {
+            e.printStackTrace();
         } finally {
-            System.out.println("finally... freeCon");
             connectionPool.freeConnection(connection);
         }
-        System.out.println("userList in getAll: " + userList);
         return userList;
     }
 
     @Override
-    public User getUserInfo(ResultSet resultSet) throws SQLException {
-        System.out.println("getuserinfo method starts...");
+    public User getUserInfo(ResultSet resultSet) {
         User user = new User();
-        user.setId(resultSet.getLong("user_id"));
-        user.setEmail(resultSet.getString("email"));
-        user.setPassword(resultSet.getString("password"));
-        Role role = new Role();
-        role.setId(resultSet.getInt("role_id"));
-        user.setRole(role);
-        System.out.println("getuserinfo ends... with user role: " + user.getRole().getId());
+        try {
+            user.setId(resultSet.getLong(RESULTSET_USER_ID));
+            user.setEmail(resultSet.getString(USER_EMAIL));
+            user.setPassword(resultSet.getString(USER_PASSWORD));
+            Role role = new Role();
+            role.setId(resultSet.getInt(RESULTSET_ROLE_ID));
+            user.setRole(role);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         return user;
     }
 
     @Override
-    public User getByEmail(String email) throws SQLException {
-        System.out.println("getByEmail method starts.");
-        ConnectionPool connectionPool = ConnectionPool.getInstance();
-        Connection connection;
-        connection = connectionPool.getConnection();
+    public User getByEmail(String email) {
         User user = new User();
-        System.out.println("connection: " + connection.getClientInfo());
-        try (PreparedStatement preparedStatement = connection.prepareStatement(
-                "SELECT * FROM user where email = ?")) {
+        Connection connection = connectionPool.getConnection();
+        try(PreparedStatement preparedStatement = connection.prepareStatement(SELECT_USER_BY_EMAIL)) {
             preparedStatement.setString(1, email);
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 if (resultSet.next()) {
                     user = getUserInfo(resultSet);
                 }
             }
+        } catch (SQLException e) {
+            e.printStackTrace();
         } finally {
-            connection.close();
+            connectionPool.freeConnection(connection);
         }
         return user;
     }

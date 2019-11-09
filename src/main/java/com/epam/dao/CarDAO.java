@@ -2,28 +2,26 @@ package com.epam.dao;
 
 import com.epam.entity.Car;
 
-import java.io.IOException;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.List;
 
 public interface CarDao extends Dao<Car> {
     @Override
-    void insert(Car car) throws SQLException, IOException;
+    void insert(Car car);
 
     @Override
-    Car update(Car car) throws SQLException;
+    void update(Car car);
 
     @Override
-    boolean deleteById(Long id) throws SQLException;
+    boolean deleteById(Long id);
 
     @Override
-    Car getById(Long id) throws SQLException;
+    Car getById(Long id);
 
     @Override
-    List<Car> getAll() throws SQLException, IOException;
+    List<Car> getAll();
 
-    List<Car> getAvailable() throws SQLException;
+    List<Car> getAvailable();
 
-    Car getCarInfo(ResultSet resultSet) throws SQLException;
+    Car getCarInfo(ResultSet resultSet);
 }

@@ -10,16 +10,11 @@ public class Order extends Entity {
     private Status status;
     private Date startDate;
     private Date endDate;
-    private Location pickUp;
-    private Location dropOff;
     private List<Driver> driverList;
     private long userID;
     private long carID;
     private double price;
     private double paymentSum;
-
-    public Order() {
-    }
 
     public User getUser() {
         return user;
@@ -59,22 +54,6 @@ public class Order extends Entity {
 
     public void setEndDate(Date endDate) {
         this.endDate = endDate;
-    }
-
-    public Location getPickUp() {
-        return pickUp;
-    }
-
-    public void setPickUp(Location pickUp) {
-        this.pickUp = pickUp;
-    }
-
-    public Location getDropOff() {
-        return dropOff;
-    }
-
-    public void setDropOff(Location dropOff) {
-        this.dropOff = dropOff;
     }
 
     public List<Driver> getDriverList() {

@@ -15,7 +15,7 @@ public final class PasswordHashing {
         try {
             md = MessageDigest.getInstance("SHA-256");
         } catch (NoSuchAlgorithmException e) {
-            LOG.info("NoSuchAlgorithmException while handling password. " + e);
+            //LOG.info("NoSuchAlgorithmException while handling password. " + e);
         }
         md.update(password.getBytes());
         byte byteData[] = md.digest();

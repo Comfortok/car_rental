@@ -2,23 +2,21 @@ package com.epam.dao;
 
 import com.epam.entity.Invoice;
 
-import java.io.IOException;
-import java.sql.SQLException;
 import java.util.List;
 
 public interface InvoiceDao extends Dao<Invoice> {
     @Override
-    void insert(Invoice invoice) throws SQLException, IOException;
+    void insert(Invoice invoice);
 
     @Override
-    Invoice update(Invoice invoice) throws SQLException;
+    void update(Invoice invoice);
 
     @Override
-    boolean deleteById(Long id) throws SQLException;
+    boolean deleteById(Long id);
 
     @Override
-    Invoice getById(Long id) throws SQLException;
+    Invoice getById(Long id);
 
     @Override
-    List<Invoice> getAll() throws SQLException, IOException;
+    List<Invoice> getAll();
 }

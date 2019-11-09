@@ -4,15 +4,6 @@ public class Model extends Entity {
     private Brand brand;
     private String name;
 
-    public Model() {
-    }
-
-    public Model(long id, Brand brand, String name) {
-        super(id);
-        this.brand = brand;
-        this.name = name;
-    }
-
     public Brand getBrand() {
         return brand;
     }

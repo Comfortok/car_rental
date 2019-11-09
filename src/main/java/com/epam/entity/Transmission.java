@@ -3,11 +3,16 @@ package com.epam.entity;
 public class Transmission extends Entity {
     private String name;
 
-    public Transmission() {
+    public String getName() {
+        return name;
     }
 
-    public Transmission(long id, String name) {
-        super(id);
+    public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return getName();
     }
 }

@@ -4,15 +4,6 @@ public class CarCategory extends Entity {
     private String name;
     private double pricePerDay;
 
-    public CarCategory() {
-    }
-
-    public CarCategory(long id, String name, double pricePerDay) {
-        super(id);
-        this.name = name;
-        this.pricePerDay = pricePerDay;
-    }
-
     public String getName() {
         return name;
     }

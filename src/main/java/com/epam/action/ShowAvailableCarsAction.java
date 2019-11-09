@@ -1,78 +1,76 @@
 package com.epam.action;
 
-import com.epam.dao.CarDao;
 import com.epam.dao.impl.CarDaoImpl;
 import com.epam.entity.Car;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
-import static com.epam.Path.AVAILABLE_CARS_PAGE;
+import java.util.*;
+import com.epam.Path;
+import static com.epam.action.ConstantField.*;
 
 public class ShowAvailableCarsAction implements Action {
+    private static final int MIN_PERIOD = 1;
+    private static final int COUNT_ZERO = 0;
+    private static final int COUNT_ONE = 1;
+
     @Override
-    public String execute(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
-        CarDaoImpl carDaoImpl;
-        List<Car> allCars;
-        List<Car> allCarsInOrder;
-        List<Car> availableCars = new ArrayList<>();
-        carDaoImpl = new CarDaoImpl();
-        
-        System.out.println("showAvCars exe");
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-        Date userStartDate = null;
-        Date userEndDate = null;
+    public String execute(HttpServletRequest request, HttpServletResponse response) {
+        CarDaoImpl carDaoImpl = new CarDaoImpl();
+        List<Car> availableCars;
+        List<Car> allCars = carDaoImpl.getAll();
+        System.out.println("AllCars: " + allCars);
+        List<Car> allCarsInOrder = carDaoImpl.getAvailable();
+        System.out.println("AllCarsInOrder: " + allCarsInOrder);
         java.sql.Date startDate = null;
         java.sql.Date endDate = null;
+        SimpleDateFormat format = new SimpleDateFormat(DATE_FORMAT);
+        Date userStartDate;
+        Date userEndDate;
         try {
-            userStartDate = format.parse(request.getParameter("startDate"));
-            userEndDate = format.parse(request.getParameter("endDate"));
+            userStartDate = format.parse(request.getParameter(ORDER_START_DATE));
+            userEndDate = format.parse(request.getParameter(ORDER_END_DATE));
             startDate = new java.sql.Date(userStartDate.getTime());
             endDate = new java.sql.Date(userEndDate.getTime());
         } catch (ParseException e) {
             e.printStackTrace();
         }
-
         int period = endDate.getDay() - startDate.getDay();
-        allCars = carDaoImpl.getAll();
-        System.out.println("allCars: " + allCars);
-        allCarsInOrder = carDaoImpl.getAvailable();
-        System.out.println("allCarsOrder: " + allCarsInOrder);
-
-        for (Car car : allCarsInOrder) {
-            System.out.println("foreach...");
-            Date carStartDate = car.getStartDate();
-            Date carEndDate = car.getEndDate();
-            if ((startDate.after(carEndDate) || endDate.before(carStartDate)) && (car.getIsAvailable().toLowerCase().equals("yes"))) {
-                System.out.println("This car is available: " + car.getModel());
-                availableCars.add(car);
-            }
+        if (period < MIN_PERIOD) {
+            period = MIN_PERIOD;
         }
-
-        for (Car allCar : allCars) {
-            int count = 0;
-            for (Car orderCar : allCarsInOrder) {
-                if (orderCar.getId() == allCar.getId()) {
-                    count++;
+        if (allCarsInOrder.size() < COUNT_ONE) {
+            availableCars = new ArrayList<>(allCars);
+        } else {
+            List<Car> bookedCars = new ArrayList<>();
+            availableCars = new ArrayList<>();
+            for (Car carInOrderList : allCarsInOrder) {
+                Date carStartDate = carInOrderList.getStartDate();
+                Date carEndDate = carInOrderList.getEndDate();
+                if (startDate.after(carEndDate) || endDate.before(carStartDate)) {
+                } else {
+                    bookedCars.add(carInOrderList);
                 }
             }
-            if (count < 1) {
-                availableCars.add(allCar);
+            for (Car car : allCars) {
+                int count = COUNT_ZERO;
+                for (Car bookedCar : bookedCars) {
+                    if (car.getId() == bookedCar.getId()) {
+                        count++;
+                    }
+                }
+                if (count < COUNT_ONE) {
+                    if (car.getIsAvailable().toLowerCase().equals(CAR_AVAILABLE_YES)) {
+                        availableCars.add(car);
+                    }
+                }
             }
         }
-
-        System.out.println("available cars: " + availableCars);
-        request.setAttribute("availableCars", availableCars);
-        request.setAttribute("period", period);
-        request.setAttribute("startDate", startDate);
-        request.setAttribute("endDate", endDate);
-        return AVAILABLE_CARS_PAGE;
+        request.setAttribute(ALL_CARS_LIST, availableCars);
+        request.setAttribute(ORDER_PERIOD, period);
+        request.setAttribute(ORDER_START_DATE, startDate);
+        request.setAttribute(ORDER_END_DATE, endDate);
+        return Path.ALL_CARS_PAGE;
     }
 }

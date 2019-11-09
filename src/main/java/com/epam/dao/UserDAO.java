@@ -2,28 +2,26 @@ package com.epam.dao;
 
 import com.epam.entity.User;
 
-import java.io.IOException;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.List;
 
 public interface UserDao extends Dao<User> {
     @Override
-    void insert(User entity) throws SQLException, IOException;
+    void insert(User entity);
 
     @Override
-    User update(User entity) throws SQLException;
+    void update(User entity);
 
     @Override
-    boolean deleteById(Long id) throws SQLException;
+    boolean deleteById(Long id);
 
     @Override
-    User getById(Long id) throws SQLException;
+    User getById(Long id);
 
     @Override
-    List<User> getAll() throws SQLException, IOException;
+    List<User> getAll();
 
-    User getUserInfo(ResultSet resultSet) throws SQLException;
+    User getUserInfo(ResultSet resultSet);
 
-    User getByEmail(String email) throws SQLException;
+    User getByEmail(String email);
 }

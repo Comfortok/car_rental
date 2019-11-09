@@ -14,4 +14,31 @@
     <servlet-name>mainServlet</servlet-name>
     <url-pattern>/mainServlet</url-pattern>
   </servlet-mapping>
+  <filter>
+    <filter-name>encodingFilter</filter-name>
+    <filter-class>com.epam.filter.EncodingFilter</filter-class>
+    <init-param>
+      <param-name>encoding</param-name>
+      <param-value>UTF-8</param-value>
+    </init-param>
+  </filter>
+  <filter-mapping>
+    <filter-name>encodingFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+  <filter>
+    <filter-name>redirectFilter</filter-name>
+    <filter-class>com.epam.filter.PageRedirectSecurityFilter</filter-class>
+    <init-param>
+      <param-name>INDEX_PATH</param-name>
+      <param-value>/home.jsp</param-value>
+    </init-param>
+  </filter>
+  <filter-mapping>
+    <filter-name>redirectFilter</filter-name>
+    <url-pattern>/jsp/*</url-pattern>
+  </filter-mapping>
+  <session-config>
+    <session-timeout>10</session-timeout>
+  </session-config>
 </web-app>

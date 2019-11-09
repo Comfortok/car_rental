@@ -8,9 +8,6 @@ public class Passport {
     private Date dateOfExpiry;
     private String authority;
 
-    public Passport() {
-    }
-
     public String getNumber() {
         return number;
     }

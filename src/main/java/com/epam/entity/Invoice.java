@@ -9,9 +9,6 @@ public class Invoice extends Entity {
     private double totalAmount;
     private PaymentStatus paymentStatus;
 
-    public Invoice() {
-    }
-
     public Date getDate() {
         return date;
     }

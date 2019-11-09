@@ -1,80 +1,57 @@
 package com.epam.action;
 
 import com.epam.Path;
-import com.epam.dao.UserDao;
 import com.epam.dao.impl.UserDaoImpl;
 import com.epam.entity.User;
+import com.epam.util.Validator;
+import com.epam.util.PasswordHashing;
 import org.apache.log4j.Logger;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
+import static com.epam.action.ConstantField.*;
 
 public class RegisterAction implements Action {
     private static final Logger LOG = Logger.getLogger(RegisterAction.class);
-    String forward;
-    User user;
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
-        System.out.println("register execute");
-        System.out.println("creating userdao");
         UserDaoImpl userDaoImpl = new UserDaoImpl();
-        System.out.println("userdao: " + userDaoImpl);
-        forward = Path.LOGIN_PAGE;
-        LOG.debug("RegisterCommand starts");
+        String page = Path.LOGIN_PAGE;
         HttpSession session = request.getSession();
-        System.out.println("session id: " + session.getId());
-        user = new User();
-        System.out.println("user is " + user);
-        String email = request.getParameter("email");
+        User user = new User();
+        String email = request.getParameter(USER_EMAIL);
         user.setEmail(email);
-        System.out.println("email: " + email);
-        LOG.trace("Request parameter: loging --> " + user.getEmail());
-        String password = request.getParameter("password");
-        user.setPassword(password);
-        System.out.println("pass: " + password);
-        LOG.trace("Request parameter: password --> " + user.getPassword());
-        String passwordConfirm = request.getParameter("password_confirm");
-
-        if (email.isEmpty() || password.isEmpty() || passwordConfirm.isEmpty()) {
-            System.out.println("Empty lines");
-            String errorMessage = "fill the whole lines...";
-            session.setAttribute("errorMessage", errorMessage);
-            LOG.error("Set the session attribute: errorMessage --> "
-                    + errorMessage);
-            forward = Path.ERROR_PAGE;
-            LOG.debug("RegisterCommand finished");
-            return forward;
-        }
-
-        System.out.println("trying to create list...(2)");
-        List<User> users = userDaoImpl.getAll();
-        System.out.println("userlist created 2: " + users);
-        for (User user2 : users) {
-            System.out.println("another user: " + user2);
-            if (user2.getEmail().equals(email)) {
-                String errorMessage = "Email is already exist";
-                session.setAttribute("errorMessage", errorMessage);
-                LOG.error("Set the session attribute: errorMessage --> "
-                        + errorMessage);
-                System.out.println("Email exist");
-                forward = Path.ERROR_PAGE;
-                LOG.debug("RegisterCommand finished");
-                return forward;
+        String password = request.getParameter(USER_PASSWORD);
+        String passwordConfirm = request.getParameter(USER_CONFIRM_PASSWORD);
+        if (!password.equals(passwordConfirm)) {
+            request.setAttribute(CONFIRM_PASSWORD_ERROR, CONFIRM_PASSWORD_ERROR_MESSAGE);
+            page = Path.REGISTER_PAGE;
+        } else if (email.isEmpty() || password.isEmpty() || passwordConfirm.isEmpty()){
+            request.setAttribute(EMPTY_FIELD_ERROR, EMPTY_FIELD_ERROR_MESSAGE);
+            page = Path.REGISTER_PAGE;
+        } else if (Validator.validateRegistrationInfo(email, password)) {
+            request.setAttribute(VALIDATION_ERROR_MESSAGE, VALIDATION_ERROR);
+            page = Path.REGISTER_PAGE;
+        } else {
+            password = PasswordHashing.getHashValue(password);
+            user.setPassword(password);
+            List<User> users = userDaoImpl.getAll();
+            for (User userSecond : users) {
+                if (userSecond.getEmail().equals(email)) {
+                    request.setAttribute(EMAIL_ERROR, EMAIL_ERROR_MESSAGE);
+                    page = Path.REGISTER_PAGE;
+                }
+            }
+            if (page.equals(Path.LOGIN_PAGE)) {
+                userDaoImpl.insert(user);
+                session.setAttribute(USER_EMAIL, user.getEmail());
+                page = Path.LOGIN_PAGE;
             }
         }
-
-        System.out.println("inserting user to db");
-        userDaoImpl.insert(user);
-        LOG.trace("Create new user --> " + user);
-        session.setAttribute("email", user.getEmail());
-        System.out.println("forwarding to login page");
-        forward = Path.LOGIN_PAGE;
-        LOG.debug("RegisterCommand finished");
-        return forward;
+        return page;
     }
 }

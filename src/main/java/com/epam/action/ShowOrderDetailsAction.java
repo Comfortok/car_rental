@@ -6,39 +6,37 @@ import com.epam.entity.Driver;
 import com.epam.entity.DrivingLicence;
 import com.epam.entity.Order;
 import com.epam.entity.Passport;
-import com.sun.org.apache.xpath.internal.operations.Or;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.sql.SQLException;
-import java.util.List;
+import static com.epam.action.ConstantField.*;
 
 public class ShowOrderDetailsAction implements Action {
 
     @Override
-    public String execute(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
-        System.out.println("ShowOrderDetails exe");
-        OrderDaoImpl orderDaoImpl;
-        orderDaoImpl = new OrderDaoImpl();
-        long orderId = Long.parseLong(request.getParameter("orderId"));
+    public String execute(HttpServletRequest request, HttpServletResponse response) throws SQLException {
+        OrderDaoImpl orderDaoImpl = new OrderDaoImpl();
+        long orderId = Long.parseLong(request.getParameter(ORDER_ID));
+        String statusId = request.getParameter(STATUS_ID);
         Order order = orderDaoImpl.getById(orderId);
         Driver driver = order.getDriver();
         Passport passport = driver.getPassport();
         DrivingLicence drivingLicence = driver.getDrivingLicence();
-        request.setAttribute("driverName", driver.getName());
-        request.setAttribute("driverSurname", driver.getSurname());
-        request.setAttribute("driverBirth", driver.getDateOfBirth());
-        request.setAttribute("driverPhone", driver.getPhoneNumber());
-        request.setAttribute("passportNumber", passport.getNumber());
-        request.setAttribute("passportIssue", passport.getDateOfIssue());
-        request.setAttribute("passportExpiry", passport.getDateOfExpiry());
-        request.setAttribute("passportAuthority", passport.getAuthority());
-        request.setAttribute("licenceNumber", drivingLicence.getNumber());
-        request.setAttribute("licenceIssue", drivingLicence.getDateOfIssue());
-        request.setAttribute("licenceExpiry", drivingLicence.getDateOfExpiry());
-        request.setAttribute("licenceAuthority", drivingLicence.getAuthority());
-        request.setAttribute("licenceCategory", drivingLicence.getCategory());
-        return Path.ADMIN_ORDERS_DETAILS_PAGE;
+        request.setAttribute(DRIVER_NAME, driver.getName());
+        request.setAttribute(DRIVER_SURNAME, driver.getSurname());
+        request.setAttribute(DRIVER_BIRTH_DATE, driver.getDateOfBirth());
+        request.setAttribute(DRIVER_PHONE, driver.getPhoneNumber());
+        request.setAttribute(PASSPORT_NUMBER, passport.getNumber());
+        request.setAttribute(PASSPORT_ISSUE_DATE, passport.getDateOfIssue());
+        request.setAttribute(PASSPORT_EXPIRY_DATE, passport.getDateOfExpiry());
+        request.setAttribute(PASSPORT_AUTHORITY, passport.getAuthority());
+        request.setAttribute(LICENCE_NUMBER, drivingLicence.getNumber());
+        request.setAttribute(LICENCE_ISSUE_DATE, drivingLicence.getDateOfIssue());
+        request.setAttribute(LICENCE_EXPIRY_DATE, drivingLicence.getDateOfExpiry());
+        request.setAttribute(LICENCE_AUTHORITY, drivingLicence.getAuthority());
+        request.setAttribute(LICENCE_CATEGORY, drivingLicence.getCategory());
+        request.setAttribute(ORDER_ID, orderId);
+        request.setAttribute(STATUS_ID, statusId);
+        return Path.ADMIN_ORDER_DETAILS_PAGE;
     }
 }

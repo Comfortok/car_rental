@@ -1,30 +1,38 @@
 package com.epam.action;
 
-import com.epam.Path;
 import com.epam.dao.impl.OrderDaoImpl;
 import com.epam.entity.Order;
 import com.epam.entity.Status;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.SQLException;
 
+import static com.epam.action.ConstantField.*;
+
 public class DeclineOrderAction implements Action {
+    private static final String USER_ROLE_ID = "1";
+
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
-        System.out.println("ConfrimOrder exe");
-        OrderDaoImpl orderDaoImpl;
-        orderDaoImpl = new OrderDaoImpl();
-        long orderId = Long.parseLong(request.getParameter("orderId"));
-        System.out.println("orderId: " + orderId);
+        OrderDaoImpl orderDaoImpl = new OrderDaoImpl();
+        long orderId = Long.parseLong(request.getParameter(ORDER_ID));
+        HttpSession session = request.getSession();
+        String forward = "";
         Order order = new Order();
         Status status = new Status();
-        status.setId(5);
+        status.setId(DECLINED_ORDER_STATUS_ID);
         order.setId(orderId);
         order.setStatus(status);
         orderDaoImpl.update(order);
-        ShowAllOrdersAction showAllOrdersAction = new ShowAllOrdersAction();
-        return showAllOrdersAction.execute(request, response);
+        if (session.getAttribute(USER_ROLE_ATTRIBUTE).equals(USER_ROLE_ID)) {
+            ShowUserOrdersAction showUserOrdersAction = new ShowUserOrdersAction();
+            forward = showUserOrdersAction.execute(request, response);
+        } else {
+            ShowAllAdminOrdersAction showAllAdminOrdersAction = new ShowAllAdminOrdersAction();
+            forward = showAllAdminOrdersAction.execute(request, response);
+        }
+        return forward;
     }
 }
