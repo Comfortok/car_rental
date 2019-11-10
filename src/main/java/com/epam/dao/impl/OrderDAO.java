@@ -1,6 +1,6 @@
 package com.epam.dao.impl;
 
-import com.epam.dao.OrderDao;
+import com.epam.dao.IOrderDAO;
 import com.epam.entity.*;
 import com.epam.entity.Driver;
 import com.epam.pool.ConnectionPool;
@@ -14,8 +14,8 @@ import java.util.List;
 
 import static com.epam.action.ConstantField.*;
 
-public class OrderDaoImpl implements OrderDao {
-    private static final Logger LOG = Logger.getLogger(OrderDaoImpl.class);
+public class OrderDAO implements IOrderDAO {
+    private static final Logger LOG = Logger.getLogger(OrderDAO.class);
     private final ConnectionPool connectionPool = ConnectionPool.getInstance();
     private final String SQL_SELECT_ALL_FROM_ORDER = "SELECT car_rent.order.order_id, car_rent.order.user_id, " +
             "car_rent.order.car_id, car_rent.order.status_id, car_rent.order.start_date, car_rent.order.end_date, " +

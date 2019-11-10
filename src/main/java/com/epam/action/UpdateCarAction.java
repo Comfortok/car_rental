@@ -1,6 +1,6 @@
 package com.epam.action;
 
-import com.epam.dao.impl.CarDaoImpl;
+import com.epam.dao.impl.CarDAO;
 import com.epam.entity.Car;
 import org.apache.log4j.Logger;
 
@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import static com.epam.action.ConstantField.*;
 
-public class UpdateCarAction implements Action {
+public class UpdateCarAction implements IAction {
     private static final Logger LOG = Logger.getLogger(UpdateCarAction.class);
 
     @Override
@@ -37,7 +37,7 @@ public class UpdateCarAction implements Action {
             car.setRegisteredNumber(currentCarNumber);
             car.setMileage(Integer.parseInt(currentStringMileage));
         }
-        CarDaoImpl carDao = new CarDaoImpl();
+        CarDAO carDao = new CarDAO();
         carDao.update(car);
         ShowAllCarsAction showAllCarsAction = new ShowAllCarsAction();
         return showAllCarsAction.execute(request, response);

@@ -1,7 +1,7 @@
 package com.epam.action;
 
 import com.epam.Path;
-import com.epam.dao.impl.OrderDaoImpl;
+import com.epam.dao.impl.OrderDAO;
 import com.epam.entity.Driver;
 import com.epam.entity.DrivingLicence;
 import com.epam.entity.Order;
@@ -13,16 +13,16 @@ import javax.servlet.http.HttpServletResponse;
 
 import static com.epam.action.ConstantField.*;
 
-public class ShowOrderDetailsAction implements Action {
+public class ShowOrderDetailsAction implements IAction {
     private static final Logger LOG = Logger.getLogger(ShowOrderDetailsAction.class);
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
         LOG.debug("ShowOrderDetailsAction execute starts.");
-        OrderDaoImpl orderDaoImpl = new OrderDaoImpl();
+        OrderDAO orderDAO = new OrderDAO();
         long orderId = Long.parseLong(request.getParameter(ORDER_ID));
         String statusId = request.getParameter(STATUS_ID);
-        Order order = orderDaoImpl.getById(orderId);
+        Order order = orderDAO.getById(orderId);
         Driver driver = order.getDriver();
         Passport passport = driver.getPassport();
         DrivingLicence drivingLicence = driver.getDrivingLicence();

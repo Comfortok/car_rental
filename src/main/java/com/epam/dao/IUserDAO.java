@@ -5,7 +5,7 @@ import com.epam.entity.User;
 import java.sql.ResultSet;
 import java.util.List;
 
-public interface UserDao extends Dao<User> {
+public interface IUserDAO extends IDAO<User> {
     @Override
     void insert(User entity);
 

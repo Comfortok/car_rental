@@ -4,7 +4,7 @@ import com.epam.entity.Entity;
 
 import java.util.List;
 
-public interface Dao<T extends Entity> {
+public interface IDAO<T extends Entity> {
     void insert(T entity);
 
     void update(T entity);

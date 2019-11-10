@@ -8,7 +8,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public class ActionFactory {
     private static final Logger LOG = Logger.getLogger(ActionFactory.class);
     private static final String EMPTY_ACTION = "emptyAction";
-    private static Map<String, Action> actionMap = new ConcurrentHashMap<>();
+    private static Map<String, IAction> actionMap = new ConcurrentHashMap<>();
 
     static {
         actionMap.put("login", new LoginAction());
@@ -39,7 +39,7 @@ public class ActionFactory {
         LOG.trace("Actions count: " + actionMap.size());
     }
 
-    public static Action getAction(String action) {
+    public static IAction getAction(String action) {
         if (action == null || !actionMap.containsKey(action)) {
             LOG.trace("This action not found: " + action);
             return actionMap.get(EMPTY_ACTION);

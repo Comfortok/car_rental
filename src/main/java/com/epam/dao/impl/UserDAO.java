@@ -1,6 +1,6 @@
 package com.epam.dao.impl;
 
-import com.epam.dao.UserDao;
+import com.epam.dao.IUserDAO;
 import com.epam.entity.Role;
 import com.epam.entity.User;
 import com.epam.pool.ConnectionPool;
@@ -12,8 +12,8 @@ import java.util.List;
 
 import static com.epam.action.ConstantField.*;
 
-public class UserDaoImpl implements UserDao {
-    private static final Logger LOG = Logger.getLogger(UserDaoImpl.class);
+public class UserDAO implements IUserDAO {
+    private static final Logger LOG = Logger.getLogger(UserDAO.class);
     private static final String SELECT_USER_BY_EMAIL = "SELECT * FROM user where email = ?";
     private final String SQL_INSERT_NEW_USER = "INSERT INTO user(email, password) VALUES(?, ?)";
     private final String SELECT_ALL_FROM_USER = "SELECT * FROM user";

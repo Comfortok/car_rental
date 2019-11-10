@@ -1,7 +1,7 @@
 package com.epam.action;
 
-import com.epam.dao.impl.InvoiceDaoImpl;
-import com.epam.dao.impl.OrderDaoImpl;
+import com.epam.dao.impl.InvoiceDAO;
+import com.epam.dao.impl.OrderDAO;
 import com.epam.entity.*;
 import org.apache.log4j.Logger;
 
@@ -11,7 +11,7 @@ import java.util.Date;
 
 import static com.epam.action.ConstantField.*;
 
-public class OrderPaymentAction implements Action {
+public class OrderPaymentAction implements IAction {
     private static final Logger LOG = Logger.getLogger(OrderPaymentAction.class);
 
     @Override
@@ -38,10 +38,10 @@ public class OrderPaymentAction implements Action {
             PaymentStatus paymentStatus = new PaymentStatus();
             paymentStatus.setId(PAYMENT_PAID_ID);
             invoice.setPaymentStatus(paymentStatus);
-            InvoiceDaoImpl invoiceDaoImpl = new InvoiceDaoImpl();
-            invoiceDaoImpl.insert(invoice);
-            OrderDaoImpl orderDaoImpl = new OrderDaoImpl();
-            orderDaoImpl.update(order);
+            InvoiceDAO invoiceDAO = new InvoiceDAO();
+            invoiceDAO.insert(invoice);
+            OrderDAO orderDAO = new OrderDAO();
+            orderDAO.update(order);
         } else {
             request.setAttribute(WRONG_SUM_ERROR, WRONG_SUM_ERROR_MESSAGE);
         }

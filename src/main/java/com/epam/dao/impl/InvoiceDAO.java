@@ -1,6 +1,6 @@
 package com.epam.dao.impl;
 
-import com.epam.dao.InvoiceDao;
+import com.epam.dao.IInvoiceDAO;
 import com.epam.entity.Invoice;
 import com.epam.pool.ConnectionPool;
 import org.apache.log4j.Logger;
@@ -10,8 +10,8 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
 
-public class InvoiceDaoImpl implements InvoiceDao {
-    private static final Logger LOG = Logger.getLogger(InvoiceDaoImpl.class);
+public class InvoiceDAO implements IInvoiceDAO {
+    private static final Logger LOG = Logger.getLogger(InvoiceDAO.class);
     private final ConnectionPool connectionPool = ConnectionPool.getInstance();
     private static final String SQL_INSERT_NEW_INVOICE = "insert into car_rent.invoice(invoice_date, order_id, " +
             "payment_type_id, total_amount, is_paid) values(?, ?, ?, ?, ?)";

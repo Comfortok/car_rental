@@ -1,7 +1,7 @@
 package com.epam.action;
 
 import com.epam.Path;
-import com.epam.dao.impl.UserDaoImpl;
+import com.epam.dao.impl.UserDAO;
 import com.epam.entity.User;
 import com.epam.util.PasswordHashing;
 import org.apache.log4j.Logger;
@@ -12,14 +12,14 @@ import javax.servlet.http.HttpSession;
 
 import static com.epam.action.ConstantField.*;
 
-public class LoginAction implements Action {
+public class LoginAction implements IAction {
     private static final long serialVersionUID = -1071012092354190852L;
     private static final Logger LOG = Logger.getLogger(LoginAction.class);
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
         LOG.debug("LoginAction execute starts.");
-        UserDaoImpl userDaoImpl = new UserDaoImpl();
+        UserDAO userDAO = new UserDAO();
         String forward = Path.HOME_PAGE;
         HttpSession session = request.getSession();
         User user;
@@ -30,7 +30,7 @@ public class LoginAction implements Action {
             forward = Path.LOGIN_PAGE;
         } else {
             password = PasswordHashing.getHashValue(password);
-            user = userDaoImpl.getByEmail(email);
+            user = userDAO.getByEmail(email);
             if (user == null || !password.equals(user.getPassword())) {
                 request.setAttribute(NO_SUCH_USER_ERROR, NO_SUCH_USER_ERROR_MESSAGE);
                 forward = Path.LOGIN_PAGE;

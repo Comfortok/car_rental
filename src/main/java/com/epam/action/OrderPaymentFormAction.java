@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import static com.epam.action.ConstantField.ORDER_ID;
 import static com.epam.action.ConstantField.PAYMENT_SUM;
 
-public class OrderPaymentFormAction implements Action {
+public class OrderPaymentFormAction implements IAction {
     private static final Logger LOG = Logger.getLogger(OrderPaymentFormAction.class);
 
     @Override

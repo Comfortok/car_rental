@@ -6,6 +6,6 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.sql.SQLException;
 
-public interface Action extends Serializable {
+public interface IAction extends Serializable {
     String execute(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException;
 }

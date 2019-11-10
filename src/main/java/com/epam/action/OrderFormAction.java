@@ -11,7 +11,7 @@ import java.util.Date;
 
 import static com.epam.action.ConstantField.*;
 
-public class OrderFormAction implements Action {
+public class OrderFormAction implements IAction {
     private static final Logger LOG = Logger.getLogger(OrderFormAction.class);
 
     @Override

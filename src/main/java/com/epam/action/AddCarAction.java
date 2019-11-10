@@ -1,7 +1,7 @@
 package com.epam.action;
 
 import com.epam.Path;
-import com.epam.dao.impl.CarDaoImpl;
+import com.epam.dao.impl.CarDAO;
 import com.epam.entity.*;
 import org.apache.log4j.Logger;
 
@@ -12,7 +12,7 @@ import java.util.Map;
 
 import static com.epam.action.ConstantField.*;
 
-public class AddCarAction implements Action {
+public class AddCarAction implements IAction {
     private static final Logger LOG = Logger.getLogger(AddCarAction.class);
 
     @Override
@@ -37,8 +37,8 @@ public class AddCarAction implements Action {
         int mileage = Integer.parseInt(request.getParameter(MILEAGE));
         String carImage = request.getParameter(CAR_IMAGE);
         carImage = CAR_IMAGE_FOLDER.concat(carImage).concat(CAR_IMAGE_FORMAT);
-        CarDaoImpl carDaoImpl = new CarDaoImpl();
-        Map<String, Integer> carDetails = new HashMap<String, Integer>(carDaoImpl.getCarDetails());
+        CarDAO carDAO = new CarDAO();
+        Map<String, Integer> carDetails = new HashMap<String, Integer>(carDAO.getCarDetails());
         Car car = new Car();
         car.setRegisteredNumber(registeredNumber);
         Brand carBrand = new Brand();
@@ -84,7 +84,7 @@ public class AddCarAction implements Action {
         car.setProductionYear(year);
         car.setMileage(mileage);
         car.setImageName(carImage);
-        carDaoImpl.insert(car);
+        carDAO.insert(car);
         return Path.HOME_PAGE;
     }
 }

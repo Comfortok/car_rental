@@ -10,7 +10,7 @@ import java.util.Locale;
 
 import static com.epam.action.ConstantField.*;
 
-public class LanguageAction implements Action {
+public class LanguageAction implements IAction {
     private static final Logger LOG = Logger.getLogger(LanguageAction.class);
 
     @Override

@@ -4,7 +4,7 @@ import com.epam.entity.Invoice;
 
 import java.util.List;
 
-public interface InvoiceDao extends Dao<Invoice> {
+public interface IInvoiceDAO extends IDAO<Invoice> {
     @Override
     void insert(Invoice invoice);
 

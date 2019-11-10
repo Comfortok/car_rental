@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import static com.epam.action.ConstantField.EMPTY_ACTION_ERROR;
 import static com.epam.action.ConstantField.EMPTY_ACTION_MESSAGE;
 
-public class EmptyAction implements Action {
+public class EmptyAction implements IAction {
     private static final Logger LOG = Logger.getLogger(EmptyAction.class);
 
     @Override

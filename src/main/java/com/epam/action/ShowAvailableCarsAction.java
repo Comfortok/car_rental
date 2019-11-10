@@ -1,6 +1,6 @@
 package com.epam.action;
 
-import com.epam.dao.impl.CarDaoImpl;
+import com.epam.dao.impl.CarDAO;
 import com.epam.entity.Car;
 
 import javax.servlet.http.HttpServletRequest;
@@ -14,7 +14,7 @@ import org.apache.log4j.Logger;
 
 import static com.epam.action.ConstantField.*;
 
-public class ShowAvailableCarsAction implements Action {
+public class ShowAvailableCarsAction implements IAction {
     private static final Logger LOG = Logger.getLogger(ShowAvailableCarsAction.class);
     private static final int MIN_PERIOD = 1;
     private static final int COUNT_ZERO = 0;
@@ -23,10 +23,10 @@ public class ShowAvailableCarsAction implements Action {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
         LOG.debug("ShowAvailableCarsAction execute starts.");
-        CarDaoImpl carDaoImpl = new CarDaoImpl();
+        CarDAO carDAO = new CarDAO();
         List<Car> availableCars;
-        List<Car> allCars = carDaoImpl.getAll();
-        List<Car> allCarsInOrder = carDaoImpl.getAvailable();
+        List<Car> allCars = carDAO.getAll();
+        List<Car> allCarsInOrder = carDAO.getAvailable();
         java.sql.Date startDate = null;
         java.sql.Date endDate = null;
         SimpleDateFormat format = new SimpleDateFormat(DATE_FORMAT);

@@ -1,7 +1,7 @@
 package com.epam.action;
 
 import com.epam.Path;
-import com.epam.dao.impl.CarDaoImpl;
+import com.epam.dao.impl.CarDAO;
 import com.epam.entity.Car;
 import org.apache.log4j.Logger;
 
@@ -14,14 +14,14 @@ import java.util.Set;
 
 import static com.epam.action.ConstantField.*;
 
-public class AddCarFormAction implements Action {
+public class AddCarFormAction implements IAction {
     private static final Logger LOG = Logger.getLogger(AddCarFormAction.class);
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
         LOG.debug("AddCarFormAction execute starts.");
-        CarDaoImpl carDaoImpl = new CarDaoImpl();
-        List<Car> carList = new ArrayList<>(carDaoImpl.getAll());
+        CarDAO carDAO = new CarDAO();
+        List<Car> carList = new ArrayList<>(carDAO.getAll());
         Set<String> brandList = new HashSet<>();
         Set<String> modelList = new HashSet<>();
         Set<String> colorList = new HashSet<>();

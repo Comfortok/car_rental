@@ -5,7 +5,7 @@ import com.epam.entity.Car;
 import java.sql.ResultSet;
 import java.util.List;
 
-public interface CarDao extends Dao<Car> {
+public interface ICarDAO extends IDAO<Car> {
     @Override
     void insert(Car car);
 

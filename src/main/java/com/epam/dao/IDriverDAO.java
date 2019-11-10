@@ -5,7 +5,7 @@ import com.epam.entity.Order;
 
 import java.util.List;
 
-public interface DriverDao extends Dao<Driver> {
+public interface IDriverDAO extends IDAO<Driver> {
     @Override
     void insert(Driver entity);
 

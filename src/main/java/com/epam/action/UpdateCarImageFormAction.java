@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import static com.epam.action.ConstantField.CAR_ID;
 
-public class UpdateCarImageFormAction implements Action {
+public class UpdateCarImageFormAction implements IAction {
     private static final Logger LOG = Logger.getLogger(UpdateCarImageFormAction.class);
 
     @Override

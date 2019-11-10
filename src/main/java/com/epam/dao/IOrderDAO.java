@@ -5,7 +5,7 @@ import com.epam.entity.Order;
 import java.sql.ResultSet;
 import java.util.List;
 
-public interface OrderDao extends Dao<Order> {
+public interface IOrderDAO extends IDAO<Order> {
     @Override
     void insert(Order order);
 

@@ -1,6 +1,6 @@
 package com.epam;
 
-import com.epam.action.Action;
+import com.epam.action.IAction;
 import com.epam.action.ActionFactory;
 import org.apache.log4j.Logger;
 
@@ -29,7 +29,7 @@ public class MainServlet extends HttpServlet {
                          HttpServletResponse response) throws IOException, ServletException {
         LOG.debug("Servlet.process()");
         String actionName = request.getParameter(COMMAND);
-        Action action = ActionFactory.getAction(actionName);
+        IAction action = ActionFactory.getAction(actionName);
         String forward = Path.ERROR_PAGE;
         try {
             forward = action.execute(request, response);

@@ -1,6 +1,6 @@
 package com.epam.dao.impl;
 
-import com.epam.dao.DriverDao;
+import com.epam.dao.IDriverDAO;
 import com.epam.entity.Driver;
 import com.epam.entity.Order;
 import com.epam.pool.ConnectionPool;
@@ -13,8 +13,8 @@ import java.util.List;
 
 import static com.epam.action.ConstantField.*;
 
-public class DriverDaoImpl implements DriverDao {
-    private static final Logger LOG = Logger.getLogger(DriverDaoImpl.class);
+public class DriverDAO implements IDriverDAO {
+    private static final Logger LOG = Logger.getLogger(DriverDAO.class);
     private final ConnectionPool connectionPool = ConnectionPool.getInstance();
     private final String SQL_INSERT_DRIVER = "INSERT INTO car_rent.driver(name, surname, date_of_birth, phone_number)\n" +
             "VALUES(?, ?, ?, ?);";

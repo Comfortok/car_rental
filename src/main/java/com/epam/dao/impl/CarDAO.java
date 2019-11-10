@@ -1,6 +1,6 @@
 package com.epam.dao.impl;
 
-import com.epam.dao.CarDao;
+import com.epam.dao.ICarDAO;
 import com.epam.entity.*;
 import com.epam.pool.ConnectionPool;
 import org.apache.log4j.Logger;
@@ -13,8 +13,8 @@ import java.util.Map;
 
 import static com.epam.action.ConstantField.*;
 
-public class CarDaoImpl implements CarDao {
-    private static final Logger LOG = Logger.getLogger(CarDaoImpl.class);
+public class CarDAO implements ICarDAO {
+    private static final Logger LOG = Logger.getLogger(CarDAO.class);
     private final ConnectionPool connectionPool = ConnectionPool.getInstance();
     private static final int YEAR_SUBSTRING_BEGIN_INDEX = 0;
     private static final int YEAR_SUBSTRING_END_INDEX = 4;

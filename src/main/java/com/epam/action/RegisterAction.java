@@ -1,7 +1,7 @@
 package com.epam.action;
 
 import com.epam.Path;
-import com.epam.dao.impl.UserDaoImpl;
+import com.epam.dao.impl.UserDAO;
 import com.epam.entity.User;
 import com.epam.util.Validator;
 import com.epam.util.PasswordHashing;
@@ -14,13 +14,13 @@ import java.util.List;
 
 import static com.epam.action.ConstantField.*;
 
-public class RegisterAction implements Action {
+public class RegisterAction implements IAction {
     private static final Logger LOG = Logger.getLogger(RegisterAction.class);
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
         LOG.debug("RegisterAction execute starts.");
-        UserDaoImpl userDaoImpl = new UserDaoImpl();
+        UserDAO userDAO = new UserDAO();
         String page = Path.LOGIN_PAGE;
         HttpSession session = request.getSession();
         User user = new User();
@@ -40,7 +40,7 @@ public class RegisterAction implements Action {
         } else {
             password = PasswordHashing.getHashValue(password);
             user.setPassword(password);
-            List<User> users = userDaoImpl.getAll();
+            List<User> users = userDAO.getAll();
             for (User userSecond : users) {
                 if (userSecond.getEmail().equals(email)) {
                     request.setAttribute(EMAIL_ERROR, EMAIL_ERROR_MESSAGE);
@@ -48,7 +48,7 @@ public class RegisterAction implements Action {
                 }
             }
             if (page.equals(Path.LOGIN_PAGE)) {
-                userDaoImpl.insert(user);
+                userDAO.insert(user);
                 session.setAttribute(USER_EMAIL, user.getEmail());
                 page = Path.LOGIN_PAGE;
             }

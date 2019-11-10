@@ -1,7 +1,7 @@
 package com.epam.action;
 
 import com.epam.Path;
-import com.epam.dao.impl.OrderDaoImpl;
+import com.epam.dao.impl.OrderDAO;
 import com.epam.entity.Order;
 import org.apache.log4j.Logger;
 
@@ -12,15 +12,15 @@ import java.util.List;
 import static com.epam.action.ConstantField.ORDER_LIST;
 import static com.epam.action.ConstantField.USER_ID;
 
-public class ShowUserOrdersAction implements Action {
+public class ShowUserOrdersAction implements IAction {
     private static final Logger LOG = Logger.getLogger(ShowUserOrdersAction.class);
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
         LOG.debug("ShowUserOrdersAction execute starts.");
-        OrderDaoImpl orderDaoImpl = new OrderDaoImpl();
+        OrderDAO orderDAO = new OrderDAO();
         long userId = (long) request.getSession().getAttribute(USER_ID);
-        List<Order> orders = orderDaoImpl.getAllByUserId(userId);
+        List<Order> orders = orderDAO.getAllByUserId(userId);
         request.setAttribute(ORDER_LIST, orders);
         return Path.ALL_ORDERS_PAGE;
     }

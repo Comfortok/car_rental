@@ -1,8 +1,8 @@
 package com.epam.action;
 
 import com.epam.Path;
-import com.epam.dao.impl.DriverDaoImpl;
-import com.epam.dao.impl.OrderDaoImpl;
+import com.epam.dao.impl.DriverDAO;
+import com.epam.dao.impl.OrderDAO;
 import com.epam.entity.*;
 import org.apache.log4j.Logger;
 
@@ -15,7 +15,7 @@ import java.util.Date;
 import static com.epam.action.ConstantField.*;
 import static com.epam.Path.HOME_PAGE;
 
-public class OrderCarAction implements Action {
+public class OrderCarAction implements IAction {
     private static final Logger LOG = Logger.getLogger(OrderCarAction.class);
 
     @Override
@@ -93,18 +93,18 @@ public class OrderCarAction implements Action {
             order.setPaymentSum(sumToPay);
             order.setStartDate(sqlDateStart);
             order.setEndDate(sqlDateEnd);
-            OrderDaoImpl orderDaoImpl = new OrderDaoImpl();
-            orderDaoImpl.insert(order);
-            DriverDaoImpl driverDaoImpl = new DriverDaoImpl();
+            OrderDAO orderDAO = new OrderDAO();
+            orderDAO.insert(order);
+            DriverDAO driverDAO = new DriverDAO();
             Driver driver = new Driver();
             driver.setName(name);
             driver.setSurname(surname);
             driver.setDateOfBirth(sqlBirthDate);
             driver.setPhoneNumber(phone);
-            driverDaoImpl.insert(driver);
-            Order orderNumber = orderDaoImpl.getOrderByUserAndCar(order);
-            Driver driverNumber = driverDaoImpl.getDriverByPhone(driver);
-            driverDaoImpl.insertOrderDriver(driverNumber, orderNumber);
+            driverDAO.insert(driver);
+            Order orderNumber = orderDAO.getOrderByUserAndCar(order);
+            Driver driverNumber = driverDAO.getDriverByPhone(driver);
+            driverDAO.insertOrderDriver(driverNumber, orderNumber);
             Passport passport = new Passport();
             passport.setNumber(passportNumber);
             passport.setDateOfIssue(sqlPassportIssueDate);
@@ -119,7 +119,7 @@ public class OrderCarAction implements Action {
             drivingLicence.setCategory(licenceCategory);
             driver.setDrivingLicence(drivingLicence);
             driver.setId(driverNumber.getId());
-            driverDaoImpl.insertDriverInfo(driver);
+            driverDAO.insertDriverInfo(driver);
         }
         return page;
     }
