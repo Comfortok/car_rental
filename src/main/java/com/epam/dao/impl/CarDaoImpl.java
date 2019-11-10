@@ -3,14 +3,18 @@ package com.epam.dao.impl;
 import com.epam.dao.CarDao;
 import com.epam.entity.*;
 import com.epam.pool.ConnectionPool;
+import org.apache.log4j.Logger;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import static com.epam.action.ConstantField.*;
 
 public class CarDaoImpl implements CarDao {
+    private static final Logger LOG = Logger.getLogger(CarDaoImpl.class);
     private final ConnectionPool connectionPool = ConnectionPool.getInstance();
     private static final int YEAR_SUBSTRING_BEGIN_INDEX = 0;
     private static final int YEAR_SUBSTRING_END_INDEX = 4;
@@ -65,6 +69,7 @@ public class CarDaoImpl implements CarDao {
 
     @Override
     public void insert(Car car) {
+        LOG.info("CarDaoImpl.insert()");
         Connection connection = connectionPool.getConnection();
         try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_INSERT_NEW_CAR)) {
             preparedStatement.setString(1, car.getRegisteredNumber());
@@ -86,12 +91,14 @@ public class CarDaoImpl implements CarDao {
             preparedStatement.setInt(17, car.getMileage());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
+            LOG.error(e);
             e.printStackTrace();
         }
     }
 
     @Override
     public void update(Car car) {
+        LOG.info("CarDaoImpl.update()");
         Connection connection = connectionPool.getConnection();
         try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_UPDATE_CAR_NUMBER)) {
             preparedStatement.setString(1, car.getRegisteredNumber());
@@ -100,6 +107,7 @@ public class CarDaoImpl implements CarDao {
             preparedStatement.setLong(4, car.getId());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
+            LOG.error(e);
             e.printStackTrace();
         } finally {
             connectionPool.freeConnection(connection);
@@ -118,6 +126,7 @@ public class CarDaoImpl implements CarDao {
 
     @Override
     public List<Car> getAll() {
+        LOG.info("CarDaoImpl.getAll()");
         List<Car> carList = new ArrayList<>();
         Connection connection = connectionPool.getConnection();
         try (Statement statement = connection.createStatement()) {
@@ -127,6 +136,7 @@ public class CarDaoImpl implements CarDao {
                 }
             }
         } catch (SQLException e) {
+            LOG.error(e);
             e.printStackTrace();
         } finally {
             connectionPool.freeConnection(connection);
@@ -136,6 +146,7 @@ public class CarDaoImpl implements CarDao {
 
     @Override
     public List<Car> getAvailable() {
+        LOG.info("CarDaoImpl.getAvailable()");
         List<Car> availableCarList = new ArrayList<>();
         Connection connection = connectionPool.getConnection();
         try (Statement statement = connection.createStatement()) {
@@ -169,6 +180,7 @@ public class CarDaoImpl implements CarDao {
                 }
             }
         } catch (SQLException e) {
+            LOG.error(e);
             e.printStackTrace();
         } finally {
             connectionPool.freeConnection(connection);
@@ -178,6 +190,7 @@ public class CarDaoImpl implements CarDao {
 
     @Override
     public Car getCarInfo(ResultSet resultSet) {
+        LOG.info("CarDaoImpl.getCarInfo()");
         Car car = new Car();
         try {
             car.setId(resultSet.getLong(CAR_ID));
@@ -223,12 +236,14 @@ public class CarDaoImpl implements CarDao {
             car.setImageName(resultSet.getString(CAR_IMAGE));
             car.setMileage(resultSet.getInt(MILEAGE));
         } catch (SQLException e) {
+            LOG.error(e);
             e.printStackTrace();
         }
         return car;
     }
 
     public Map<? extends String, ? extends Integer> getCarDetails() {
+        LOG.info("CarDaoImpl.getCarDetails()");
         Map<String, Integer> map = new HashMap<>();
         Connection connection = connectionPool.getConnection();
         try (Statement statement = connection.createStatement()) {
@@ -244,6 +259,7 @@ public class CarDaoImpl implements CarDao {
                 }
             }
         } catch (SQLException e) {
+            LOG.error(e);
             e.printStackTrace();
         } finally {
             connectionPool.freeConnection(connection);
@@ -252,12 +268,14 @@ public class CarDaoImpl implements CarDao {
     }
 
     public void updateImage(Car car) {
+        LOG.info("CarDaoImpl.updateImage()");
         Connection connection = connectionPool.getConnection();
         try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_UPDATE_CAR_IMAGE)) {
             preparedStatement.setString(1, car.getImageName());
             preparedStatement.setLong(2, car.getId());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
+            LOG.error(e);
             e.printStackTrace();
         } finally {
             connectionPool.freeConnection(connection);

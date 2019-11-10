@@ -38,6 +38,9 @@
     <filter-name>redirectFilter</filter-name>
     <url-pattern>/jsp/*</url-pattern>
   </filter-mapping>
+  <listener>
+    <listener-class>com.epam.listener.RequestListener</listener-class>
+  </listener>
   <session-config>
     <session-timeout>10</session-timeout>
   </session-config>

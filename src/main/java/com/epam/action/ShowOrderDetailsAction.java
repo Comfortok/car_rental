@@ -6,15 +6,19 @@ import com.epam.entity.Driver;
 import com.epam.entity.DrivingLicence;
 import com.epam.entity.Order;
 import com.epam.entity.Passport;
+import org.apache.log4j.Logger;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.sql.SQLException;
+
 import static com.epam.action.ConstantField.*;
 
 public class ShowOrderDetailsAction implements Action {
+    private static final Logger LOG = Logger.getLogger(ShowOrderDetailsAction.class);
 
     @Override
-    public String execute(HttpServletRequest request, HttpServletResponse response) throws SQLException {
+    public String execute(HttpServletRequest request, HttpServletResponse response) {
+        LOG.debug("ShowOrderDetailsAction execute starts.");
         OrderDaoImpl orderDaoImpl = new OrderDaoImpl();
         long orderId = Long.parseLong(request.getParameter(ORDER_ID));
         String statusId = request.getParameter(STATUS_ID);

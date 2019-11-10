@@ -3,17 +3,20 @@ package com.epam.action;
 import com.epam.dao.impl.InvoiceDaoImpl;
 import com.epam.dao.impl.OrderDaoImpl;
 import com.epam.entity.*;
+import org.apache.log4j.Logger;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.sql.SQLException;
 import java.util.Date;
+
 import static com.epam.action.ConstantField.*;
 
 public class OrderPaymentAction implements Action {
+    private static final Logger LOG = Logger.getLogger(OrderPaymentAction.class);
 
     @Override
-    public String execute(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
+    public String execute(HttpServletRequest request, HttpServletResponse response) {
+        LOG.debug("OrderPaymentAction execute starts.");
         long orderId = Long.parseLong(request.getParameter(ORDER_ID));
         double paymentSum = Double.parseDouble(request.getParameter(PAYMENT_SUM));
         double actualSum = Double.parseDouble(request.getParameter(ACTUAL_SUM));

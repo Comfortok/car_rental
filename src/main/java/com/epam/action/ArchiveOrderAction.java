@@ -3,18 +3,19 @@ package com.epam.action;
 import com.epam.dao.impl.OrderDaoImpl;
 import com.epam.entity.Order;
 import com.epam.entity.Status;
+import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.sql.SQLException;
 
 import static com.epam.action.ConstantField.*;
 
 public class ArchiveOrderAction implements Action {
+    private static final Logger LOG = Logger.getLogger(ArchiveOrderAction.class);
 
     @Override
-    public String execute(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
+    public String execute(HttpServletRequest request, HttpServletResponse response) {
+        LOG.debug("ArchiveOrderAction execute starts.");
         OrderDaoImpl orderDaoImpl = new OrderDaoImpl();
         long orderId = Long.parseLong(request.getParameter(ORDER_ID));
         Order order = new Order();

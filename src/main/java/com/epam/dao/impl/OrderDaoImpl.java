@@ -4,14 +4,18 @@ import com.epam.dao.OrderDao;
 import com.epam.entity.*;
 import com.epam.entity.Driver;
 import com.epam.pool.ConnectionPool;
+import org.apache.log4j.Logger;
+
 import java.sql.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+
 import static com.epam.action.ConstantField.*;
 
 public class OrderDaoImpl implements OrderDao {
+    private static final Logger LOG = Logger.getLogger(OrderDaoImpl.class);
     private final ConnectionPool connectionPool = ConnectionPool.getInstance();
     private final String SQL_SELECT_ALL_FROM_ORDER = "SELECT car_rent.order.order_id, car_rent.order.user_id, " +
             "car_rent.order.car_id, car_rent.order.status_id, car_rent.order.start_date, car_rent.order.end_date, " +
@@ -78,6 +82,7 @@ public class OrderDaoImpl implements OrderDao {
 
     @Override
     public void insert(Order order) {
+        LOG.info("OrderDaoImpl.insert()");
         Connection connection = connectionPool.getConnection();
         try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_INSERT_NEW_ORDER)) {
             preparedStatement.setLong(1, order.getUser().getId());
@@ -93,6 +98,7 @@ public class OrderDaoImpl implements OrderDao {
             preparedStatement.setDouble(6, order.getPaymentSum());
             preparedStatement.executeUpdate();
         } catch (SQLException | ParseException e) {
+            LOG.error(e);
             e.printStackTrace();
         } finally {
             connectionPool.freeConnection(connection);
@@ -101,12 +107,14 @@ public class OrderDaoImpl implements OrderDao {
 
     @Override
     public void update(Order order) {
+        LOG.info("OrderDaoImpl.update()");
         Connection connection = connectionPool.getConnection();
         try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_UPDATE_ORDER_STATUS)) {
             preparedStatement.setLong(1, order.getStatus().getId());
             preparedStatement.setLong(2, order.getId());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
+            LOG.error(e);
             e.printStackTrace();
         } finally {
             connectionPool.freeConnection(connection);
@@ -120,6 +128,7 @@ public class OrderDaoImpl implements OrderDao {
 
     @Override
     public Order getById(Long id) {
+        LOG.info("OrderDaoImpl.getById()");
         Connection connection = connectionPool.getConnection();
         Order order = new Order();
         try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_SELECT_ORDER_BY_ID)) {
@@ -130,6 +139,7 @@ public class OrderDaoImpl implements OrderDao {
                 }
             }
         } catch (SQLException e) {
+            LOG.error(e);
             e.printStackTrace();
         } finally {
             connectionPool.freeConnection(connection);
@@ -139,6 +149,7 @@ public class OrderDaoImpl implements OrderDao {
 
     @Override
     public List<Order> getAll() {
+        LOG.info("OrderDaoImpl.getAll()");
         List<Order> orderList = new ArrayList<>();
         Connection connection = connectionPool.getConnection();
         try (Statement statement = connection.createStatement()) {
@@ -148,6 +159,7 @@ public class OrderDaoImpl implements OrderDao {
                 }
             }
         } catch (SQLException e) {
+            LOG.error(e);
             e.printStackTrace();
         } finally {
             connectionPool.freeConnection(connection);
@@ -157,6 +169,7 @@ public class OrderDaoImpl implements OrderDao {
 
     @Override
     public List<Order> getAllByUserId(Long id) {
+        LOG.info("OrderDaoImpl.getAllByUserId()");
         List<Order> orderList = new ArrayList<>();
         Connection connection = connectionPool.getConnection();
         try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_SELECT_ORDERS_BY_USER_ID)) {
@@ -167,6 +180,7 @@ public class OrderDaoImpl implements OrderDao {
                 }
             }
         } catch (SQLException e) {
+            LOG.error(e);
             e.printStackTrace();
         } finally {
             connectionPool.freeConnection(connection);
@@ -176,6 +190,7 @@ public class OrderDaoImpl implements OrderDao {
 
     @Override
     public Order getOrderInfo(ResultSet resultSet) {
+        LOG.info("OrderDaoImpl.getOrderInfo()");
         Order order = new Order();
         try {
             order.setId(resultSet.getLong(RESULTSET_ORDER_ID));
@@ -199,6 +214,7 @@ public class OrderDaoImpl implements OrderDao {
             order.setEndDate(resultSet.getDate(RESULTSET_END_DATE));
             order.setPaymentSum(resultSet.getDouble(RESULTSET_PAYMENT_SUM));
         } catch (SQLException e) {
+            LOG.error(e);
             e.printStackTrace();
         }
         return order;
@@ -206,6 +222,7 @@ public class OrderDaoImpl implements OrderDao {
 
     @Override
     public Order getOrderByUserAndCar(Order order) {
+        LOG.info("OrderDaoImpl.getOrderByUserAndCar()");
         Connection connection = connectionPool.getConnection();
         try (PreparedStatement preparedStatement = connection.prepareStatement(
                 SQL_SELECT_ORDER_BY_USER_CAR_STATUS)) {
@@ -217,9 +234,11 @@ public class OrderDaoImpl implements OrderDao {
                     order.setId(resultSet.getLong(RESULTSET_ORDER_ID));
                 }
             } catch (SQLException e) {
+                LOG.error(e);
                 e.printStackTrace();
             }
         } catch (SQLException e) {
+            LOG.error(e);
             e.printStackTrace();
         } finally {
             connectionPool.freeConnection(connection);
@@ -229,6 +248,7 @@ public class OrderDaoImpl implements OrderDao {
 
     @Override
     public List<Order> getAllForOperator() {
+        LOG.info("OrderDaoImpl.getAllForOperator()");
         List<Order> orderList = new ArrayList<>();
         Connection connection = connectionPool.getConnection();
         try (Statement statement = connection.createStatement()) {
@@ -238,6 +258,7 @@ public class OrderDaoImpl implements OrderDao {
                 }
             }
         } catch (SQLException e) {
+            LOG.error(e);
             e.printStackTrace();
         } finally {
             connectionPool.freeConnection(connection);
@@ -246,6 +267,7 @@ public class OrderDaoImpl implements OrderDao {
     }
 
     private Order getOrderInfoForOperator(ResultSet resultSet) {
+        LOG.info("OrderDaoImpl.getOrderInfoForOperator()");
         Order order = new Order();
         try {
             Driver driver = new Driver();
@@ -289,6 +311,7 @@ public class OrderDaoImpl implements OrderDao {
             order.setStatus(status);
             order.setDriver(driver);
         } catch (SQLException e) {
+            LOG.error(e);
             e.printStackTrace();
         }
         return order;

@@ -7,15 +7,17 @@ import java.security.NoSuchAlgorithmException;
 
 public final class PasswordHashing {
     private static final Logger LOG = Logger.getLogger(PasswordHashing.class);
+
     private PasswordHashing() {
     }
 
     public static String getHashValue(String password) {
+        LOG.debug("PasswordHashing.getHashValue()");
         MessageDigest md = null;
         try {
             md = MessageDigest.getInstance("SHA-256");
         } catch (NoSuchAlgorithmException e) {
-            //LOG.info("NoSuchAlgorithmException while handling password. " + e);
+            LOG.error(e);
         }
         md.update(password.getBytes());
         byte byteData[] = md.digest();

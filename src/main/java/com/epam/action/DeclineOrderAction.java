@@ -3,19 +3,21 @@ package com.epam.action;
 import com.epam.dao.impl.OrderDaoImpl;
 import com.epam.entity.Order;
 import com.epam.entity.Status;
+import org.apache.log4j.Logger;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.io.IOException;
-import java.sql.SQLException;
 
 import static com.epam.action.ConstantField.*;
 
 public class DeclineOrderAction implements Action {
+    private static final Logger LOG = Logger.getLogger(DeclineOrderAction.class);
     private static final String USER_ROLE_ID = "1";
 
     @Override
-    public String execute(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
+    public String execute(HttpServletRequest request, HttpServletResponse response) {
+        LOG.debug("DeclineOrderAction execute starts.");
         OrderDaoImpl orderDaoImpl = new OrderDaoImpl();
         long orderId = Long.parseLong(request.getParameter(ORDER_ID));
         HttpSession session = request.getSession();

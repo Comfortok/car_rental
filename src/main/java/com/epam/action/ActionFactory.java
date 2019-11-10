@@ -1,11 +1,13 @@
 package com.epam.action;
 
 import org.apache.log4j.Logger;
+
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class ActionFactory {
     private static final Logger LOG = Logger.getLogger(ActionFactory.class);
+    private static final String EMPTY_ACTION = "emptyAction";
     private static Map<String, Action> actionMap = new ConcurrentHashMap<>();
 
     static {
@@ -33,7 +35,6 @@ public class ActionFactory {
         actionMap.put("updateCar", new UpdateCarAction());
         actionMap.put("updateCarForm", new UpdateCarFormAction());
         actionMap.put("orderPayForm", new OrderPaymentFormAction());
-
         LOG.debug("ActionFactory has successfully started.");
         LOG.trace("Actions count: " + actionMap.size());
     }
@@ -41,7 +42,7 @@ public class ActionFactory {
     public static Action getAction(String action) {
         if (action == null || !actionMap.containsKey(action)) {
             LOG.trace("This action not found: " + action);
-            return actionMap.get("emptyAction");
+            return actionMap.get(EMPTY_ACTION);
         }
         return actionMap.get(action);
     }

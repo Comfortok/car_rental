@@ -5,10 +5,11 @@ import com.epam.dao.impl.UserDaoImpl;
 import com.epam.entity.User;
 import com.epam.util.PasswordHashing;
 import org.apache.log4j.Logger;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.sql.SQLException;
+
 import static com.epam.action.ConstantField.*;
 
 public class LoginAction implements Action {
@@ -16,7 +17,8 @@ public class LoginAction implements Action {
     private static final Logger LOG = Logger.getLogger(LoginAction.class);
 
     @Override
-    public String execute(HttpServletRequest request, HttpServletResponse response) throws SQLException {
+    public String execute(HttpServletRequest request, HttpServletResponse response) {
+        LOG.debug("LoginAction execute starts.");
         UserDaoImpl userDaoImpl = new UserDaoImpl();
         String forward = Path.HOME_PAGE;
         HttpSession session = request.getSession();

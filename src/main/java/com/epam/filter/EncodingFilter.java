@@ -7,21 +7,24 @@ import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+
 import org.apache.log4j.Logger;
 
 public class EncodingFilter implements Filter {
     private final String ENCODING = "encoding";
     private String code;
-    static final Logger LOG = Logger.getLogger(EncodingFilter.class);
+    private static final Logger LOG = Logger.getLogger(EncodingFilter.class);
 
     @Override
     public void init(FilterConfig filterConfig) {
+        LOG.debug("EncodingFilter.init()");
         code = filterConfig.getInitParameter(ENCODING);
     }
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response,
-            FilterChain chain) throws IOException, ServletException {
+                         FilterChain chain) throws IOException, ServletException {
+        LOG.debug("EncodingFilter.doFilter()");
         String codeRequest = request.getCharacterEncoding();
         if (code != null && !code.equalsIgnoreCase(codeRequest)) {
             request.setCharacterEncoding(code);
@@ -32,6 +35,7 @@ public class EncodingFilter implements Filter {
 
     @Override
     public void destroy() {
+        LOG.debug("EncodingFilter.destroy()");
         code = null;
     }
 }

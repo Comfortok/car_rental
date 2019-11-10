@@ -1,17 +1,22 @@
 package com.epam.action;
 
 import com.epam.Path;
+import org.apache.log4j.Logger;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
 import static com.epam.action.ConstantField.*;
 
 public class OrderFormAction implements Action {
+    private static final Logger LOG = Logger.getLogger(OrderFormAction.class);
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
+        LOG.debug("OrderFormAction execute starts.");
         long userId = (long) request.getSession().getAttribute(USER_ID);
         long carId = Long.parseLong(request.getParameter(CAR_ID));
         double carPrice = Double.parseDouble(request.getParameter(CAR_PRICE));
@@ -29,6 +34,7 @@ public class OrderFormAction implements Action {
             sqlDateStart = new java.sql.Date(parseDateStart.getTime());
             sqlDateEnd = new java.sql.Date(parseDateEnd.getTime());
         } catch (ParseException e) {
+            LOG.error(e);
             e.printStackTrace();
         }
         request.setAttribute(USER_ID, userId);

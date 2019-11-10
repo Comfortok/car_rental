@@ -4,20 +4,23 @@ import com.epam.Path;
 import com.epam.dao.impl.DriverDaoImpl;
 import com.epam.dao.impl.OrderDaoImpl;
 import com.epam.entity.*;
+import org.apache.log4j.Logger;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
 import static com.epam.action.ConstantField.*;
 import static com.epam.Path.HOME_PAGE;
 
 public class OrderCarAction implements Action {
+    private static final Logger LOG = Logger.getLogger(OrderCarAction.class);
 
     @Override
-    public String execute(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
+    public String execute(HttpServletRequest request, HttpServletResponse response) {
+        LOG.debug("OrderCarAction execute starts.");
         String page = HOME_PAGE;
         long userId = (long) request.getSession().getAttribute(USER_ID);
         long carId = Long.parseLong(request.getParameter(CAR_ID));
@@ -68,11 +71,12 @@ public class OrderCarAction implements Action {
             sqlLicenceIssueDate = new java.sql.Date(licenceIssueDate.getTime());
             sqlLicenceExpiryDate = new java.sql.Date(licenceExpiryDate.getTime());
         } catch (ParseException e) {
+            LOG.error(e);
             e.printStackTrace();
         }
         if (name.isEmpty() || surname.isEmpty() || phone.isEmpty() || passportNumber.isEmpty() ||
-        passportAuthority.isEmpty() || licenceNumber.isEmpty() || licenceAuthority.isEmpty() ||
-        licenceCategory.isEmpty() || birthDate == null || parseDateStart == null || parseDateEnd == null) {
+                passportAuthority.isEmpty() || licenceNumber.isEmpty() || licenceAuthority.isEmpty() ||
+                licenceCategory.isEmpty() || birthDate == null || parseDateStart == null || parseDateEnd == null) {
             request.setAttribute(EMPTY_FIELD_ERROR, EMPTY_FIELD_ERROR_MESSAGE);
             page = Path.ORDER_FORM_PAGE;
         } else {

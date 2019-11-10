@@ -6,19 +6,20 @@ import com.epam.entity.User;
 import com.epam.util.Validator;
 import com.epam.util.PasswordHashing;
 import org.apache.log4j.Logger;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.io.IOException;
-import java.sql.SQLException;
 import java.util.List;
+
 import static com.epam.action.ConstantField.*;
 
 public class RegisterAction implements Action {
     private static final Logger LOG = Logger.getLogger(RegisterAction.class);
 
     @Override
-    public String execute(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
+    public String execute(HttpServletRequest request, HttpServletResponse response) {
+        LOG.debug("RegisterAction execute starts.");
         UserDaoImpl userDaoImpl = new UserDaoImpl();
         String page = Path.LOGIN_PAGE;
         HttpSession session = request.getSession();
@@ -30,7 +31,7 @@ public class RegisterAction implements Action {
         if (!password.equals(passwordConfirm)) {
             request.setAttribute(CONFIRM_PASSWORD_ERROR, CONFIRM_PASSWORD_ERROR_MESSAGE);
             page = Path.REGISTER_PAGE;
-        } else if (email.isEmpty() || password.isEmpty() || passwordConfirm.isEmpty()){
+        } else if (email.isEmpty() || password.isEmpty() || passwordConfirm.isEmpty()) {
             request.setAttribute(EMPTY_FIELD_ERROR, EMPTY_FIELD_ERROR_MESSAGE);
             page = Path.REGISTER_PAGE;
         } else if (Validator.validateRegistrationInfo(email, password)) {

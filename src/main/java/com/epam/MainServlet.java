@@ -3,6 +3,7 @@ package com.epam;
 import com.epam.action.Action;
 import com.epam.action.ActionFactory;
 import org.apache.log4j.Logger;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -26,6 +27,7 @@ public class MainServlet extends HttpServlet {
 
     private void process(HttpServletRequest request,
                          HttpServletResponse response) throws IOException, ServletException {
+        LOG.debug("Servlet.process()");
         String actionName = request.getParameter(COMMAND);
         Action action = ActionFactory.getAction(actionName);
         String forward = Path.ERROR_PAGE;
@@ -35,7 +37,7 @@ public class MainServlet extends HttpServlet {
             request.setAttribute(ERROR_MESSAGE, e.getMessage());
         }
         LOG.trace("Forward address: " + forward);
-        LOG.debug("Servlet has finished, now go to: " + forward);
+        LOG.debug("Servlet has finished, now going to: " + forward);
         request.getRequestDispatcher(forward).forward(request, response);
     }
 }

@@ -2,14 +2,19 @@ package com.epam.action;
 
 import com.epam.dao.impl.CarDaoImpl;
 import com.epam.entity.Car;
+import org.apache.log4j.Logger;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import static com.epam.action.ConstantField.*;
 
 public class UpdateCarAction implements Action {
+    private static final Logger LOG = Logger.getLogger(UpdateCarAction.class);
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
+        LOG.debug("UpdateCarAction execute starts.");
         long carId = Long.parseLong(request.getParameter(CAR_ID));
         String stringMileage = request.getParameter(CAR_MILEAGE);
         String currentStringMileage = request.getParameter(MILEAGE);

@@ -3,18 +3,21 @@ package com.epam.action;
 import com.epam.Path;
 import com.epam.dao.impl.CarDaoImpl;
 import com.epam.entity.*;
+import org.apache.log4j.Logger;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
+
 import static com.epam.action.ConstantField.*;
 
 public class AddCarAction implements Action {
+    private static final Logger LOG = Logger.getLogger(AddCarAction.class);
 
     @Override
-    public String execute(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
+    public String execute(HttpServletRequest request, HttpServletResponse response) {
+        LOG.debug("AddCarAction execute starts.");
         String registeredNumber = request.getParameter(CAR_REGISTERED_NUMBER);
         String brand = request.getParameter(CAR_BRAND);
         String model = request.getParameter(CAR_MODEL);
@@ -64,24 +67,24 @@ public class AddCarAction implements Action {
                 carEngine.setId(value);
             }
         }
-                carModel.setBrand(carBrand);
-                car.setModel(carModel);
-                car.setColor(carColor);
-                car.setCategory(carCategory);
-                car.setTransmission(carTransmission);
-                car.setBody(carBody);
-                car.setEngineType(carEngine);
-                car.setHasAirConditioner(airConditioner);
-                car.setAvailable(available);
-                car.setEngineVolume(engineVolume);
-                car.setBaggageAmount(baggage);
-                car.setPassengerAmount(seat);
-                car.setFuelConsumption(fuelConsumption);
-                car.setDoorAmount(door);
-                car.setProductionYear(year);
-                car.setMileage(mileage);
-                car.setImageName(carImage);
-                carDaoImpl.insert(car);
+        carModel.setBrand(carBrand);
+        car.setModel(carModel);
+        car.setColor(carColor);
+        car.setCategory(carCategory);
+        car.setTransmission(carTransmission);
+        car.setBody(carBody);
+        car.setEngineType(carEngine);
+        car.setHasAirConditioner(airConditioner);
+        car.setAvailable(available);
+        car.setEngineVolume(engineVolume);
+        car.setBaggageAmount(baggage);
+        car.setPassengerAmount(seat);
+        car.setFuelConsumption(fuelConsumption);
+        car.setDoorAmount(door);
+        car.setProductionYear(year);
+        car.setMileage(mileage);
+        car.setImageName(carImage);
+        carDaoImpl.insert(car);
         return Path.HOME_PAGE;
     }
 }
