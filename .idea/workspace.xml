@@ -10,6 +10,7 @@
       <change afterPath="$PROJECT_DIR$/src/main/java/com/epam/listener/RequestListener.java" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/main/java/com/epam/util/Validator.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/epam/MainServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/epam/MainServlet.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/epam/Path.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/epam/Path.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/epam/action/ActionFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/epam/action/ActionFactory.java" afterDir="false" />
@@ -72,11 +73,11 @@
       <change beforePath="$PROJECT_DIR$/src/main/java/com/epam/util/PasswordHashing.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/epam/util/PasswordHashing.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/epam/util/StatisticsTagHandler.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/properties/log4j.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/jdbc.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/jdbc.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/log4j.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/log4j.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/title.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/title.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/title_en.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/title_en.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/title_ru.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/title_ru.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/jdbc.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/log4j.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/title.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/title_en.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/title_ru.properties" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/tld/custom.tld" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/tld/custom.tld" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/webapp/admin.jsp" beforeDir="false" />
@@ -110,6 +111,196 @@
       <change beforePath="$PROJECT_DIR$/src/main/webapp/user/order.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/user/orderForm.jsp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/webapp/user/payment.jsp" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/webapp/user/unpaidOrders.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/user/allOrders.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/car-rental-webapp.war" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/car-rental-webapp/META-INF/MANIFEST.MF" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/car-rental-webapp/WEB-INF/classes/META-INF/carrentalwebapp.kotlin_module" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/car-rental-webapp/WEB-INF/classes/com/epam/MainServlet.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/car-rental-webapp/WEB-INF/classes/com/epam/Path.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/car-rental-webapp/WEB-INF/classes/com/epam/action/Action.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/car-rental-webapp/WEB-INF/classes/com/epam/action/ActionFactory.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/car-rental-webapp/WEB-INF/classes/com/epam/action/AddCarAction.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/car-rental-webapp/WEB-INF/classes/com/epam/action/AddCarFormAction.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/car-rental-webapp/WEB-INF/classes/com/epam/action/ArchiveOrderAction.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/car-rental-webapp/WEB-INF/classes/com/epam/action/ConfirmOrderAction.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/car-rental-webapp/WEB-INF/classes/com/epam/action/ConstantField.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/car-rental-webapp/WEB-INF/classes/com/epam/action/DeclineOrderAction.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/car-rental-webapp/WEB-INF/classes/com/epam/action/EmptyAction.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/car-rental-webapp/WEB-INF/classes/com/epam/action/LanguageAction.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/car-rental-webapp/WEB-INF/classes/com/epam/action/LoginAction.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/car-rental-webapp/WEB-INF/classes/com/epam/action/LogoutAction.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/car-rental-webapp/WEB-INF/classes/com/epam/action/OrderCarAction.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/car-rental-webapp/WEB-INF/classes/com/epam/action/OrderFormAction.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/car-rental-webapp/WEB-INF/classes/com/epam/action/OrderPaymentAction.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/car-rental-webapp/WEB-INF/classes/com/epam/action/OrderPaymentFormAction.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/car-rental-webapp/WEB-INF/classes/com/epam/action/RegisterAction.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/car-rental-webapp/WEB-INF/classes/com/epam/action/ShowAllAdminOrdersAction.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/car-rental-webapp/WEB-INF/classes/com/epam/action/ShowAllCarsAction.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/car-rental-webapp/WEB-INF/classes/com/epam/action/ShowAvailableCarsAction.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/car-rental-webapp/WEB-INF/classes/com/epam/action/ShowOrderDetailsAction.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/car-rental-webapp/WEB-INF/classes/com/epam/action/ShowUserOrdersAction.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/car-rental-webapp/WEB-INF/classes/com/epam/action/UpdateCarAction.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/car-rental-webapp/WEB-INF/classes/com/epam/action/UpdateCarFormAction.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/car-rental-webapp/WEB-INF/classes/com/epam/action/UpdateCarImageAction.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/car-rental-webapp/WEB-INF/classes/com/epam/action/UpdateCarImageFormAction.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/car-rental-webapp/WEB-INF/classes/com/epam/dao/CarDAO.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/car-rental-webapp/WEB-INF/classes/com/epam/dao/DAO.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/car-rental-webapp/WEB-INF/classes/com/epam/dao/DriverDao.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/car-rental-webapp/WEB-INF/classes/com/epam/dao/InvoiceDao.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/car-rental-webapp/WEB-INF/classes/com/epam/dao/OrderDAO.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/car-rental-webapp/WEB-INF/classes/com/epam/dao/UserDAO.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/car-rental-webapp/WEB-INF/classes/com/epam/dao/impl/CarDaoImpl.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/car-rental-webapp/WEB-INF/classes/com/epam/dao/impl/DriverDaoImpl.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/car-rental-webapp/WEB-INF/classes/com/epam/dao/impl/InvoiceDaoImpl.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/car-rental-webapp/WEB-INF/classes/com/epam/dao/impl/OrderDaoImpl.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/car-rental-webapp/WEB-INF/classes/com/epam/dao/impl/UserDaoImpl.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/car-rental-webapp/WEB-INF/classes/com/epam/entity/Body.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/car-rental-webapp/WEB-INF/classes/com/epam/entity/Brand.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/car-rental-webapp/WEB-INF/classes/com/epam/entity/Car.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/car-rental-webapp/WEB-INF/classes/com/epam/entity/CarCategory.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/car-rental-webapp/WEB-INF/classes/com/epam/entity/Color.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/car-rental-webapp/WEB-INF/classes/com/epam/entity/Driver.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/car-rental-webapp/WEB-INF/classes/com/epam/entity/DrivingLicence.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/car-rental-webapp/WEB-INF/classes/com/epam/entity/EngineType.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/car-rental-webapp/WEB-INF/classes/com/epam/entity/Entity.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/car-rental-webapp/WEB-INF/classes/com/epam/entity/Invoice.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/car-rental-webapp/WEB-INF/classes/com/epam/entity/Model.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/car-rental-webapp/WEB-INF/classes/com/epam/entity/Order.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/car-rental-webapp/WEB-INF/classes/com/epam/entity/Passport.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/car-rental-webapp/WEB-INF/classes/com/epam/entity/PaymentStatus.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/car-rental-webapp/WEB-INF/classes/com/epam/entity/PaymentType.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/car-rental-webapp/WEB-INF/classes/com/epam/entity/Role.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/car-rental-webapp/WEB-INF/classes/com/epam/entity/Status.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/car-rental-webapp/WEB-INF/classes/com/epam/entity/Transmission.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/car-rental-webapp/WEB-INF/classes/com/epam/entity/User.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/car-rental-webapp/WEB-INF/classes/com/epam/filter/EncodingFilter.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/car-rental-webapp/WEB-INF/classes/com/epam/filter/PageRedirectSecurityFilter.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/car-rental-webapp/WEB-INF/classes/com/epam/listener/RequestListener.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/car-rental-webapp/WEB-INF/classes/com/epam/pool/ConnectionPool.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/car-rental-webapp/WEB-INF/classes/com/epam/tag/CurrentDateTagHandler.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/car-rental-webapp/WEB-INF/classes/com/epam/util/PasswordHashing.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/car-rental-webapp/WEB-INF/classes/com/epam/util/Validator.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/car-rental-webapp/WEB-INF/classes/jdbc.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/car-rental-webapp/WEB-INF/classes/log4j.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/car-rental-webapp/WEB-INF/classes/log4j.rar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/car-rental-webapp/WEB-INF/classes/title.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/car-rental-webapp/WEB-INF/classes/title_en.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/car-rental-webapp/WEB-INF/classes/title_ru.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/car-rental-webapp/WEB-INF/lib/jstl-1.2.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/car-rental-webapp/WEB-INF/lib/log4j-1.2.16.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/car-rental-webapp/WEB-INF/lib/mysql-connector-java-8.0.13.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/car-rental-webapp/WEB-INF/lib/protobuf-java-3.6.1.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/car-rental-webapp/WEB-INF/tld/custom.tld" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/car-rental-webapp/WEB-INF/web.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/car-rental-webapp/admin/addCar.jsp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/car-rental-webapp/admin/headerAdmin.jsp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/car-rental-webapp/admin/orderAdmin.jsp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/car-rental-webapp/admin/orderDetails.jsp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/car-rental-webapp/admin/updateCar.jsp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/car-rental-webapp/admin/updateCarImage.jsp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/car-rental-webapp/common/footer.jsp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/car-rental-webapp/common/header.jsp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/car-rental-webapp/css/style.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/car-rental-webapp/error.jsp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/car-rental-webapp/home.jsp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/car-rental-webapp/img/bg.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/car-rental-webapp/img/car/audi.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/car-rental-webapp/img/car/bmw.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/car-rental-webapp/img/car/citroen.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/car-rental-webapp/img/car/kia.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/car-rental-webapp/img/car/lada.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/car-rental-webapp/img/car/lexus.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/car-rental-webapp/img/car/nissan.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/car-rental-webapp/img/car/renault.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/car-rental-webapp/img/car/skoda.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/car-rental-webapp/img/car/smart.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/car-rental-webapp/img/car/toyota.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/car-rental-webapp/img/car/volkswagen.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/car-rental-webapp/img/favicon.ico" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/car-rental-webapp/img/logo.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/car-rental-webapp/img/russia-flag-icon.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/car-rental-webapp/img/uk-flag-icon.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/car-rental-webapp/login.jsp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/car-rental-webapp/logout.jsp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/car-rental-webapp/register.jsp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/car-rental-webapp/user/allCars.jsp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/car-rental-webapp/user/allOrders.jsp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/car-rental-webapp/user/orderForm.jsp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/car-rental-webapp/user/paymentForm.jsp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/META-INF/carrentalwebapp.kotlin_module" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/epam/MainServlet.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/epam/Path.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/epam/action/Action.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/epam/action/ActionFactory.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/epam/action/AddCarAction.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/epam/action/AddCarFormAction.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/epam/action/ArchiveOrderAction.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/epam/action/ConfirmOrderAction.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/epam/action/ConstantField.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/epam/action/DeclineOrderAction.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/epam/action/EmptyAction.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/epam/action/LanguageAction.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/epam/action/LoginAction.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/epam/action/LogoutAction.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/epam/action/OrderCarAction.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/epam/action/OrderFormAction.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/epam/action/OrderPaymentAction.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/epam/action/OrderPaymentFormAction.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/epam/action/RegisterAction.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/epam/action/ShowAllAdminOrdersAction.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/epam/action/ShowAllCarsAction.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/epam/action/ShowAvailableCarsAction.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/epam/action/ShowOrderDetailsAction.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/epam/action/ShowUserOrdersAction.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/epam/action/UpdateCarAction.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/epam/action/UpdateCarFormAction.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/epam/action/UpdateCarImageAction.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/epam/action/UpdateCarImageFormAction.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/epam/dao/CarDAO.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/epam/dao/DAO.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/epam/dao/DriverDao.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/epam/dao/InvoiceDao.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/epam/dao/OrderDAO.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/epam/dao/UserDAO.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/epam/dao/impl/CarDaoImpl.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/epam/dao/impl/DriverDaoImpl.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/epam/dao/impl/InvoiceDaoImpl.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/epam/dao/impl/OrderDaoImpl.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/epam/dao/impl/UserDaoImpl.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/epam/entity/Body.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/epam/entity/Brand.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/epam/entity/Car.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/epam/entity/CarCategory.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/epam/entity/Color.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/epam/entity/Driver.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/epam/entity/DrivingLicence.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/epam/entity/EngineType.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/epam/entity/Entity.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/epam/entity/Invoice.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/epam/entity/Model.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/epam/entity/Order.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/epam/entity/Passport.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/epam/entity/PaymentStatus.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/epam/entity/PaymentType.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/epam/entity/Role.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/epam/entity/Status.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/epam/entity/Transmission.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/epam/entity/User.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/epam/filter/EncodingFilter.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/epam/filter/PageRedirectSecurityFilter.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/epam/listener/RequestListener.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/epam/pool/ConnectionPool.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/epam/tag/CurrentDateTagHandler.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/epam/util/PasswordHashing.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/epam/util/Validator.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/jdbc.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/log4j.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/log4j.rar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/title.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/title_en.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/title_ru.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-archiver/pom.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -130,7 +321,7 @@
     </option>
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/src" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
     <option name="ROOT_SYNC" value="SYNC" />
   </component>
   <component name="LogFilters">
@@ -157,15 +348,19 @@
     <property name="aspect.path.notification.shown" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main/webapp/img/car" />
     <property name="nodejs_package_manager_path" value="npm" />
-    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.last.edited" value="Libraries" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
     <property name="settings.editor.selected.configurable" value="Web Contexts" />
   </component>
   <component name="RecentsManager">
-    <key name="CreateClassDialog.RecentsKey">
-      <recent name="com.epam.action" />
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Olzhas\IdeaProjects\carrentalwebapp" />
+      <recent name="C:\Users\Olzhas\IdeaProjects\carrentalwebapp\src\main\java" />
+      <recent name="C:\Users\Olzhas\IdeaProjects\carrentalwebapp\src\main\webapp\common" />
+      <recent name="C:\Users\Olzhas\IdeaProjects\carrentalwebapp\src\main\webapp" />
+      <recent name="C:\Users\Olzhas\IdeaProjects\carrentalwebapp\src\main\webapp\WEB-INF\jsp" />
     </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
       <recent name="com.epam" />
@@ -180,12 +375,8 @@
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="com.epam.action" />
     </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\Olzhas\IdeaProjects\carrentalwebapp\src\main\webapp\common" />
-      <recent name="C:\Users\Olzhas\IdeaProjects\carrentalwebapp\src\main\webapp" />
-      <recent name="C:\Users\Olzhas\IdeaProjects\carrentalwebapp\src\main\webapp\WEB-INF\jsp" />
-      <recent name="C:\Users\Olzhas\IdeaProjects\carrentalwebapp\src\main\webapp\img\cars" />
-      <recent name="C:\Users\Olzhas\IdeaProjects\carrentalwebapp\src\main\webapp\img" />
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="com.epam.action" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -379,6 +570,39 @@
       <predefined_log_file id="Tomcat Manager" />
       <predefined_log_file id="Tomcat Host Manager" />
       <predefined_log_file id="Tomcat Localhost Access" />
+      <RunnerSettings RunnerId="Debug">
+        <option name="DEBUG_PORT" value="58077" />
+      </RunnerSettings>
+      <ConfigurationWrapper VM_VAR="JAVA_OPTS" RunnerId="Cover">
+        <option name="USE_ENV_VARIABLES" value="true" />
+        <STARTUP>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </STARTUP>
+        <SHUTDOWN>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </SHUTDOWN>
+      </ConfigurationWrapper>
+      <ConfigurationWrapper VM_VAR="JAVA_OPTS" RunnerId="Debug">
+        <option name="USE_ENV_VARIABLES" value="true" />
+        <STARTUP>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </STARTUP>
+        <SHUTDOWN>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </SHUTDOWN>
+      </ConfigurationWrapper>
       <ConfigurationWrapper VM_VAR="JAVA_OPTS" RunnerId="Run">
         <option name="USE_ENV_VARIABLES" value="true" />
         <STARTUP>
@@ -477,7 +701,7 @@
       <workItem from="1573283007810" duration="11059000" />
       <workItem from="1573297510889" duration="932000" />
       <workItem from="1573298968766" duration="10982000" />
-      <workItem from="1573375170891" duration="6249000" />
+      <workItem from="1573375170891" duration="14661000" />
     </task>
     <servers />
   </component>
