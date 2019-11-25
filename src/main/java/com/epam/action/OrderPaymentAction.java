@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import static com.epam.constant.ConstantField.*;
@@ -31,33 +33,19 @@ public class OrderPaymentAction implements IAction {
             ConnectionPool connectionPool = ConnectionPool.getInstance();
             Connection connection = connectionPool.getConnection();
             connection.setAutoCommit(false);
-            Date currentDate = new Date();
-            java.sql.Date invoiceDate = new java.sql.Date(currentDate.getDate());
-            Invoice invoice = new Invoice();
-            invoice.setDate(invoiceDate);
-            Order order = new Order();
-            order.setId(orderId);
-            order.setPaymentSum(paymentSum);
-            Status status = new Status();
-            status.setId(PAID_ORDER_STATUS_ID);
-            order.setStatus(status);
-            invoice.setOrder(order);
-            PaymentType paymentType = new PaymentType();
-            paymentType.setId(PAYMENT_BANK_CARD_ID);
-            invoice.setPaymentType(paymentType);
-            PaymentStatus paymentStatus = new PaymentStatus();
-            paymentStatus.setId(PAYMENT_PAID_ID);
-            invoice.setPaymentStatus(paymentStatus);
             InvoiceDAO invoiceDAO = new InvoiceDAO();
             OrderDAO orderDAO = new OrderDAO();
+            Order order = getOrderAttributes(orderId, paymentSum);
             try {
+                Invoice invoice = getInvoiceAttributes(order);
                 invoiceDAO.insert(invoice, connection);
                 orderDAO.update(order, connection);
                 connection.commit();
                 LOG.debug("execute method ends in OrderPaymentAction. Committing...");
-            } catch (Exception e) {
+            } catch (ParseException e) {
                 connection.rollback();
-                LOG.error("Exception in OrderFormAction has happened. Can not insert invoice or update order. " +
+                LOG.error("Exception in OrderFormAction has happened. Can not parse date, " +
+                        "insert invoice or update order. " +
                         "Rolling back...", e);
                 return JspPagePath.ERROR_PAGE;
             } finally {
@@ -69,5 +57,34 @@ public class OrderPaymentAction implements IAction {
             forward = orderPaymentFormAction.execute(request, response);
         }
         return forward;
+    }
+
+    private Invoice getInvoiceAttributes(Order order) throws ParseException {
+        SimpleDateFormat format = new SimpleDateFormat(DATE_FORMAT);
+        Date currentDate = new Date();
+        String stringDate = format.format(currentDate);
+        Date parseDate = format.parse(stringDate);
+        java.sql.Date invoiceDate = new java.sql.Date(parseDate.getTime());
+        Invoice invoice = new Invoice();
+        invoice.setDate(invoiceDate);
+        order = getOrderAttributes(order.getId(), order.getPaymentSum());
+        invoice.setOrder(order);
+        PaymentType paymentType = new PaymentType();
+        paymentType.setId(PAYMENT_BANK_CARD_ID);
+        invoice.setPaymentType(paymentType);
+        PaymentStatus paymentStatus = new PaymentStatus();
+        paymentStatus.setId(PAYMENT_PAID_ID);
+        invoice.setPaymentStatus(paymentStatus);
+        return invoice;
+    }
+
+    private Order getOrderAttributes(long orderId, double paymentSum) {
+        Order order = new Order();
+        order.setId(orderId);
+        order.setPaymentSum(paymentSum);
+        Status status = new Status();
+        status.setId(PAID_ORDER_STATUS_ID);
+        order.setStatus(status);
+        return order;
     }
 }

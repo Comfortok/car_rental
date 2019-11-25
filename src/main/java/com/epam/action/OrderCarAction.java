@@ -36,13 +36,7 @@ public class OrderCarAction implements IAction {
         String licenceNumber = request.getParameter(LICENCE_NUMBER);
         String licenceAuthority = request.getParameter(LICENCE_AUTHORITY);
         String licenceCategory = request.getParameter(LICENCE_CATEGORY);
-        request.setAttribute(USER_ID, userId);
-        request.setAttribute(CAR_ID, carId);
-        request.setAttribute(CAR_PRICE, request.getParameter(CAR_PRICE));
-        request.setAttribute(ORDER_PAYMENT_SUM, sumToPay);
-        request.setAttribute(ORDER_START_DATE, request.getParameter(ORDER_START_DATE));
-        request.setAttribute(ORDER_END_DATE, request.getParameter(ORDER_END_DATE));
-        request.setAttribute(CAR_MODEL, request.getParameter(CAR_MODEL));
+        setRequestAttribute(request, userId, carId, sumToPay);
         Date parseDateStart;
         Date parseDateEnd;
         Date birthDate;
@@ -88,45 +82,18 @@ public class OrderCarAction implements IAction {
                 connectionPool = ConnectionPool.getInstance();
                 connection = connectionPool.getConnection();
                 connection.setAutoCommit(false);
-                Order order = new Order();
-                User user = new User();
-                user.setId(userId);
-                order.setUser(user);
-                Car car = new Car();
-                car.setId(carId);
-                order.setCar(car);
-                Status status = new Status();
-                status.setId(FORMED_ORDER_STATUS_ID);
-                order.setStatus(status);
-                order.setPaymentSum(sumToPay);
-                order.setStartDate(sqlDateStart);
-                order.setEndDate(sqlDateEnd);
                 OrderDAO orderDAO = new OrderDAO();
-                orderDAO.insert(order, connection);
                 DriverDAO driverDAO = new DriverDAO();
-                Driver driver = new Driver();
-                driver.setName(name);
-                driver.setSurname(surname);
-                driver.setDateOfBirth(sqlBirthDate);
-                driver.setPhoneNumber(phone);
+                Order order = getOrderAttributes(userId, carId, sumToPay, sqlDateStart, sqlDateEnd);
+                orderDAO.insert(order, connection);
+                Driver driver = getDriverAttributes(name, surname, sqlBirthDate, phone);
                 driverDAO.insert(driver, connection);
-                Order orderNumber = orderDAO.getOrderByUserAndCar(order, connection);
-                Driver driverNumber = driverDAO.getDriverByPhone(driver, connection);
-                driverDAO.insertOrderDriver(driverNumber, orderNumber, connection);
-                Passport passport = new Passport();
-                passport.setNumber(passportNumber);
-                passport.setDateOfIssue(sqlPassportIssueDate);
-                passport.setDateOfExpiry(sqlPassportExpiryDate);
-                passport.setAuthority(passportAuthority);
-                driver.setPassport(passport);
-                DrivingLicence drivingLicence = new DrivingLicence();
-                drivingLicence.setNumber(licenceNumber);
-                drivingLicence.setDateOfIssue(sqlLicenceIssueDate);
-                drivingLicence.setDateOfExpiry(sqlLicenceExpiryDate);
-                drivingLicence.setAuthority(licenceAuthority);
-                drivingLicence.setCategory(licenceCategory);
-                driver.setDrivingLicence(drivingLicence);
-                driver.setId(driverNumber.getId());
+                long newDriverId = insertDataToDriverOrder(order, driver, driverDAO, orderDAO, connection);
+                driver.setPassport(getDriverPassport(passportNumber, sqlPassportIssueDate,
+                        sqlPassportExpiryDate, passportAuthority));
+                driver.setDrivingLicence(getDriverLicence(licenceNumber, sqlLicenceIssueDate, sqlLicenceExpiryDate,
+                        licenceAuthority, licenceCategory));
+                driver.setId(newDriverId);
                 driverDAO.insertDriverInfo(driver, connection);
                 connection.commit();
                 LOG.debug("execute method ends in OrderCarAction. Committing...");
@@ -139,5 +106,72 @@ public class OrderCarAction implements IAction {
             }
         }
         return forward;
+    }
+
+    private void setRequestAttribute(HttpServletRequest request, long userId, long carId, double sumToPay) {
+        request.setAttribute(USER_ID, userId);
+        request.setAttribute(CAR_ID, carId);
+        request.setAttribute(CAR_PRICE, request.getParameter(CAR_PRICE));
+        request.setAttribute(ORDER_PAYMENT_SUM, sumToPay);
+        request.setAttribute(ORDER_START_DATE, request.getParameter(ORDER_START_DATE));
+        request.setAttribute(ORDER_END_DATE, request.getParameter(ORDER_END_DATE));
+        request.setAttribute(CAR_MODEL, request.getParameter(CAR_MODEL));
+    }
+
+    private Order getOrderAttributes(long userId, long carId, double sumToPay, java.sql.Date sqlDateStart,
+                                     java.sql.Date sqlDateEnd) {
+        Order order = new Order();
+        User user = new User();
+        user.setId(userId);
+        order.setUser(user);
+        Car car = new Car();
+        car.setId(carId);
+        order.setCar(car);
+        Status status = new Status();
+        status.setId(FORMED_ORDER_STATUS_ID);
+        order.setStatus(status);
+        order.setPaymentSum(sumToPay);
+        order.setStartDate(sqlDateStart);
+        order.setEndDate(sqlDateEnd);
+        return order;
+    }
+
+    private Driver getDriverAttributes(String name, String surname, java.sql.Date sqlBirthDate, String phone) {
+        Driver driver = new Driver();
+        driver.setName(name);
+        driver.setSurname(surname);
+        driver.setDateOfBirth(sqlBirthDate);
+        driver.setPhoneNumber(phone);
+        return driver;
+    }
+
+    private long insertDataToDriverOrder(Order order, Driver driver, DriverDAO driverDAO, OrderDAO orderDAO,
+                                         Connection connection) {
+        Order orderNumber = orderDAO.getOrderByUserAndCar(order, connection);
+        Driver driverNumber = driverDAO.getDriverByPhone(driver, connection);
+        driverDAO.insertOrderDriver(driverNumber, orderNumber, connection);
+        return driverNumber.getId();
+    }
+
+    private Passport getDriverPassport(String passportNumber, java.sql.Date sqlPassportIssueDate,
+                                       java.sql.Date sqlPassportExpiryDate, String passportAuthority) {
+        Passport passport = new Passport();
+        passport.setNumber(passportNumber);
+        passport.setDateOfIssue(sqlPassportIssueDate);
+        passport.setDateOfExpiry(sqlPassportExpiryDate);
+        passport.setAuthority(passportAuthority);
+        return passport;
+    }
+
+    private DrivingLicence getDriverLicence(String licenceNumber, java.sql.Date sqlLicenceIssueDate,
+                                            java.sql.Date sqlLicenceExpiryDate, String licenceAuthority,
+                                            String licenceCategory) {
+        DrivingLicence drivingLicence = new DrivingLicence();
+        drivingLicence.setNumber(licenceNumber);
+        drivingLicence.setDateOfIssue(sqlLicenceIssueDate);
+        drivingLicence.setDateOfExpiry(sqlLicenceExpiryDate);
+        drivingLicence.setAuthority(licenceAuthority);
+        drivingLicence.setCategory(licenceCategory);
+        return drivingLicence;
     }
 }

@@ -68,17 +68,9 @@ public class AddCarAction implements IAction {
                 car.setRegisteredNumber(registeredNumber);
                 Map<String, Integer> carDetails;
                 carDetails = new HashMap<>(carDAO.getCarDetails(connection));
-                setCarAttribute(car, carDetails, brand, model, color, category, transmission, body, engine);
-                car.setHasAirConditioner(airConditioner);
-                car.setAvailable(available);
-                car.setEngineVolume(engineVolume);
-                car.setBaggageAmount(baggage);
-                car.setPassengerAmount(seat);
-                car.setFuelConsumption(fuelConsumption);
-                car.setDoorAmount(door);
-                car.setProductionYear(year);
-                car.setMileage(mileage);
-                car.setImageName(carImage);
+                setCarAttribute(car, carDetails, brand, model, color, category, airConditioner, available,
+                        engineVolume, transmission, body, engine, baggage, seat, fuelConsumption,  door,
+                        year,  mileage,  carImage);
                 carDAO.insert(car, connection);
             } catch (Exception e) {
                 LOG.error("Exception in AddCarAction has happened. Can not insert a new car to DB. ", e);
@@ -90,8 +82,10 @@ public class AddCarAction implements IAction {
         return forward;
     }
 
-    private void setCarAttribute(Car car, Map<String, Integer> carDetails, String brand, String model, String color, String category,
-                                 String transmission, String body, String engine) {
+    private void setCarAttribute(Car car, Map<String, Integer> carDetails, String brand, String model, String color,
+                                 String category, String airConditioner, String available, double engineVolume,
+                                 String transmission, String body, String engine, int baggage, int seat,
+                                 double fuelConsumption, int door, String year, int mileage, String carImage) {
         Brand carBrand = new Brand();
         Model carModel = new Model();
         Color carColor = new Color();
@@ -125,5 +119,15 @@ public class AddCarAction implements IAction {
         car.setTransmission(carTransmission);
         car.setBody(carBody);
         car.setEngineType(carEngine);
+        car.setHasAirConditioner(airConditioner);
+        car.setAvailable(available);
+        car.setEngineVolume(engineVolume);
+        car.setBaggageAmount(baggage);
+        car.setPassengerAmount(seat);
+        car.setFuelConsumption(fuelConsumption);
+        car.setDoorAmount(door);
+        car.setProductionYear(year);
+        car.setMileage(mileage);
+        car.setImageName(carImage);
     }
 }

@@ -26,7 +26,7 @@ public class ShowAvailableCarsAction implements IAction {
     public String execute(HttpServletRequest request, HttpServletResponse response) {
         String forward = JspPagePath.ALL_CARS_PAGE;
         CarDAO carDAO = new CarDAO();
-        List<Car> availableCars;
+        List<Car> availableCars = new ArrayList<>();
         List<Car> allCars;
         List<Car> allCarsInOrder;
         java.sql.Date startDate;
@@ -55,31 +55,9 @@ public class ShowAvailableCarsAction implements IAction {
                 period = MIN_PERIOD;
             }
             if (allCarsInOrder.size() < COUNT_ONE) {
-                availableCars = new ArrayList<>(allCars);
+                availableCars.addAll(allCars);
             } else {
-                List<Car> bookedCars = new ArrayList<>();
-                availableCars = new ArrayList<>();
-                for (Car carInOrderList : allCarsInOrder) {
-                    Date carStartDate = carInOrderList.getStartDate();
-                    Date carEndDate = carInOrderList.getEndDate();
-                    if (startDate.after(carEndDate) || endDate.before(carStartDate)) {
-                    } else {
-                        bookedCars.add(carInOrderList);
-                    }
-                }
-                for (Car car : allCars) {
-                    int count = COUNT_ZERO;
-                    for (Car bookedCar : bookedCars) {
-                        if (car.getId() == bookedCar.getId()) {
-                            count++;
-                        }
-                    }
-                    if (count < COUNT_ONE) {
-                        if (car.getIsAvailable().equalsIgnoreCase(CAR_AVAILABLE_YES)) {
-                            availableCars.add(car);
-                        }
-                    }
-                }
+                getAvailableCarList(availableCars, allCarsInOrder, allCars, startDate, endDate);
             }
             request.setAttribute(ALL_CARS_LIST, availableCars);
             request.setAttribute(ORDER_PERIOD, period);
@@ -92,5 +70,31 @@ public class ShowAvailableCarsAction implements IAction {
             connectionPool.freeConnection(connection);
         }
         return forward;
+    }
+
+    private void getAvailableCarList(List<Car> availableCars, List<Car> orderedCarList,
+                                     List<Car> allCars, java.sql.Date startDate, java.sql.Date endDate) {
+        List<Car> bookedCars = new ArrayList<>();
+        for (Car carInOrderList : orderedCarList) {
+            Date carStartDate = carInOrderList.getStartDate();
+            Date carEndDate = carInOrderList.getEndDate();
+            if (startDate.after(carEndDate) || endDate.before(carStartDate)) {
+            } else {
+                bookedCars.add(carInOrderList);
+            }
+        }
+        for (Car car : allCars) {
+            int count = COUNT_ZERO;
+            for (Car bookedCar : bookedCars) {
+                if (car.getId() == bookedCar.getId()) {
+                    count++;
+                }
+            }
+            if (count < COUNT_ONE) {
+                if (car.getIsAvailable().equalsIgnoreCase(CAR_AVAILABLE_YES)) {
+                    availableCars.add(car);
+                }
+            }
+        }
     }
 }
