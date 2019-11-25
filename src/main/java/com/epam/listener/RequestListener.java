@@ -14,7 +14,7 @@ public class RequestListener implements ServletRequestListener {
 
     @Override
     public void requestInitialized(ServletRequestEvent sre) {
-        LOG.debug("RequestListener.requestInitialized()");
+        LOG.debug("RequestListener initialized");
         ServletContext context = sre.getServletContext();
         ServletRequest request = sre.getServletRequest();
         synchronized (context) {
@@ -25,6 +25,6 @@ public class RequestListener implements ServletRequestListener {
 
     @Override
     public void requestDestroyed(ServletRequestEvent sre) {
-        LOG.debug("RequestListener.requestDestroyed()");
+        LOG.debug("RequestListener destroyed");
     }
 }

@@ -5,22 +5,30 @@
 <fmt:setLocale value="${sessionScope.locale}" scope="session"/>
 <fmt:setBundle basename="title" var="loc"/>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<link rel="stylesheet" href="../css/style.css" type="text/css">
-<link rel="shortcut icon" href="../img/favicon.ico" type="image/x-icon"/>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css" type="text/css">
+<link rel="shortcut icon" href="${pageContext.request.contextPath}/img/favicon.ico" type="image/x-icon"/>
 <head>
-    <jsp:include page="../admin/headerAdmin.jsp"/>
+    <jsp:include page="headerAdmin.jsp"/>
 </head>
 <body>
 <br>
 <div class="form-group">
-    <form action="mainServlet" name="changeCarImage" method="post">
+    <form action="imageServlet" method="post" enctype="multipart/form-data">
         <div class="card">
             <div class="card-header">
                 <fmt:message key="car.image" bundle="${loc}"/>
             </div>
             <div class="card-body">
-                <input name="image" type="text" placeholder="<fmt:message key="car.image.input" bundle="${loc}"/>">
-                <input type="hidden" name="command" value="changeCarImage"/>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"><fmt:message key="input.upload" bundle="${loc}"/></span>
+                    </div>
+                    <div class="custom-file">
+                        <input type="file" name="image" class="custom-file-input" id="image" required>
+                        <label class="custom-file-label" for="image">
+                            <fmt:message key="car.image.choose" bundle="${loc}"/></label>
+                    </div>
+                </div>
                 <input type="hidden" name="carId" value="${requestScope.carId}"/>
                 <input type="submit" class="btn btn-primary"
                        value="<fmt:message key="button.update" bundle="${loc}"/>"/>
@@ -32,6 +40,11 @@
     <c:when test="${not empty requestScope.errorEmpty}">
         <div class="alert alert-primary" role="alert">
             <fmt:message key="error.empty" bundle="${loc}"/>
+        </div>
+    </c:when>
+    <c:when test="${not empty requestScope.result}">
+        <div class="alert alert-primary" role="alert">
+            <c:out value="${requestScope.result}"/>
         </div>
     </c:when>
 </c:choose>

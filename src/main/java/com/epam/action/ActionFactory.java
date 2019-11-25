@@ -35,6 +35,10 @@ public class ActionFactory {
         actionMap.put("updateCar", new UpdateCarAction());
         actionMap.put("updateCarForm", new UpdateCarFormAction());
         actionMap.put("orderPayForm", new OrderPaymentFormAction());
+        actionMap.put("showSignInPage", new ShowSignInPageAction());
+        actionMap.put("showSignUpPage", new ShowSignUpPageAction());
+        actionMap.put("changeCategoryPrice", new ChangeCategoryPriceAction());
+        actionMap.put("showCategoryPrice", new ShowCategoryPriceAction());
         LOG.debug("ActionFactory has successfully started.");
         LOG.trace("Actions count: " + actionMap.size());
     }

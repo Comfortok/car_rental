@@ -3,7 +3,6 @@ package com.epam.dao.impl;
 import com.epam.dao.IDriverDAO;
 import com.epam.entity.Driver;
 import com.epam.entity.Order;
-import com.epam.pool.ConnectionPool;
 import org.apache.log4j.Logger;
 
 import java.sql.*;
@@ -11,25 +10,22 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
-import static com.epam.action.ConstantField.*;
+import static com.epam.constant.ConstantField.*;
 
 public class DriverDAO implements IDriverDAO {
     private static final Logger LOG = Logger.getLogger(DriverDAO.class);
-    private final ConnectionPool connectionPool = ConnectionPool.getInstance();
-    private final String SQL_INSERT_DRIVER = "INSERT INTO car_rent.driver(name, surname, date_of_birth, phone_number)\n" +
+    private static final String SQL_INSERT_DRIVER = "INSERT INTO car_rent.driver(name, surname, date_of_birth, phone_number)\n" +
             "VALUES(?, ?, ?, ?);";
-    private final String SQL_INSERT_PASSPORT = "INSERT INTO car_rent.passport(number, date_of_issue, date_of_expiry, " +
+    private static final String SQL_INSERT_PASSPORT = "INSERT INTO car_rent.passport(number, date_of_issue, date_of_expiry, " +
             "authority, driver_id) VALUES(?, ?, ?, ?, ?);";
-    private final String SQL_INSERT_LICENCE = "INSERT INTO car_rent.driving_licence(number, date_of_issue, " +
+    private static final String SQL_INSERT_LICENCE = "INSERT INTO car_rent.driving_licence(number, date_of_issue, " +
             "date_of_expiry, authority, category, driver_id) VALUES(?, ?, ?, ?, ?, ?);";
-    private final String SQL_INSERT_ORDER_DRIVER = "INSERT INTO car_rent.order_driver(driver_id, order_id) VALUES(?, ?)";
-    private final String SQL_SELECT_DRIVER = "SELECT driver_id FROM driver where phone_number = ?";
-    private final String SQL_SELECT_ALL_FROM_ORDER_DRIVER = "SELECT * FROM order_driver where order_id = ?";
+    private static final String SQL_INSERT_ORDER_DRIVER = "INSERT INTO car_rent.order_driver(driver_id, order_id) VALUES(?, ?)";
+    private static final String SQL_SELECT_DRIVER = "SELECT driver_id FROM driver where phone_number = ?";
+    private static final String SQL_SELECT_ALL_FROM_ORDER_DRIVER = "SELECT * FROM order_driver where order_id = ?";
 
     @Override
-    public void insert(Driver driver) {
-        LOG.info("DriverDaoImpl.insert()");
-        Connection connection = connectionPool.getConnection();
+    public void insert(Driver driver, Connection connection) {
         try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_INSERT_DRIVER)) {
             SimpleDateFormat format = new SimpleDateFormat(DATE_FORMAT);
             java.util.Date parseBirthDate = format.parse(String.valueOf(driver.getDateOfBirth()));
@@ -40,26 +36,21 @@ public class DriverDAO implements IDriverDAO {
             preparedStatement.setString(4, driver.getPhoneNumber());
             preparedStatement.executeUpdate();
         } catch (SQLException | ParseException e) {
-            LOG.error(e);
-            e.printStackTrace();
-        } finally {
-            connectionPool.freeConnection(connection);
+            LOG.error("Exception in DriverDAO.insert() has happened. ", e);
         }
     }
 
     @Override
-    public void update(Driver entity) {
+    public void update(Driver entity, Connection connection) {
     }
 
     @Override
-    public boolean deleteById(Long id) {
+    public boolean deleteById(Long id, Connection connection) {
         return false;
     }
 
     @Override
-    public Driver getById(Long id) {
-        LOG.info("DriverDaoImpl.getById()");
-        Connection connection = connectionPool.getConnection();
+    public Driver getById(Long id, Connection connection) {
         Driver driver = new Driver();
         try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_SELECT_ALL_FROM_ORDER_DRIVER)) {
             preparedStatement.setLong(1, id);
@@ -69,39 +60,29 @@ public class DriverDAO implements IDriverDAO {
                 }
             }
         } catch (SQLException e) {
-            LOG.error(e);
-            e.printStackTrace();
-        } finally {
-            connectionPool.freeConnection(connection);
+            LOG.error("Exception in DriverDAO.getById() has happened. ", e);
         }
         return driver;
     }
 
     @Override
-    public List<Driver> getAll() {
+    public List<Driver> getAll(Connection connection) {
         return null;
     }
 
     @Override
-    public void insertOrderDriver(Driver driver, Order order) {
-        LOG.info("DriverDaoImpl.insertOrderDriver()");
-        Connection connection = connectionPool.getConnection();
+    public void insertOrderDriver(Driver driver, Order order, Connection connection) {
         try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_INSERT_ORDER_DRIVER)) {
             preparedStatement.setLong(1, driver.getId());
             preparedStatement.setLong(2, order.getId());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            LOG.error(e);
-            e.printStackTrace();
-        } finally {
-            connectionPool.freeConnection(connection);
+            LOG.error("Exception in DriverDAO.insertOrderDriver() has happened. ", e);
         }
     }
 
     @Override
-    public void insertDriverInfo(Driver driver) {
-        LOG.info("DriverDaoImpl.insertDriverInfo()");
-        Connection connection = connectionPool.getConnection();
+    public void insertDriverInfo(Driver driver, Connection connection) {
         try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_INSERT_PASSPORT);
              PreparedStatement preparedStatementSecond = connection.prepareStatement(SQL_INSERT_LICENCE)) {
             SimpleDateFormat format = new SimpleDateFormat(DATE_FORMAT);
@@ -127,31 +108,21 @@ public class DriverDAO implements IDriverDAO {
             preparedStatementSecond.setLong(6, driver.getId());
             preparedStatementSecond.executeUpdate();
         } catch (SQLException | ParseException e) {
-            LOG.error(e);
-            e.printStackTrace();
-        } finally {
-            connectionPool.freeConnection(connection);
+            LOG.error("Exception in DriverDAO.insertDriverInfo() has happened. ", e);
         }
     }
 
     @Override
-    public Driver getDriverByPhone(Driver driver) {
-        LOG.info("DriverDaoImpl.getDriverByPhone()");
-        Connection connection = connectionPool.getConnection();
+    public Driver getDriverByPhone(Driver driver, Connection connection) {
         try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_SELECT_DRIVER)) {
             preparedStatement.setString(1, driver.getPhoneNumber());
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 while (resultSet.next()) {
                     driver.setId(resultSet.getLong(DRIVER_ID));
                 }
-            } catch (SQLException e) {
-                e.printStackTrace();
             }
         } catch (SQLException e) {
-            LOG.error(e);
-            e.printStackTrace();
-        } finally {
-            connectionPool.freeConnection(connection);
+            LOG.error("Exception in DriverDAO.getDriverByPhone() has happened. ", e);
         }
         return driver;
     }

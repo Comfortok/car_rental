@@ -1,12 +1,12 @@
 package com.epam.action;
 
-import com.epam.Path;
+import com.epam.constant.JspPagePath;
 import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import static com.epam.action.ConstantField.*;
+import static com.epam.constant.ConstantField.*;
 
 public class UpdateCarFormAction implements IAction {
     private static final Logger LOG = Logger.getLogger(UpdateCarFormAction.class);
@@ -20,6 +20,6 @@ public class UpdateCarFormAction implements IAction {
         request.setAttribute(CAR_ID, carId);
         request.setAttribute(MILEAGE, mileage);
         request.setAttribute(CAR_REGISTERED_NUMBER, carNumber);
-        return Path.ADMIN_UPDATE_CAR;
+        return JspPagePath.ADMIN_UPDATE_CAR;
     }
 }

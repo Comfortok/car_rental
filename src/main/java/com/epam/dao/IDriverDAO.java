@@ -3,27 +3,13 @@ package com.epam.dao;
 import com.epam.entity.Driver;
 import com.epam.entity.Order;
 
+import java.sql.Connection;
 import java.util.List;
 
 public interface IDriverDAO extends IDAO<Driver> {
-    @Override
-    void insert(Driver entity);
+    void insertOrderDriver(Driver driver, Order order, Connection connection);
 
-    @Override
-    void update(Driver entity);
+    void insertDriverInfo(Driver driver, Connection connection);
 
-    @Override
-    boolean deleteById(Long id);
-
-    @Override
-    Driver getById(Long id);
-
-    @Override
-    List<Driver> getAll();
-
-    void insertOrderDriver(Driver driver, Order order);
-
-    void insertDriverInfo(Driver driver);
-
-    Driver getDriverByPhone(Driver driver);
+    Driver getDriverByPhone(Driver driver, Connection connection);
 }

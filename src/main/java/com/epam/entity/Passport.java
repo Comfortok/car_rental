@@ -39,12 +39,4 @@ public class Passport {
     public void setAuthority(String authority) {
         this.authority = authority;
     }
-
-    @Override
-    public String toString() {
-        return "Passport number: " + getNumber() + "\n"
-                + "Issue: " + getDateOfIssue() + "\n"
-                + "Expiry: " + getDateOfExpiry() + "\n"
-                + "Authority: " + getAuthority() + "\n";
-    }
 }

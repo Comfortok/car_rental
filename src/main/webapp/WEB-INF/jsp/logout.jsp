@@ -5,6 +5,6 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
-<jsp:forward page="home.jsp"/>
+<jsp:forward page="${pageContext.request.contextPath}/home.jsp"/>
 </body>
 </html>

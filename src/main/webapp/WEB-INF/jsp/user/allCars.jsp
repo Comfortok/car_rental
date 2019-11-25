@@ -6,27 +6,35 @@
 <fmt:setLocale value="${sessionScope.locale}" scope="session"/>
 <fmt:setBundle basename="title" var="loc"/>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<link rel="stylesheet" href="../css/style.css" type="text/css">
-<link rel="shortcut icon" href="../img/favicon.ico" type="image/x-icon"/>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css" type="text/css">
+<link rel="shortcut icon" href="${pageContext.request.contextPath}/img/favicon.ico" type="image/x-icon"/>
 <head>
     <c:choose>
         <c:when test="${not empty sessionScope.user}">
             <jsp:useBean id="roleId" scope="session" type="java.lang.Long"/>
             <c:choose>
                 <c:when test="${roleId eq 1}">
-                    <jsp:include page="/common/header.jsp"/>
+                    <jsp:include page="../common/header.jsp"/>
                 </c:when>
                 <c:otherwise>
-                    <jsp:include page="/admin/headerAdmin.jsp"/>
+                    <jsp:include page="../admin/headerAdmin.jsp"/>
                 </c:otherwise>
             </c:choose>
         </c:when>
         <c:otherwise>
-            <jsp:include page="/common/header.jsp"/>
+            <jsp:include page="../common/header.jsp"/>
         </c:otherwise>
     </c:choose>
 </head>
 <body>
+<br>
+<c:choose>
+    <c:when test="${not empty requestScope.result}">
+        <div class="alert alert-primary" role="alert">
+            <c:out value="${requestScope.result}"/>
+        </div>
+    </c:when>
+</c:choose>
 <center>
     <div class="card-group">
         <c:forEach var="elem" items="${availableCars}">
@@ -80,19 +88,31 @@
                                             </c:if>
                                         </c:when>
                                         <c:otherwise>
+                                            <br/>
+                                            <div class="dropdown">
+                                                <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton"
+                                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    <fmt:message key="button.update" bundle="${loc}"/>
+                                                </button>
+                                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                    <button type="submit" name="command" value="updateCarImageForm"
+                                                            class="btn btn-link">
+                                                        <fmt:message key="button.image.change" bundle="${loc}"/></button><br/>
+                                                    <button type="submit" name="command" value="updateCarForm"
+                                                            class="btn btn-link">
+                                                        <fmt:message key="button.update.car" bundle="${loc}"/></button><br/>
+                                                    <button type="submit" name="command" value="showCategoryPrice"
+                                                            class="btn btn-link">
+                                                        <fmt:message key="button.update.price" bundle="${loc}"/></button>
+                                                </div>
+                                            </div>
                                             <br>
-                                            <button type="submit" name="command" value="updateCarImageForm"
-                                                    class="btn btn-primary">
-                                                <fmt:message key="button.image.change" bundle="${loc}"/></button>
-                                            <button type="submit" name="command" value="updateCarForm"
-                                                    class="btn btn-primary">
-                                                <fmt:message key="button.update" bundle="${loc}"/></button>
                                         </c:otherwise>
                                     </c:choose>
                                 </c:when>
                                 <c:otherwise>
                                     <br>
-                                    <a href="${pageContext.request.contextPath}/login.jsp"
+                                    <a href="${pageContext.request.contextPath}/mainServlet?command=showSignInPage"
                                        class="btn btn-primary"><fmt:message key="button.signin" bundle="${loc}"/></a>
                                 </c:otherwise>
                             </c:choose>
@@ -104,6 +124,6 @@
         </c:forEach>
     </div>
 </center>
-<div class="footer"><c:import url="/common/footer.jsp" charEncoding="utf-8"/></div>
+<div class="footer"><c:import url="../common/footer.jsp" charEncoding="utf-8"/></div>
 </body>
 </html>

@@ -3,8 +3,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-<link rel="stylesheet" href="css/style.css" type="text/css">
-<link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon"/>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css" type="text/css">
+<link rel="shortcut icon" href="${pageContext.request.contextPath}/img/favicon.ico" type="image/x-icon"/>
 <head>
     <fmt:setLocale value="${sessionScope.locale}" scope="session"/>
     <fmt:setBundle basename="title" var="loc"/>
@@ -21,12 +21,12 @@
                 <div class="form-group">
                     <label for="email"><fmt:message key="login.email" bundle="${loc}"/></label>
                     <input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp"
-                           required>
+                           required title="<fmt:message key="login.email.format" bundle="${loc}"/>">
                 </div>
                 <div class="form-group">
                     <label for="password"><fmt:message key="login.password" bundle="${loc}"/></label>
-                    <input type="password" class="form-control" id="password" name="password"
-                           pattern="^[a-zA-Z0-9_-]{4,16}$" required>
+                    <input type="password" class="form-control" id="password" name="password" required
+                           pattern="^[a-zA-Z0-9_-]{4,16}$" title="<fmt:message key="login.password.format" bundle="${loc}"/>">
                     <small id="passwordHelp" class="form-text text-muted">
 						<fmt:message key="register.help" bundle="${loc}"/></small>
                 </div>
@@ -46,10 +46,14 @@
                     </div>
                 </c:when>
                 <c:when test="${not empty requestScope.validationError}">
-                    <small id="errorValidation" class="form-text text-muted"><c:out value="${requestScope.validationError}"/></small>
+                    <div class="alert">
+                        <small id="errorValidation" class="form-text text-muted"><c:out value="${requestScope.validationError}"/></small>
+                    </div>
                 </c:when>
                 <c:when test="${not empty requestScope.errorConfirm}">
-                    <small id="errorConfirm" class="form-text text-muted"><c:out value="${requestScope.errorConfirm}"/></small>
+                    <div class="alert">
+                        <small id="errorConfirm" class="form-text text-muted"><c:out value="${requestScope.errorConfirm}"/></small>
+                    </div>
                 </c:when>
                 <c:otherwise>
                 </c:otherwise>

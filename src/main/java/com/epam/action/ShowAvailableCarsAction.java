@@ -5,14 +5,16 @@ import com.epam.entity.Car;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.sql.Connection;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-import com.epam.Path;
+import com.epam.constant.JspPagePath;
+import com.epam.pool.ConnectionPool;
 import org.apache.log4j.Logger;
 
-import static com.epam.action.ConstantField.*;
+import static com.epam.constant.ConstantField.*;
 
 public class ShowAvailableCarsAction implements IAction {
     private static final Logger LOG = Logger.getLogger(ShowAvailableCarsAction.class);
@@ -22,60 +24,73 @@ public class ShowAvailableCarsAction implements IAction {
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
-        LOG.debug("ShowAvailableCarsAction execute starts.");
+        String forward = JspPagePath.ALL_CARS_PAGE;
         CarDAO carDAO = new CarDAO();
         List<Car> availableCars;
-        List<Car> allCars = carDAO.getAll();
-        List<Car> allCarsInOrder = carDAO.getAvailable();
-        java.sql.Date startDate = null;
-        java.sql.Date endDate = null;
+        List<Car> allCars;
+        List<Car> allCarsInOrder;
+        java.sql.Date startDate;
+        java.sql.Date endDate;
         SimpleDateFormat format = new SimpleDateFormat(DATE_FORMAT);
         Date userStartDate;
         Date userEndDate;
+        ConnectionPool connectionPool = null;
+        Connection connection = null;
         try {
-            userStartDate = format.parse(request.getParameter(ORDER_START_DATE));
-            userEndDate = format.parse(request.getParameter(ORDER_END_DATE));
-            startDate = new java.sql.Date(userStartDate.getTime());
-            endDate = new java.sql.Date(userEndDate.getTime());
-        } catch (ParseException e) {
-            LOG.error(e);
-            e.printStackTrace();
-        }
-        int period = endDate.getDay() - startDate.getDay();
-        if (period < MIN_PERIOD) {
-            period = MIN_PERIOD;
-        }
-        if (allCarsInOrder.size() < COUNT_ONE) {
-            availableCars = new ArrayList<>(allCars);
-        } else {
-            List<Car> bookedCars = new ArrayList<>();
-            availableCars = new ArrayList<>();
-            for (Car carInOrderList : allCarsInOrder) {
-                Date carStartDate = carInOrderList.getStartDate();
-                Date carEndDate = carInOrderList.getEndDate();
-                if (startDate.after(carEndDate) || endDate.before(carStartDate)) {
-                } else {
-                    bookedCars.add(carInOrderList);
-                }
+            connectionPool = ConnectionPool.getInstance();
+            connection = connectionPool.getConnection();
+            allCars = carDAO.getAll(connection);
+            allCarsInOrder = carDAO.getAvailable(connection);
+            try {
+                userStartDate = format.parse(request.getParameter(ORDER_START_DATE));
+                userEndDate = format.parse(request.getParameter(ORDER_END_DATE));
+                startDate = new java.sql.Date(userStartDate.getTime());
+                endDate = new java.sql.Date(userEndDate.getTime());
+            } catch (ParseException e) {
+                LOG.error("Exception in ShowAvailableCarsAction has happened. Can not parse dates. ", e);
+                return JspPagePath.ERROR_PAGE;
             }
-            for (Car car : allCars) {
-                int count = COUNT_ZERO;
-                for (Car bookedCar : bookedCars) {
-                    if (car.getId() == bookedCar.getId()) {
-                        count++;
+            int period = endDate.getDay() - startDate.getDay();
+            if (period < MIN_PERIOD) {
+                period = MIN_PERIOD;
+            }
+            if (allCarsInOrder.size() < COUNT_ONE) {
+                availableCars = new ArrayList<>(allCars);
+            } else {
+                List<Car> bookedCars = new ArrayList<>();
+                availableCars = new ArrayList<>();
+                for (Car carInOrderList : allCarsInOrder) {
+                    Date carStartDate = carInOrderList.getStartDate();
+                    Date carEndDate = carInOrderList.getEndDate();
+                    if (startDate.after(carEndDate) || endDate.before(carStartDate)) {
+                    } else {
+                        bookedCars.add(carInOrderList);
                     }
                 }
-                if (count < COUNT_ONE) {
-                    if (car.getIsAvailable().toLowerCase().equals(CAR_AVAILABLE_YES)) {
-                        availableCars.add(car);
+                for (Car car : allCars) {
+                    int count = COUNT_ZERO;
+                    for (Car bookedCar : bookedCars) {
+                        if (car.getId() == bookedCar.getId()) {
+                            count++;
+                        }
+                    }
+                    if (count < COUNT_ONE) {
+                        if (car.getIsAvailable().equalsIgnoreCase(CAR_AVAILABLE_YES)) {
+                            availableCars.add(car);
+                        }
                     }
                 }
             }
+            request.setAttribute(ALL_CARS_LIST, availableCars);
+            request.setAttribute(ORDER_PERIOD, period);
+            request.setAttribute(ORDER_START_DATE, startDate);
+            request.setAttribute(ORDER_END_DATE, endDate);
+        } catch (Exception e) {
+            LOG.error("Exception in ShowAvailableCarsAction has happened. Can not get cars from DB. ", e);
+            return JspPagePath.ERROR_PAGE;
+        } finally {
+            connectionPool.freeConnection(connection);
         }
-        request.setAttribute(ALL_CARS_LIST, availableCars);
-        request.setAttribute(ORDER_PERIOD, period);
-        request.setAttribute(ORDER_START_DATE, startDate);
-        request.setAttribute(ORDER_END_DATE, endDate);
-        return Path.ALL_CARS_PAGE;
+        return forward;
     }
 }

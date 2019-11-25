@@ -2,7 +2,6 @@ package com.epam.dao.impl;
 
 import com.epam.dao.IInvoiceDAO;
 import com.epam.entity.Invoice;
-import com.epam.pool.ConnectionPool;
 import org.apache.log4j.Logger;
 
 import java.sql.Connection;
@@ -12,14 +11,11 @@ import java.util.List;
 
 public class InvoiceDAO implements IInvoiceDAO {
     private static final Logger LOG = Logger.getLogger(InvoiceDAO.class);
-    private final ConnectionPool connectionPool = ConnectionPool.getInstance();
     private static final String SQL_INSERT_NEW_INVOICE = "insert into car_rent.invoice(invoice_date, order_id, " +
             "payment_type_id, total_amount, is_paid) values(?, ?, ?, ?, ?)";
 
     @Override
-    public void insert(Invoice invoice) {
-        LOG.info("InvoiceDaoImpl.insert()");
-        Connection connection = connectionPool.getConnection();
+    public void insert(Invoice invoice, Connection connection) {
         try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_INSERT_NEW_INVOICE)) {
             preparedStatement.setDate(1, invoice.getDate());
             preparedStatement.setLong(2, invoice.getOrder().getId());
@@ -28,27 +24,26 @@ public class InvoiceDAO implements IInvoiceDAO {
             preparedStatement.setLong(5, invoice.getPaymentStatus().getId());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            LOG.error(e);
-            e.printStackTrace();
+            LOG.error("Exception in InvoiceDAO.insert() has happened. ", e);
         }
     }
 
     @Override
-    public void update(Invoice invoice) {
+    public void update(Invoice entity, Connection connection) {
     }
 
     @Override
-    public boolean deleteById(Long id) {
+    public boolean deleteById(Long id, Connection connection) {
         return false;
     }
 
     @Override
-    public Invoice getById(Long id) {
+    public Invoice getById(Long id, Connection connection) {
         return null;
     }
 
     @Override
-    public List<Invoice> getAll() {
+    public List<Invoice> getAll(Connection connection) {
         return null;
     }
 }

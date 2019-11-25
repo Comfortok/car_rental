@@ -13,22 +13,23 @@ public class PageRedirectSecurityFilter implements Filter {
 
     @Override
     public void init(FilterConfig filterConfig) {
-        LOG.debug("PageRedirectSecurityFilter.init()");
         indexPath = filterConfig.getInitParameter("INDEX_PATH");
+        LOG.debug("PageRedirectSecurityFilter initialized");
     }
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-        LOG.debug("PageRedirectSecurityFilter.doFilter()");
+        LOG.debug("doFilter() starts in PageRedirectSecurityFilter");
         HttpServletRequest httpServletRequest = (HttpServletRequest) request;
         HttpServletResponse httpServletResponse = (HttpServletResponse) response;
         httpServletResponse.sendRedirect(httpServletRequest.getContextPath() + indexPath);
         chain.doFilter(request, response);
+        LOG.debug("doFilter() ends in PageRedirectSecurityFilter");
     }
 
     @Override
     public void destroy() {
-        LOG.debug("PageRedirectSecurityFilter.destroy()");
         indexPath = null;
+        LOG.debug("PageRedirectSecurityFilter destroyed");
     }
 }

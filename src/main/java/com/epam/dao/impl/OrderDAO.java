@@ -3,7 +3,6 @@ package com.epam.dao.impl;
 import com.epam.dao.IOrderDAO;
 import com.epam.entity.*;
 import com.epam.entity.Driver;
-import com.epam.pool.ConnectionPool;
 import org.apache.log4j.Logger;
 
 import java.sql.*;
@@ -12,12 +11,11 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.epam.action.ConstantField.*;
+import static com.epam.constant.ConstantField.*;
 
 public class OrderDAO implements IOrderDAO {
     private static final Logger LOG = Logger.getLogger(OrderDAO.class);
-    private final ConnectionPool connectionPool = ConnectionPool.getInstance();
-    private final String SQL_SELECT_ALL_FROM_ORDER = "SELECT car_rent.order.order_id, car_rent.order.user_id, " +
+    private static final String SQL_SELECT_ALL_FROM_ORDER = "SELECT car_rent.order.order_id, car_rent.order.user_id, " +
             "car_rent.order.car_id, car_rent.order.status_id, car_rent.order.start_date, car_rent.order.end_date, " +
             "car_rent.order.payment_sum, car_rent.brand.name AS brand_name, car_rent.model.name AS model_name, " +
             "car_rent.status.description AS status_name\n" +
@@ -26,7 +24,7 @@ public class OrderDAO implements IOrderDAO {
             "JOIN model ON car.model_id = model.model_id\n" +
             "JOIN brand ON brand.brand_id = model.brand_id\n" +
             "JOIN status ON car_rent.order.status_id = status.status_id";
-    private final String SQL_SELECT_ORDERS_BY_USER_ID = "SELECT car_rent.order.order_id, car_rent.order.user_id, " +
+    private static final String SQL_SELECT_ORDERS_BY_USER_ID = "SELECT car_rent.order.order_id, car_rent.order.user_id, " +
             "car_rent.order.car_id, car_rent.order.status_id, car_rent.order.start_date, car_rent.order.end_date, " +
             "car_rent.order.payment_sum, car_rent.brand.name AS brand_name, car_rent.model.name AS model_name, " +
             "car_rent.status.description AS status_name\n" +
@@ -36,11 +34,11 @@ public class OrderDAO implements IOrderDAO {
             "JOIN brand ON brand.brand_id = model.brand_id\n" +
             "JOIN status ON car_rent.order.status_id = status.status_id \n" +
             "WHERE user_id = ?";
-    private final String SQL_SELECT_ORDER_BY_USER_CAR_STATUS = "SELECT car_rent.order.order_id " +
+    private static final String SQL_SELECT_ORDER_BY_USER_CAR_STATUS = "SELECT car_rent.order.order_id " +
             "FROM car_rent.order WHERE user_id = ? and car_id = ? and status_id = ?";
-    private final String SQL_INSERT_NEW_ORDER = "INSERT INTO car_rent.order(user_id, car_id, status_id, start_date, " +
+    private static final String SQL_INSERT_NEW_ORDER = "INSERT INTO car_rent.order(user_id, car_id, status_id, start_date, " +
             "end_date, payment_sum) VALUES(?, ?, ?, ?, ?, ?)";
-    private final String SQL_SELECT_ORDER_FOR_OPERATOR = "select order_driver.driver_id, driver.name, driver.surname, " +
+    private static final String SQL_SELECT_ORDER_FOR_OPERATOR = "select order_driver.driver_id, driver.name, driver.surname, " +
             "driver.date_of_birth, driver.phone_number, passport.number AS passport_number, " +
             "passport.date_of_issue AS passport_issue, passport.date_of_expiry AS passport_expiry, " +
             "passport.authority AS passport_authority, driving_licence.number AS licence_number, " +
@@ -78,12 +76,10 @@ public class OrderDAO implements IOrderDAO {
             "inner join car_rent.passport on car_rent.passport.driver_id = driver.driver_id\n" +
             "inner join car_rent.driving_licence on car_rent.driving_licence.driver_id = driver.driver_id\n" +
             "where car_rent.order.order_id = ?";
-    private final String SQL_UPDATE_ORDER_STATUS = "update car_rent.order set status_id = ? where order_id = ?";
+    private static final String SQL_UPDATE_ORDER_STATUS = "update car_rent.order set status_id = ? where order_id = ?";
 
     @Override
-    public void insert(Order order) {
-        LOG.info("OrderDaoImpl.insert()");
-        Connection connection = connectionPool.getConnection();
+    public void insert(Order order, Connection connection) {
         try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_INSERT_NEW_ORDER)) {
             preparedStatement.setLong(1, order.getUser().getId());
             preparedStatement.setLong(2, order.getCar().getId());
@@ -98,38 +94,28 @@ public class OrderDAO implements IOrderDAO {
             preparedStatement.setDouble(6, order.getPaymentSum());
             preparedStatement.executeUpdate();
         } catch (SQLException | ParseException e) {
-            LOG.error(e);
-            e.printStackTrace();
-        } finally {
-            connectionPool.freeConnection(connection);
+            LOG.error("Exception in OrderDAO.insert() has happened. ", e);
         }
     }
 
     @Override
-    public void update(Order order) {
-        LOG.info("OrderDaoImpl.update()");
-        Connection connection = connectionPool.getConnection();
+    public void update(Order order, Connection connection) {
         try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_UPDATE_ORDER_STATUS)) {
             preparedStatement.setLong(1, order.getStatus().getId());
             preparedStatement.setLong(2, order.getId());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            LOG.error(e);
-            e.printStackTrace();
-        } finally {
-            connectionPool.freeConnection(connection);
+            LOG.error("Exception in OrderDAO.update() has happened. ", e);
         }
     }
 
     @Override
-    public boolean deleteById(Long id) {
+    public boolean deleteById(Long id, Connection connection) {
         return false;
     }
 
     @Override
-    public Order getById(Long id) {
-        LOG.info("OrderDaoImpl.getById()");
-        Connection connection = connectionPool.getConnection();
+    public Order getById(Long id, Connection connection) {
         Order order = new Order();
         try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_SELECT_ORDER_BY_ID)) {
             preparedStatement.setLong(1, id);
@@ -139,19 +125,14 @@ public class OrderDAO implements IOrderDAO {
                 }
             }
         } catch (SQLException e) {
-            LOG.error(e);
-            e.printStackTrace();
-        } finally {
-            connectionPool.freeConnection(connection);
+            LOG.error("Exception in OrderDAO.getById() has happened. ", e);
         }
         return order;
     }
 
     @Override
-    public List<Order> getAll() {
-        LOG.info("OrderDaoImpl.getAll()");
+    public List<Order> getAll(Connection connection) {
         List<Order> orderList = new ArrayList<>();
-        Connection connection = connectionPool.getConnection();
         try (Statement statement = connection.createStatement()) {
             try (ResultSet resultSet = statement.executeQuery(SQL_SELECT_ALL_FROM_ORDER)) {
                 while (resultSet.next()) {
@@ -159,19 +140,14 @@ public class OrderDAO implements IOrderDAO {
                 }
             }
         } catch (SQLException e) {
-            LOG.error(e);
-            e.printStackTrace();
-        } finally {
-            connectionPool.freeConnection(connection);
+            LOG.error("Exception in OrderDAO.getAll() has happened. ", e);
         }
         return orderList;
     }
 
     @Override
-    public List<Order> getAllByUserId(Long id) {
-        LOG.info("OrderDaoImpl.getAllByUserId()");
+    public List<Order> getAllByUserId(Long id, Connection connection) {
         List<Order> orderList = new ArrayList<>();
-        Connection connection = connectionPool.getConnection();
         try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_SELECT_ORDERS_BY_USER_ID)) {
             preparedStatement.setLong(1, id);
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
@@ -180,17 +156,28 @@ public class OrderDAO implements IOrderDAO {
                 }
             }
         } catch (SQLException e) {
-            LOG.error(e);
-            e.printStackTrace();
-        } finally {
-            connectionPool.freeConnection(connection);
+            LOG.error("Exception in OrderDAO.getAllByUserId() has happened. ", e);
+        }
+        return orderList;
+    }
+
+    @Override
+    public List<Order> getAllForOperator(Connection connection) {
+        List<Order> orderList = new ArrayList<>();
+        try (Statement statement = connection.createStatement()) {
+            try (ResultSet resultSet = statement.executeQuery(SQL_SELECT_ORDER_FOR_OPERATOR)) {
+                while (resultSet.next()) {
+                    orderList.add(getOrderInfoForOperator(resultSet));
+                }
+            }
+        } catch (SQLException e) {
+            LOG.error("Exception in OrderDAO.getAllForOperator() has happened. ", e);
         }
         return orderList;
     }
 
     @Override
     public Order getOrderInfo(ResultSet resultSet) {
-        LOG.info("OrderDaoImpl.getOrderInfo()");
         Order order = new Order();
         try {
             order.setId(resultSet.getLong(RESULTSET_ORDER_ID));
@@ -214,16 +201,13 @@ public class OrderDAO implements IOrderDAO {
             order.setEndDate(resultSet.getDate(RESULTSET_END_DATE));
             order.setPaymentSum(resultSet.getDouble(RESULTSET_PAYMENT_SUM));
         } catch (SQLException e) {
-            LOG.error(e);
-            e.printStackTrace();
+            LOG.error("Exception in OrderDAO.getOrderInfo() has happened. ", e);
         }
         return order;
     }
 
     @Override
-    public Order getOrderByUserAndCar(Order order) {
-        LOG.info("OrderDaoImpl.getOrderByUserAndCar()");
-        Connection connection = connectionPool.getConnection();
+    public Order getOrderByUserAndCar(Order order, Connection connection) {
         try (PreparedStatement preparedStatement = connection.prepareStatement(
                 SQL_SELECT_ORDER_BY_USER_CAR_STATUS)) {
             preparedStatement.setLong(1, order.getUser().getId());
@@ -233,41 +217,15 @@ public class OrderDAO implements IOrderDAO {
                 while (resultSet.next()) {
                     order.setId(resultSet.getLong(RESULTSET_ORDER_ID));
                 }
-            } catch (SQLException e) {
-                LOG.error(e);
-                e.printStackTrace();
             }
         } catch (SQLException e) {
-            LOG.error(e);
-            e.printStackTrace();
-        } finally {
-            connectionPool.freeConnection(connection);
+            LOG.error("Exception in OrderDAO.getOrderByUserAndCar() has happened. ", e);
         }
         return order;
     }
 
     @Override
-    public List<Order> getAllForOperator() {
-        LOG.info("OrderDaoImpl.getAllForOperator()");
-        List<Order> orderList = new ArrayList<>();
-        Connection connection = connectionPool.getConnection();
-        try (Statement statement = connection.createStatement()) {
-            try (ResultSet resultSet = statement.executeQuery(SQL_SELECT_ORDER_FOR_OPERATOR)) {
-                while (resultSet.next()) {
-                    orderList.add(getOrderInfoForOperator(resultSet));
-                }
-            }
-        } catch (SQLException e) {
-            LOG.error(e);
-            e.printStackTrace();
-        } finally {
-            connectionPool.freeConnection(connection);
-        }
-        return orderList;
-    }
-
-    private Order getOrderInfoForOperator(ResultSet resultSet) {
-        LOG.info("OrderDaoImpl.getOrderInfoForOperator()");
+    public Order getOrderInfoForOperator(ResultSet resultSet) {
         Order order = new Order();
         try {
             Driver driver = new Driver();
@@ -311,8 +269,7 @@ public class OrderDAO implements IOrderDAO {
             order.setStatus(status);
             order.setDriver(driver);
         } catch (SQLException e) {
-            LOG.error(e);
-            e.printStackTrace();
+            LOG.error("Exception in OrderDAO.getOrderInfoForOperator() has happened. ", e);
         }
         return order;
     }

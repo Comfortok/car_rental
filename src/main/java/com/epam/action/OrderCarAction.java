@@ -1,27 +1,29 @@
 package com.epam.action;
 
-import com.epam.Path;
+import com.epam.constant.JspPagePath;
 import com.epam.dao.impl.DriverDAO;
 import com.epam.dao.impl.OrderDAO;
 import com.epam.entity.*;
+import com.epam.pool.ConnectionPool;
 import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import static com.epam.action.ConstantField.*;
-import static com.epam.Path.HOME_PAGE;
+import static com.epam.constant.ConstantField.*;
 
 public class OrderCarAction implements IAction {
     private static final Logger LOG = Logger.getLogger(OrderCarAction.class);
 
     @Override
-    public String execute(HttpServletRequest request, HttpServletResponse response) {
-        LOG.debug("OrderCarAction execute starts.");
-        String page = HOME_PAGE;
+    public String execute(HttpServletRequest request, HttpServletResponse response) throws SQLException {
+        LOG.debug("execute method starts in OrderCarAction.");
+        String forward = JspPagePath.HOME_PAGE;
         long userId = (long) request.getSession().getAttribute(USER_ID);
         long carId = Long.parseLong(request.getParameter(CAR_ID));
         double sumToPay = Double.parseDouble(request.getParameter(ORDER_PAYMENT_SUM));
@@ -41,20 +43,20 @@ public class OrderCarAction implements IAction {
         request.setAttribute(ORDER_START_DATE, request.getParameter(ORDER_START_DATE));
         request.setAttribute(ORDER_END_DATE, request.getParameter(ORDER_END_DATE));
         request.setAttribute(CAR_MODEL, request.getParameter(CAR_MODEL));
-        Date parseDateStart = null;
-        Date parseDateEnd = null;
-        Date birthDate = null;
+        Date parseDateStart;
+        Date parseDateEnd;
+        Date birthDate;
         Date passportIssueDate;
         Date passportExpiryDate;
         Date licenceIssueDate;
         Date licenceExpiryDate;
-        java.sql.Date sqlDateStart = null;
-        java.sql.Date sqlDateEnd = null;
-        java.sql.Date sqlBirthDate = null;
-        java.sql.Date sqlPassportIssueDate = null;
-        java.sql.Date sqlPassportExpiryDate = null;
-        java.sql.Date sqlLicenceIssueDate = null;
-        java.sql.Date sqlLicenceExpiryDate = null;
+        java.sql.Date sqlDateStart;
+        java.sql.Date sqlDateEnd;
+        java.sql.Date sqlBirthDate;
+        java.sql.Date sqlPassportIssueDate;
+        java.sql.Date sqlPassportExpiryDate;
+        java.sql.Date sqlLicenceIssueDate;
+        java.sql.Date sqlLicenceExpiryDate;
         try {
             parseDateStart = format.parse(request.getParameter(ORDER_START_DATE));
             parseDateEnd = format.parse(request.getParameter(ORDER_END_DATE));
@@ -71,56 +73,71 @@ public class OrderCarAction implements IAction {
             sqlLicenceIssueDate = new java.sql.Date(licenceIssueDate.getTime());
             sqlLicenceExpiryDate = new java.sql.Date(licenceExpiryDate.getTime());
         } catch (ParseException e) {
-            LOG.error(e);
-            e.printStackTrace();
+            LOG.error("Exception in OrderCarAction has happened. Can not parse dates. ", e);
+            return JspPagePath.ERROR_PAGE;
         }
         if (name.isEmpty() || surname.isEmpty() || phone.isEmpty() || passportNumber.isEmpty() ||
                 passportAuthority.isEmpty() || licenceNumber.isEmpty() || licenceAuthority.isEmpty() ||
                 licenceCategory.isEmpty() || birthDate == null || parseDateStart == null || parseDateEnd == null) {
             request.setAttribute(EMPTY_FIELD_ERROR, EMPTY_FIELD_ERROR_MESSAGE);
-            page = Path.ORDER_FORM_PAGE;
+            forward = JspPagePath.ORDER_FORM_PAGE;
         } else {
-            Order order = new Order();
-            User user = new User();
-            user.setId(userId);
-            order.setUser(user);
-            Car car = new Car();
-            car.setId(carId);
-            order.setCar(car);
-            Status status = new Status();
-            status.setId(FORMED_ORDER_STATUS_ID);
-            order.setStatus(status);
-            order.setPaymentSum(sumToPay);
-            order.setStartDate(sqlDateStart);
-            order.setEndDate(sqlDateEnd);
-            OrderDAO orderDAO = new OrderDAO();
-            orderDAO.insert(order);
-            DriverDAO driverDAO = new DriverDAO();
-            Driver driver = new Driver();
-            driver.setName(name);
-            driver.setSurname(surname);
-            driver.setDateOfBirth(sqlBirthDate);
-            driver.setPhoneNumber(phone);
-            driverDAO.insert(driver);
-            Order orderNumber = orderDAO.getOrderByUserAndCar(order);
-            Driver driverNumber = driverDAO.getDriverByPhone(driver);
-            driverDAO.insertOrderDriver(driverNumber, orderNumber);
-            Passport passport = new Passport();
-            passport.setNumber(passportNumber);
-            passport.setDateOfIssue(sqlPassportIssueDate);
-            passport.setDateOfExpiry(sqlPassportExpiryDate);
-            passport.setAuthority(passportAuthority);
-            driver.setPassport(passport);
-            DrivingLicence drivingLicence = new DrivingLicence();
-            drivingLicence.setNumber(licenceNumber);
-            drivingLicence.setDateOfIssue(sqlLicenceIssueDate);
-            drivingLicence.setDateOfExpiry(sqlLicenceExpiryDate);
-            drivingLicence.setAuthority(licenceAuthority);
-            drivingLicence.setCategory(licenceCategory);
-            driver.setDrivingLicence(drivingLicence);
-            driver.setId(driverNumber.getId());
-            driverDAO.insertDriverInfo(driver);
+            ConnectionPool connectionPool = null;
+            Connection connection = null;
+            try {
+                connectionPool = ConnectionPool.getInstance();
+                connection = connectionPool.getConnection();
+                connection.setAutoCommit(false);
+                Order order = new Order();
+                User user = new User();
+                user.setId(userId);
+                order.setUser(user);
+                Car car = new Car();
+                car.setId(carId);
+                order.setCar(car);
+                Status status = new Status();
+                status.setId(FORMED_ORDER_STATUS_ID);
+                order.setStatus(status);
+                order.setPaymentSum(sumToPay);
+                order.setStartDate(sqlDateStart);
+                order.setEndDate(sqlDateEnd);
+                OrderDAO orderDAO = new OrderDAO();
+                orderDAO.insert(order, connection);
+                DriverDAO driverDAO = new DriverDAO();
+                Driver driver = new Driver();
+                driver.setName(name);
+                driver.setSurname(surname);
+                driver.setDateOfBirth(sqlBirthDate);
+                driver.setPhoneNumber(phone);
+                driverDAO.insert(driver, connection);
+                Order orderNumber = orderDAO.getOrderByUserAndCar(order, connection);
+                Driver driverNumber = driverDAO.getDriverByPhone(driver, connection);
+                driverDAO.insertOrderDriver(driverNumber, orderNumber, connection);
+                Passport passport = new Passport();
+                passport.setNumber(passportNumber);
+                passport.setDateOfIssue(sqlPassportIssueDate);
+                passport.setDateOfExpiry(sqlPassportExpiryDate);
+                passport.setAuthority(passportAuthority);
+                driver.setPassport(passport);
+                DrivingLicence drivingLicence = new DrivingLicence();
+                drivingLicence.setNumber(licenceNumber);
+                drivingLicence.setDateOfIssue(sqlLicenceIssueDate);
+                drivingLicence.setDateOfExpiry(sqlLicenceExpiryDate);
+                drivingLicence.setAuthority(licenceAuthority);
+                drivingLicence.setCategory(licenceCategory);
+                driver.setDrivingLicence(drivingLicence);
+                driver.setId(driverNumber.getId());
+                driverDAO.insertDriverInfo(driver, connection);
+                connection.commit();
+                LOG.debug("execute method ends in OrderCarAction. Committing...");
+            } catch (Exception e) {
+                connection.rollback();
+                LOG.error("Exception in OrderCarAction has happened. Can not insert all data to DB. Rolling back...", e);
+                return JspPagePath.ERROR_PAGE;
+            } finally {
+                connectionPool.freeConnection(connection);
+            }
         }
-        return page;
+        return forward;
     }
 }

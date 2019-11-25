@@ -1,5 +1,7 @@
 package com.epam.entity;
 
+import java.io.FileInputStream;
+import java.io.InputStream;
 import java.sql.Date;
 
 public class Car extends Entity {
@@ -19,6 +21,7 @@ public class Car extends Entity {
     private double fuelConsumption;
     private String productionYear;
     private String imageName;
+    private InputStream imageFIS;
     private int mileage;
     private Date startDate;
     private Date endDate;
@@ -181,6 +184,14 @@ public class Car extends Entity {
 
     public void setMileage(int mileage) {
         this.mileage = mileage;
+    }
+
+    public InputStream getImageFIS() {
+        return imageFIS;
+    }
+
+    public void setImageFIS(InputStream imageFIS) {
+        this.imageFIS = imageFIS;
     }
 
     @Override

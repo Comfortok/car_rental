@@ -103,10 +103,4 @@ public class Order extends Entity {
     public void setDriver(Driver driver) {
         this.driver = driver;
     }
-
-    @Override
-    public String toString() {
-        return "Order id: " + getId() + " user: " + user.getId() + " car: " + car.getId() +
-                " status id: " + status.getId() + " sum: " + paymentSum;
-    }
 }

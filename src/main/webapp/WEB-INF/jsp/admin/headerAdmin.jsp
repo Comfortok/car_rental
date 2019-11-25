@@ -3,6 +3,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <fmt:setLocale value="${sessionScope.locale}" scope="session"/>
 <fmt:setBundle basename="title" var="loc"/>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css" type="text/css">
+<link rel="shortcut icon" href="${pageContext.request.contextPath}/img/favicon.ico" type="image/x-icon"/>
 <html>
 <head>
     <fmt:setLocale value="${sessionScope.locale}" scope="session"/>
@@ -11,10 +13,9 @@
     <title><fmt:message key="header.title" bundle="${loc}"/></title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" href="css/style.css" type="text/css">
-    <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon"/>
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -39,6 +40,10 @@
                 <a class="nav-link" href="${pageContext.request.contextPath}/mainServlet?command=allCars">
                     <fmt:message key="header.park" bundle="${loc}"/></a>
             </li>
+            <li class="navitem">
+                <a class="nav-link" href="${pageContext.request.contextPath}/mainServlet?command=addCarForm">
+                    <fmt:message key="button.add.car" bundle="${loc}"/></a>
+            </li>
             <c:choose>
                 <c:when test="${not empty sessionScope.user}">
                     <li class="navitem">
@@ -46,24 +51,21 @@
                             <fmt:message key="header.logout" bundle="${loc}"/></a>
                     </li>
                     <li class="navitem">
-                        <a class="nav-link" href="${pageContext.request.contextPath}/mainServlet?command=userOrders">
-                            <fmt:message key="header.user.orders" bundle="${loc}"/>
+                        <a class="nav-link" href="${pageContext.request.contextPath}/mainServlet?command=showAllOrders">
+                            <fmt:message key="header.admin.orders" bundle="${loc}"/>
                         </a>
                     </li>
                 </c:when>
                 <c:otherwise>
                     <li class="navitem">
-                        <a class="nav-link" href="login.jsp"><fmt:message key="header.signin" bundle="${loc}"/></a>
-                    </li>
-                    <li class="navitem">
-                        <a class="nav-link" href="register.jsp"><fmt:message key="header.signup" bundle="${loc}"/></a>
+                        <a class="nav-link" href="${pageContext.request.contextPath}/WEB-INF/jsp/login.jsp">
+                            <fmt:message key="header.signin" bundle="${loc}"/></a>
                     </li>
                 </c:otherwise>
             </c:choose>
         </ul>
     </div>
 </nav>
-
 <div class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
      aria-hidden="true">
     <div class="modal-dialog modal-sm" role="document">
@@ -99,7 +101,6 @@
         </div>
     </div>
 </div>
-
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"

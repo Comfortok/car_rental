@@ -5,9 +5,9 @@ import org.apache.log4j.Logger;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.ResourceBundle;
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.BlockingQueue;
 
 public class ConnectionPool {
     private static final Logger LOG = Logger.getLogger(ConnectionPool.class);
@@ -18,11 +18,9 @@ public class ConnectionPool {
     private static final String JDBC_PASSWORD = "password";
     private static final String POOL_SIZE = "size";
     private static ConnectionPool connectionPool;
-    private List<Connection> connectionBlockingQueue;
-    private List<Connection> usedConnections = new ArrayList<>();
+    private BlockingQueue<Connection> connectionBlockingQueue;
 
     public static ConnectionPool getInstance() {
-        LOG.debug("ConnectionPool.getInstance()");
         if (connectionPool == null) {
             ResourceBundle resourceBundle = ResourceBundle.getBundle(BUNDLE_NAME);
             String driver = resourceBundle.getString(JDBC_DRIVER);
@@ -34,8 +32,7 @@ public class ConnectionPool {
             try {
                 connectionPool = new ConnectionPool(driver, url, user, password, poolSize);
             } catch (ClassNotFoundException | SQLException e) {
-                LOG.error(e);
-                e.printStackTrace();
+                LOG.error("Exception has happened while trying to create a new connection pool. ", e);
             }
         }
         return connectionPool;
@@ -43,31 +40,34 @@ public class ConnectionPool {
 
     private ConnectionPool(String driver, String url, String user, String password, int poolSize)
             throws ClassNotFoundException, SQLException {
-        LOG.debug("ConnectionPool constructor creating");
         Class.forName(driver);
-        connectionBlockingQueue = new ArrayList<>(poolSize);
+        connectionBlockingQueue = new ArrayBlockingQueue<>(poolSize);
         for (int i = 0; i < poolSize; i++) {
             Connection connection = DriverManager.getConnection(url, user, password);
-            connectionBlockingQueue.add(connection);
+            try {
+                connectionBlockingQueue.put(connection);
+            } catch (InterruptedException e) {
+                LOG.error("Interrupted exception has happened while trying to put new connection. ", e);
+            }
         }
     }
 
-    public Connection getConnection() {
-        LOG.debug("ConnectionPool.getConnection()");
-        Connection connection = connectionBlockingQueue.remove(connectionBlockingQueue.size() - 1);
-        usedConnections.add(connection);
+    public synchronized Connection getConnection() {
+        Connection connection = null;
+        try {
+            connection = connectionBlockingQueue.take();
+        } catch (InterruptedException e) {
+            LOG.error("InterruptedException has happened while trying to take connection. ", e);
+        }
         return connection;
     }
 
     public void freeConnection(Connection connection) {
-        LOG.debug("ConnectionPool.freeConnection()");
         if (connectionPool != null) {
             try {
-                connectionBlockingQueue.add(connection);
-                usedConnections.remove(connection);
+                connectionBlockingQueue.put(connection);
             } catch (Exception e) {
-                LOG.error(e);
-                e.printStackTrace();
+                LOG.error("Exception has happened while trying to release connection. ", e);
             }
         }
     }

@@ -1,4 +1,4 @@
-package com.epam.action;
+package com.epam.constant;
 
 public class ConstantField {
     public static final String CAR_REGISTERED_NUMBER = "regNumber";
@@ -99,7 +99,9 @@ public class ConstantField {
     public static final String COLOR_ID = "color_id";
     public static final String COLOR_NAME = "color_name";
     public static final String CAR_CATEGORY_ID = "car_category_id";
+    public static final String CATEGORY_ID = "categoryId";
     public static final String CAR_CATEGORY_NAME = "car_category_name";
+    public static final String PRICE = "price";
     public static final String CAR_PRICE_PER_DAY = "price_per_day";
     public static final String CAR_TRANSMISSION_ID = "transmission_id";
     public static final String BODY_ID = "body_id";
@@ -139,4 +141,16 @@ public class ConstantField {
     public static final String RESULTSET_LICENCE_CATEGORY = "category";
     public static final String RESULTSET_ROLE_ID = "role_id";
     public static final String ERROR_MESSAGE = "errorMessage";
+    public static final String JAVA_TEMP_DIR = "java.io.tmpdir";
+    public static final String APP_PATH_SLASH = "/";
+    public static final String APP_PATH_REPLACE_PART = "target\\car-rental-webapp\\";
+    public static final String EMPTY_STRING = "";
+    public static final String IMAGE_FOLDER = "src\\main\\webapp\\img\\car";
+    public static final String IMAGE_CAR_FOLDER = "img/car";
+    public static final String CAR_CATEGORY_LIST = "categoryList";
+    public static final String CAR_CATEGORY_DB_NAME = "name";
+    public static final String DEFAULT_IMAGE_NAME = "empty";
+
+    private ConstantField() {
+    }
 }

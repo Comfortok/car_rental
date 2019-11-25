@@ -48,13 +48,4 @@ public class DrivingLicence {
     public void setCategory(String category) {
         this.category = category;
     }
-
-    @Override
-    public String toString() {
-        return "Licence number: " + getNumber() + "\n"
-                + "Issue: " + getDateOfIssue() + "\n"
-                + "Expiry: " + getDateOfExpiry() + "\n"
-                + "Authority: " + getAuthority() + "\n"
-                + "Category: " + getCategory() + "\n";
-    }
 }

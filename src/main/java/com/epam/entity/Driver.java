@@ -57,12 +57,4 @@ public class Driver extends Entity {
     public void setDrivingLicence(DrivingLicence drivingLicence) {
         this.drivingLicence = drivingLicence;
     }
-
-    @Override
-    public String toString() {
-        return getName() + " " + getSurname() + ". Birth: " + getDateOfBirth() + "\n"
-                + "Phone: " + getPhoneNumber() + "\n"
-                + passport.toString() + "\n"
-                + drivingLicence.toString() + "\n";
-    }
 }

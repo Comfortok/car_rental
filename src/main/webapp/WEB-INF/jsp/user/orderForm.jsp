@@ -5,8 +5,8 @@
 <fmt:setLocale value="${sessionScope.locale}" scope="session"/>
 <fmt:setBundle basename="title" var="loc"/>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<link rel="stylesheet" href="../css/style.css" type="text/css">
-<link rel="shortcut icon" href="../img/favicon.ico" type="image/x-icon"/>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css" type="text/css">
+<link rel="shortcut icon" href="${pageContext.request.contextPath}/img/favicon.ico" type="image/x-icon"/>
 <head>
     <jsp:include page="../common/header.jsp"/>
 </head>
@@ -64,71 +64,77 @@
                     <div class="form-group">
                         <label for="name"><fmt:message key="driver.name" bundle="${loc}"/></label>
                         <input class="form-control" id="name" name="driverName" type="text"
-                               pattern="^[A-ZА-Я]{1}[a-zа-яё]{1,25}">
+                               pattern="^[A-ZА-Я]{1}[a-zа-яё]{1,25}" required
+                               title="<fmt:message key="driver.name.format" bundle="${loc}"/>">
                     </div>
                     <div class="form-group">
                         <label for="surname"><fmt:message key="driver.surname" bundle="${loc}"/></label>
                         <input class="form-control" id="surname" name="driverSurname" type="text"
-                               pattern="^[A-ZА-Я]{1}[a-zа-яё]{1,25}">
+                               pattern="^[A-ZА-Я]{1}[a-zа-яё]{1,25}" required
+                               title="<fmt:message key="driver.surname.format" bundle="${loc}"/>">
                     </div>
                     <div class="form-group">
                         <label for="birthDate"><fmt:message key="driver.birth" bundle="${loc}"/></label>
                         <input class="form-control" id="birthDate" type="date"
-                               name="driverBirth" pattern="yyyy-MM-dd">
+                               name="driverBirth" pattern="yyyy-MM-dd" required>
                     </div>
                     <div class="form-group">
                         <label for="phone"><fmt:message key="driver.phone" bundle="${loc}"/></label>
-                        <input class="form-control" id="phone" type="tel" name="driverPhone"
-                               placeholder="77071234567" pattern="7[0-9]{10}">
+                        <input class="form-control" id="phone" type="tel" name="driverPhone" placeholder="77071234567"
+                               pattern="77[0-9]{9}" title="<fmt:message key="driver.phone.format" bundle="${loc}"/>" required>
                     </div>
                     <br>
                     <fmt:message key="passport.info" bundle="${loc}"/>
                     <div class="form-group">
                         <label for="passport"><fmt:message key="passport.number" bundle="${loc}"/></label>
                         <input class="form-control" id="passport" name="passportNumber" type="text"
-                               placeholder="AB1234567" pattern="^([A-Z0-9]{2})[0-9]{7}">
+                               placeholder="AB1234567" pattern="^([A-Z0-9]{2})[0-9]{7}" required
+                        title="<fmt:message key="passport.number.format" bundle="${loc}"/>">
                     </div>
                     <div class="form-group">
                         <label for="passportIssue"><fmt:message key="passport.issue" bundle="${loc}"/></label>
                         <input class="form-control" id="passportIssue" type="date"
-                               name="passportIssue" pattern="yyyy-MM-dd">
+                               name="passportIssue" pattern="yyyy-MM-dd" required>
                     </div>
                     <div class="form-group">
                         <label for="passportExpiry"><fmt:message key="passport.expiry" bundle="${loc}"/></label>
                         <input class="form-control" id="passportExpiry" type="date"
-                               name="passportExpiry" pattern="yyyy-MM-dd">
+                               name="passportExpiry" pattern="yyyy-MM-dd" required>
                     </div>
                     <div class="form-group">
                         <label for="passportAuthority"><fmt:message key="passport.authority" bundle="${loc}"/></label>
-                        <input class="form-control" id="passportAuthority" name="passportAuthority"
-                               type="text" pattern="^[a-zA-Zа-яА-ЯёЁ][a-zA-Zа-яА-ЯёЁ\s]*$">
+                        <input class="form-control" id="passportAuthority" name="passportAuthority" required
+                               type="text" pattern="^[a-zA-Zа-яА-ЯёЁ][a-zA-Zа-яА-ЯёЁ\s]*$"
+                               title="<fmt:message key="passport.authority.format" bundle="${loc}"/>">
                     </div>
                     <br>
                     <fmt:message key="licence.info" bundle="${loc}"/>
                     <div class="form-group">
                         <label for="licence"><fmt:message key="licence.number" bundle="${loc}"/></label>
-                        <input class="form-control" id="licence" name="licenceNumber" type="text"
-                               placeholder="AB1234567" pattern="^([A-Z0-9]{2})[0-9]{7}">
+                        <input class="form-control" id="licence" name="licenceNumber" type="text" required
+                               placeholder="AB1234567" pattern="^([A-Z0-9]{2})[0-9]{7}"
+                               title="<fmt:message key="licence.number.format" bundle="${loc}"/>">
                     </div>
                     <div class="form-group">
                         <label for="licenceIssue"><fmt:message key="licence.issue" bundle="${loc}"/></label>
                         <input class="form-control" id="licenceIssue" type="date"
-                               name="licenceIssue" pattern="yyyy-MM-dd">
+                               name="licenceIssue" pattern="yyyy-MM-dd" required>
                     </div>
                     <div class="form-group">
                         <label for="licenceExpiry"><fmt:message key="licence.expiry" bundle="${loc}"/></label>
                         <input class="form-control" id="licenceExpiry" type="date"
-                               name="licenceExpiry" pattern="yyyy-MM-dd">
+                               name="licenceExpiry" pattern="yyyy-MM-dd" required>
                     </div>
                     <div class="form-group">
                         <label for="licenceAuthority"><fmt:message key="licence.authority" bundle="${loc}"/></label>
-                        <input class="form-control" id="licenceAuthority" type="text"
-                               name="licenceAuthority" pattern="^[a-zA-Zа-яА-ЯёЁ][a-zA-Zа-яА-ЯёЁ\s]*$">
+                        <input class="form-control" id="licenceAuthority" type="text" required
+                               name="licenceAuthority" pattern="^[a-zA-Zа-яА-ЯёЁ][a-zA-Zа-яА-ЯёЁ\s]*$"
+                               title="<fmt:message key="licence.authority.format" bundle="${loc}"/>">
                     </div>
                     <div class="form-group">
                         <label for="licenceCategory"><fmt:message key="licence.category" bundle="${loc}"/></label>
-                        <input class="form-control" id="licenceCategory" type="text"
-                               name="licenceCategory" pattern="^([A-Z]{1,10})$">
+                        <input class="form-control" id="licenceCategory" type="text" pattern="^([A-Z]{1,10})$" required
+                               title="<fmt:message key="licence.category.format" bundle="${loc}"/>" name="licenceCategory">
                     </div>
                 </div>
                 <div class="modal-footer">

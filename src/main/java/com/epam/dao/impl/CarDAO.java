@@ -2,7 +2,6 @@ package com.epam.dao.impl;
 
 import com.epam.dao.ICarDAO;
 import com.epam.entity.*;
-import com.epam.pool.ConnectionPool;
 import org.apache.log4j.Logger;
 
 import java.sql.*;
@@ -11,13 +10,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.epam.action.ConstantField.*;
+import static com.epam.constant.ConstantField.*;
 
 public class CarDAO implements ICarDAO {
     private static final Logger LOG = Logger.getLogger(CarDAO.class);
-    private final ConnectionPool connectionPool = ConnectionPool.getInstance();
     private static final int YEAR_SUBSTRING_BEGIN_INDEX = 0;
     private static final int YEAR_SUBSTRING_END_INDEX = 4;
+    private static final String SQL_UPDATE_PRICE = "update car_rent.car_category set price_per_day = ? " +
+            "where car_category_id = ?";
     private final String SQL_UPDATE_CAR_NUMBER = "update car_rent.car set registered_number = ?, " +
             "is_available_yn = ?, mileage = ?  where car_id = ?";
     private final String SQL_SELECT_CAR_INFO_ID = "select brand.name as brand_name, brand.brand_id, " +
@@ -50,7 +50,7 @@ public class CarDAO implements ICarDAO {
             "JOIN transmission ON car.transmission_id = transmission.transmission_id\n" +
             "JOIN engine_type ON car.engine_type_id = engine_type.engine_type_id\n" +
             "ORDER BY car_category.price_per_day;";
-    public final String SQL_SELECT_ALL_FROM_CAR = "SELECT car.car_id as carId, car.registered_number, model.brand_id, " +
+    private final String SQL_SELECT_ALL_FROM_CAR = "SELECT car.car_id as carId, car.registered_number, model.brand_id, " +
             "brand.name as brand_name, model.model_id, model.name as model_name, car.color_id, color.name as color_name, " +
             "car.car_category_id, car_category.name as car_category_name, car_category.price_per_day, car.transmission_id, " +
             "transmission.name as transmission_name, car.body_id, body.name as body_name,\n" +
@@ -66,11 +66,10 @@ public class CarDAO implements ICarDAO {
             "JOIN engine_type ON engine_type.engine_type_id = car.engine_type_id\n" +
             "JOIN car_category ON car_category.car_category_id = car.car_category_id\n" +
             "ORDER BY brand.name";
+    private static final String SQL_SELECT_ALL_FROM_CATEGORY = "SELECT * FROM car_rent.car_category";
 
     @Override
-    public void insert(Car car) {
-        LOG.info("CarDaoImpl.insert()");
-        Connection connection = connectionPool.getConnection();
+    public void insert(Car car, Connection connection) {
         try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_INSERT_NEW_CAR)) {
             preparedStatement.setString(1, car.getRegisteredNumber());
             preparedStatement.setLong(2, car.getModel().getId());
@@ -91,15 +90,12 @@ public class CarDAO implements ICarDAO {
             preparedStatement.setInt(17, car.getMileage());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            LOG.error(e);
-            e.printStackTrace();
+            LOG.error("Exception in CarDAO.insert() has happened. ", e);
         }
     }
 
     @Override
-    public void update(Car car) {
-        LOG.info("CarDaoImpl.update()");
-        Connection connection = connectionPool.getConnection();
+    public void update(Car car, Connection connection) {
         try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_UPDATE_CAR_NUMBER)) {
             preparedStatement.setString(1, car.getRegisteredNumber());
             preparedStatement.setString(2, car.getIsAvailable());
@@ -107,28 +103,13 @@ public class CarDAO implements ICarDAO {
             preparedStatement.setLong(4, car.getId());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            LOG.error(e);
-            e.printStackTrace();
-        } finally {
-            connectionPool.freeConnection(connection);
+            LOG.error("Exception in CarDAO.update() has happened. ", e);
         }
     }
 
     @Override
-    public boolean deleteById(Long id) {
-        return false;
-    }
-
-    @Override
-    public Car getById(Long id) {
-        return null;
-    }
-
-    @Override
-    public List<Car> getAll() {
-        LOG.info("CarDaoImpl.getAll()");
+    public List<Car> getAll(Connection connection) {
         List<Car> carList = new ArrayList<>();
-        Connection connection = connectionPool.getConnection();
         try (Statement statement = connection.createStatement()) {
             try (ResultSet resultSet = statement.executeQuery(SQL_SELECT_ALL_FROM_CAR)) {
                 while (resultSet.next()) {
@@ -136,19 +117,14 @@ public class CarDAO implements ICarDAO {
                 }
             }
         } catch (SQLException e) {
-            LOG.error(e);
-            e.printStackTrace();
-        } finally {
-            connectionPool.freeConnection(connection);
+            LOG.error("Exception in CarDAO.getAll() has happened. ", e);
         }
         return carList;
     }
 
     @Override
-    public List<Car> getAvailable() {
-        LOG.info("CarDaoImpl.getAvailable()");
+    public List<Car> getAvailable(Connection connection) {
         List<Car> availableCarList = new ArrayList<>();
-        Connection connection = connectionPool.getConnection();
         try (Statement statement = connection.createStatement()) {
             try (ResultSet resultSet = statement.executeQuery(SQL_SELECT_CARS_WITH_DATES)) {
                 while (resultSet.next()) {
@@ -180,17 +156,13 @@ public class CarDAO implements ICarDAO {
                 }
             }
         } catch (SQLException e) {
-            LOG.error(e);
-            e.printStackTrace();
-        } finally {
-            connectionPool.freeConnection(connection);
+            LOG.error("Exception in CarDAO.getAvailable() has happened. ", e);
         }
         return availableCarList;
     }
 
     @Override
     public Car getCarInfo(ResultSet resultSet) {
-        LOG.info("CarDaoImpl.getCarInfo()");
         Car car = new Car();
         try {
             car.setId(resultSet.getLong(CAR_ID));
@@ -236,16 +208,14 @@ public class CarDAO implements ICarDAO {
             car.setImageName(resultSet.getString(CAR_IMAGE));
             car.setMileage(resultSet.getInt(MILEAGE));
         } catch (SQLException e) {
-            LOG.error(e);
-            e.printStackTrace();
+            LOG.error("Exception in CarDAO.getCarInfo() has happened. ", e);
         }
         return car;
     }
 
-    public Map<? extends String, ? extends Integer> getCarDetails() {
-        LOG.info("CarDaoImpl.getCarDetails()");
+    @Override
+    public Map<String, Integer> getCarDetails(Connection connection) {
         Map<String, Integer> map = new HashMap<>();
-        Connection connection = connectionPool.getConnection();
         try (Statement statement = connection.createStatement()) {
             try (ResultSet resultSet = statement.executeQuery(SQL_SELECT_CAR_INFO_ID)) {
                 while (resultSet.next()) {
@@ -259,26 +229,59 @@ public class CarDAO implements ICarDAO {
                 }
             }
         } catch (SQLException e) {
-            LOG.error(e);
-            e.printStackTrace();
-        } finally {
-            connectionPool.freeConnection(connection);
+            LOG.error("Exception in CarDAO.getCarDetails() has happened. ", e);
         }
         return map;
     }
 
-    public void updateImage(Car car) {
-        LOG.info("CarDaoImpl.updateImage()");
-        Connection connection = connectionPool.getConnection();
+    @Override
+    public void updateImage(Car car, Connection connection) {
         try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_UPDATE_CAR_IMAGE)) {
             preparedStatement.setString(1, car.getImageName());
             preparedStatement.setLong(2, car.getId());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            LOG.error(e);
-            e.printStackTrace();
-        } finally {
-            connectionPool.freeConnection(connection);
+            LOG.error("Exception in CarDAO.updateImage() has happened. ", e);
         }
+    }
+
+    @Override
+    public List<CarCategory> getCarCategory(Connection connection) {
+        List<CarCategory> categoryList = new ArrayList<>();
+        try (Statement statement = connection.createStatement()) {
+            try (ResultSet resultSet = statement.executeQuery(SQL_SELECT_ALL_FROM_CATEGORY)) {
+                while (resultSet.next()) {
+                    CarCategory category = new CarCategory();
+                    category.setId(resultSet.getInt(CAR_CATEGORY_ID));
+                    category.setName(resultSet.getString(CAR_CATEGORY_DB_NAME));
+                    category.setPricePerDay(resultSet.getDouble(CAR_PRICE_PER_DAY));
+                    categoryList.add(category);
+                }
+            }
+        } catch (SQLException e) {
+            LOG.error("Exception in CarDAO.getAll() has happened. ", e);
+        }
+        return categoryList;
+    }
+
+    @Override
+    public void updatePrice(CarCategory category, Connection connection) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_UPDATE_PRICE)) {
+            preparedStatement.setDouble(1, category.getPricePerDay());
+            preparedStatement.setLong(2, category.getId());
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            LOG.error("Exception in CarDAO.updateImage() has happened. ", e);
+        }
+    }
+
+    @Override
+    public boolean deleteById(Long id, Connection connection) {
+        return false;
+    }
+
+    @Override
+    public Car getById(Long id, Connection connection) {
+        return null;
     }
 }

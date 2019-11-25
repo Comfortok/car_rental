@@ -15,15 +15,15 @@
             <jsp:useBean id="roleId" scope="session" type="java.lang.Long"/>
             <c:choose>
                 <c:when test="${roleId eq 1}">
-                    <jsp:include page="common/header.jsp"/>
+                    <jsp:include page="WEB-INF/jsp/common/header.jsp"/>
                 </c:when>
                 <c:otherwise>
-                    <jsp:include page="admin/headerAdmin.jsp"/>
+                    <jsp:include page="WEB-INF/jsp/admin/headerAdmin.jsp"/>
                 </c:otherwise>
             </c:choose>
         </c:when>
         <c:otherwise>
-            <jsp:include page="common/header.jsp"/>
+            <jsp:include page="WEB-INF/jsp/common/header.jsp"/>
         </c:otherwise>
     </c:choose>
 </head>
@@ -72,6 +72,6 @@
     }
 </script>
 <br><br><br><br><br><br><br>
-<div class="footer"><c:import url="common/footer.jsp" charEncoding="utf-8"/></div>
+<div class="footer"><c:import url="WEB-INF/jsp/common/footer.jsp" charEncoding="utf-8"/></div>
 </body>
 </html>

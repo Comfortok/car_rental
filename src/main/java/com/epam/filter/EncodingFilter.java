@@ -11,31 +11,32 @@ import javax.servlet.ServletResponse;
 import org.apache.log4j.Logger;
 
 public class EncodingFilter implements Filter {
-    private final String ENCODING = "encoding";
+    private static final String ENCODING = "encoding";
     private String code;
     private static final Logger LOG = Logger.getLogger(EncodingFilter.class);
 
     @Override
     public void init(FilterConfig filterConfig) {
-        LOG.debug("EncodingFilter.init()");
         code = filterConfig.getInitParameter(ENCODING);
+        LOG.debug("EncodingFilter initialized");
     }
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response,
                          FilterChain chain) throws IOException, ServletException {
-        LOG.debug("EncodingFilter.doFilter()");
+        LOG.debug("doFilter() starts in EncodingFilter");
         String codeRequest = request.getCharacterEncoding();
         if (code != null && !code.equalsIgnoreCase(codeRequest)) {
             request.setCharacterEncoding(code);
             response.setCharacterEncoding(code);
             chain.doFilter(request, response);
         }
+        LOG.debug("doFilter() ends in EncodingFilter");
     }
 
     @Override
     public void destroy() {
-        LOG.debug("EncodingFilter.destroy()");
         code = null;
+        LOG.debug("EncodingFilter destroyed");
     }
 }
