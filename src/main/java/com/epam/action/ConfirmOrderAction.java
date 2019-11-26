@@ -11,9 +11,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 
-import static com.epam.constant.ConstantField.CONFIRMED_ORDER_STATUS_ID;
-import static com.epam.constant.ConstantField.ORDER_ID;
+import static com.epam.constant.ConstantField.*;
 
 public class ConfirmOrderAction implements IAction {
     private static final Logger LOG = Logger.getLogger(ConfirmOrderAction.class);
@@ -35,7 +35,7 @@ public class ConfirmOrderAction implements IAction {
             order.setId(orderId);
             order.setStatus(status);
             orderDAO.update(order, connection);
-        } catch (Exception e) {
+        } catch (SQLException e) {
             LOG.error("Exception in ConfirmOrderAction has happened. Can not update an order. ", e);
             return JspPagePath.ERROR_PAGE;
         } finally {

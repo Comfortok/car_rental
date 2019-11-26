@@ -28,6 +28,13 @@
 <body>
 <br>
 <h2><fmt:message key="page.error" bundle="${loc}"/></h2>
+<c:choose>
+    <c:when test="${not empty requestScope.errorFormat}">
+        <div class="alert">
+                <fmt:message key="page.error.format" bundle="${loc}"/>
+        </div>
+    </c:when>
+</c:choose>
 <div class="footer"><c:import url="common/footer.jsp" charEncoding="utf-8"/></div>
 </body>
 </html>

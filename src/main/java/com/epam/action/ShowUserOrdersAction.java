@@ -9,10 +9,10 @@ import org.apache.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.List;
 
-import static com.epam.constant.ConstantField.ORDER_LIST;
-import static com.epam.constant.ConstantField.USER_ID;
+import static com.epam.constant.ConstantField.*;
 
 public class ShowUserOrdersAction implements IAction {
     private static final Logger LOG = Logger.getLogger(ShowUserOrdersAction.class);
@@ -30,7 +30,7 @@ public class ShowUserOrdersAction implements IAction {
             connection = connectionPool.getConnection();
             List<Order> orders = orderDAO.getAllByUserId(userId, connection);
             request.setAttribute(ORDER_LIST, orders);
-        } catch (Exception e) {
+        } catch (SQLException e) {
             LOG.error("Exception in ShowUserOrdersAction has happened. Can not get orders from DB. ", e);
             return JspPagePath.ERROR_PAGE;
         } finally {

@@ -29,9 +29,12 @@
 <body>
 <br>
 <c:choose>
-    <c:when test="${not empty requestScope.result}">
-        <div class="alert alert-primary" role="alert">
-            <c:out value="${requestScope.result}"/>
+    <c:when test="${not empty requestScope.errorFormat}">
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            <fmt:message key="page.error.format" bundle="${loc}"/>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
         </div>
     </c:when>
 </c:choose>

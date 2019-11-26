@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.List;
 
 import static com.epam.constant.ConstantField.*;
@@ -37,7 +38,7 @@ public class RegisterAction implements IAction {
             request.setAttribute(EMPTY_FIELD_ERROR, EMPTY_FIELD_ERROR_MESSAGE);
             forward = JspPagePath.REGISTER_PAGE;
         } else if (Validator.validateRegistrationInfo(email, password)) {
-            request.setAttribute(VALIDATION_ERROR_MESSAGE, VALIDATION_ERROR);
+            request.setAttribute(VALIDATION_ERROR, VALIDATION_ERROR_MESSAGE);
             forward = JspPagePath.REGISTER_PAGE;
         } else {
             ConnectionPool connectionPool = null;
@@ -59,7 +60,7 @@ public class RegisterAction implements IAction {
                     session.setAttribute(USER_EMAIL, user.getEmail());
                     forward = JspPagePath.LOGIN_PAGE;
                 }
-            } catch (Exception e) {
+            } catch (SQLException e) {
                 LOG.error("Exception in RegisterAction has happened. Can not get user listfrom DB. ", e);
                 return JspPagePath.ERROR_PAGE;
             } finally {

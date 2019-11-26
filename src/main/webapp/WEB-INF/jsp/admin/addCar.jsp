@@ -12,7 +12,7 @@
 </head>
 <body>
 <div class="form-group">
-    <form action="mainServlet" name="addCarInfo" method="post">
+    <form action="imageServlet" name="addCarInfo" method="post" enctype="multipart/form-data">
         <input type="hidden" name="command" value="addCar"/>
         <div class="form-header">
             <h5 class="form-title">
@@ -181,10 +181,15 @@
                 <input class="form-control" id="mileage" name="mileage" type="number" min="1" placeholder="100"
                        step="1" title="<fmt:message key="car.mileage.format" bundle="${loc}"/>" required>
             </div>
-            <div class="form-group">
-                <label for="carImage"><fmt:message key="car.image" bundle="${loc}"/></label>
-                <input class="form-control" id="carImage" name="image" type="text"
-                       placeholder="<fmt:message key="image.folder" bundle="${loc}"/>">
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"><fmt:message key="input.upload" bundle="${loc}"/></span>
+                </div>
+                <div class="custom-file">
+                    <input type="file" name="image" class="custom-file-input" id="image" required>
+                    <label class="custom-file-label" for="image">
+                        <fmt:message key="car.image.choose" bundle="${loc}"/></label>
+                </div>
             </div>
         </div>
         <div class="modal-footer">

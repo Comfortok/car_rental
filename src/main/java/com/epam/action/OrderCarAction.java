@@ -97,7 +97,7 @@ public class OrderCarAction implements IAction {
                 driverDAO.insertDriverInfo(driver, connection);
                 connection.commit();
                 LOG.debug("execute method ends in OrderCarAction. Committing...");
-            } catch (Exception e) {
+            } catch (SQLException | ParseException e) {
                 connection.rollback();
                 LOG.error("Exception in OrderCarAction has happened. Can not insert all data to DB. Rolling back...", e);
                 return JspPagePath.ERROR_PAGE;
@@ -146,7 +146,7 @@ public class OrderCarAction implements IAction {
     }
 
     private long insertDataToDriverOrder(Order order, Driver driver, DriverDAO driverDAO, OrderDAO orderDAO,
-                                         Connection connection) {
+                                         Connection connection) throws SQLException {
         Order orderNumber = orderDAO.getOrderByUserAndCar(order, connection);
         Driver driverNumber = driverDAO.getDriverByPhone(driver, connection);
         driverDAO.insertOrderDriver(driverNumber, orderNumber, connection);

@@ -6,6 +6,7 @@ import com.epam.entity.Car;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -63,7 +64,7 @@ public class ShowAvailableCarsAction implements IAction {
             request.setAttribute(ORDER_PERIOD, period);
             request.setAttribute(ORDER_START_DATE, startDate);
             request.setAttribute(ORDER_END_DATE, endDate);
-        } catch (Exception e) {
+        } catch (SQLException e) {
             LOG.error("Exception in ShowAvailableCarsAction has happened. Can not get cars from DB. ", e);
             return JspPagePath.ERROR_PAGE;
         } finally {

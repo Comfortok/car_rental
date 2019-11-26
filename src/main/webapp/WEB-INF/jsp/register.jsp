@@ -42,17 +42,20 @@
             <c:choose>
                 <c:when test="${not empty requestScope.emailError}">
                     <div class="alert">
-                        <small id="errorEmail" class="form-text text-muted"><c:out value="${requestScope.errorEmail}"/></small>
+                        <small id="errorEmail" class="form-text text-muted">
+                            <fmt:message key="error.register.email" bundle="${loc}"/></small>
                     </div>
                 </c:when>
                 <c:when test="${not empty requestScope.validationError}">
                     <div class="alert">
-                        <small id="errorValidation" class="form-text text-muted"><c:out value="${requestScope.validationError}"/></small>
+                        <small id="errorValidation" class="form-text text-muted">
+                            <fmt:message key="error.register.validation" bundle="${loc}"/></small>
                     </div>
                 </c:when>
                 <c:when test="${not empty requestScope.errorConfirm}">
                     <div class="alert">
-                        <small id="errorConfirm" class="form-text text-muted"><c:out value="${requestScope.errorConfirm}"/></small>
+                        <small id="errorConfirm" class="form-text text-muted">
+                            <fmt:message key="error.register.confirm" bundle="${loc}"/></small>
                     </div>
                 </c:when>
                 <c:otherwise>

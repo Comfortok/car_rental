@@ -1,7 +1,6 @@
 package com.epam.action;
 
 import com.epam.constant.JspPagePath;
-import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

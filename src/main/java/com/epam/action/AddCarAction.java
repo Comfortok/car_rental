@@ -10,6 +10,7 @@ import org.apache.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -20,28 +21,28 @@ public class AddCarAction implements IAction {
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
-        String registeredNumber = request.getParameter(CAR_REGISTERED_NUMBER);
-        String brand = request.getParameter(CAR_BRAND);
-        String model = request.getParameter(CAR_MODEL);
-        String color = request.getParameter(CAR_COLOR);
-        String category = request.getParameter(CAR_CATEGORY);
-        String transmission = request.getParameter(CAR_TRANSMISSION);
-        String body = request.getParameter(CAR_BODY);
-        String engine = request.getParameter(CAR_ENGINE);
-        String airConditioner = request.getParameter(CAR_AC);
-        String available = request.getParameter(CAR_AVAILABILITY);
-        String stringEngineVolume = request.getParameter(CAR_ENGINE_VOLUME);
-        String stringBaggage = request.getParameter(CAR_BAGGAGE_AMOUNT);
-        String stringSeat = request.getParameter(CAR_SEAT_AMOUNT);
-        String stringFuel = request.getParameter(CAR_FUEL_CONSUMPTION);
-        String stringDoor = request.getParameter(CAR_DOOR_AMOUNT);
-        String year = request.getParameter(CAR_PRODUCTION_YEAR);
-        String stringMileage = request.getParameter(MILEAGE);
-        String carImage = request.getParameter(CAR_IMAGE);
+        String registeredNumber = (String) request.getAttribute(CAR_REGISTERED_NUMBER);
+        String brand = (String) request.getAttribute(CAR_BRAND);
+        String model = (String) request.getAttribute(CAR_MODEL);
+        String color = (String) request.getAttribute(CAR_COLOR);
+        String category = (String) request.getAttribute(CAR_CATEGORY);
+        String transmission = (String) request.getAttribute(CAR_TRANSMISSION);
+        String body = (String) request.getAttribute(CAR_BODY);
+        String engine = (String) request.getAttribute(CAR_ENGINE);
+        String airConditioner = (String) request.getAttribute(CAR_AC);
+        String available = (String) request.getAttribute(CAR_AVAILABILITY);
+        String stringEngineVolume = (String) request.getAttribute(CAR_ENGINE_VOLUME);
+        String stringBaggage = (String) request.getAttribute(CAR_BAGGAGE_AMOUNT);
+        String stringSeat = (String) request.getAttribute(CAR_SEAT_AMOUNT);
+        String stringFuel = (String) request.getAttribute(CAR_FUEL_CONSUMPTION);
+        String stringDoor = (String) request.getAttribute(CAR_DOOR_AMOUNT);
+        String year = (String) request.getAttribute(CAR_PRODUCTION_YEAR);
+        String stringMileage = (String) request.getAttribute(MILEAGE);
+        String carImage = (String) request.getAttribute(CAR_IMAGE);
         String forward = JspPagePath.HOME_PAGE;
         if (Validator.checkEmptyAttributes(registeredNumber, brand, model, color, category, transmission, body, engine,
                 airConditioner, available, stringEngineVolume, stringBaggage, stringSeat, stringFuel, stringDoor,
-                year, stringMileage)) {
+                year, stringMileage, carImage)) {
             request.setAttribute(EMPTY_FIELD_ERROR, EMPTY_FIELD_ERROR_MESSAGE);
             LOG.trace("Validation error in AddCarAction has happened. Can not insert empty fields to DB. ");
             AddCarFormAction addCarFormAction = new AddCarFormAction();
@@ -53,11 +54,7 @@ public class AddCarAction implements IAction {
             double fuelConsumption = Double.parseDouble(stringFuel);
             int door = Integer.parseInt(stringDoor);
             int mileage = Integer.parseInt(stringMileage);
-            if (!carImage.isEmpty()) {
-                carImage = CAR_IMAGE_FOLDER.concat(carImage).concat(CAR_IMAGE_FORMAT);
-            } else {
-                carImage = DEFAULT_IMAGE_NAME;
-            }
+            carImage = CAR_IMAGE_FOLDER.concat(carImage);
             ConnectionPool connectionPool = null;
             Connection connection = null;
             try {
@@ -65,14 +62,13 @@ public class AddCarAction implements IAction {
                 connection = connectionPool.getConnection();
                 CarDAO carDAO = new CarDAO();
                 Car car = new Car();
-                car.setRegisteredNumber(registeredNumber);
                 Map<String, Integer> carDetails;
                 carDetails = new HashMap<>(carDAO.getCarDetails(connection));
-                setCarAttribute(car, carDetails, brand, model, color, category, airConditioner, available,
-                        engineVolume, transmission, body, engine, baggage, seat, fuelConsumption,  door,
-                        year,  mileage,  carImage);
+                setCarAttribute(car, registeredNumber, carDetails, brand, model, color, category, airConditioner,
+                        available, engineVolume, transmission, body, engine, baggage, seat, fuelConsumption, door,
+                        year, mileage, carImage);
                 carDAO.insert(car, connection);
-            } catch (Exception e) {
+            } catch (SQLException e) {
                 LOG.error("Exception in AddCarAction has happened. Can not insert a new car to DB. ", e);
                 return JspPagePath.ERROR_PAGE;
             } finally {
@@ -82,10 +78,10 @@ public class AddCarAction implements IAction {
         return forward;
     }
 
-    private void setCarAttribute(Car car, Map<String, Integer> carDetails, String brand, String model, String color,
-                                 String category, String airConditioner, String available, double engineVolume,
-                                 String transmission, String body, String engine, int baggage, int seat,
-                                 double fuelConsumption, int door, String year, int mileage, String carImage) {
+    private void setCarAttribute(Car car, String registeredNumber, Map<String, Integer> carDetails, String brand,
+                                 String model, String color, String category, String airConditioner, String available,
+                                 double engineVolume, String transmission, String body, String engine, int baggage,
+                                 int seat, double fuelConsumption, int door, String year, int mileage, String carImage) {
         Brand carBrand = new Brand();
         Model carModel = new Model();
         Color carColor = new Color();
@@ -112,6 +108,7 @@ public class AddCarAction implements IAction {
                 carEngine.setId(value);
             }
         }
+        car.setRegisteredNumber(registeredNumber);
         carModel.setBrand(carBrand);
         car.setModel(carModel);
         car.setColor(carColor);

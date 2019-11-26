@@ -9,6 +9,7 @@ import org.apache.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -52,7 +53,7 @@ public class AddCarFormAction implements IAction {
             request.setAttribute(TRANSMISSION_LIST, transmissionList);
             request.setAttribute(BODY_LIST, bodyList);
             request.setAttribute(ENGINE_LIST, engineList);
-        } catch (Exception e) {
+        } catch (SQLException e) {
             LOG.error("Exception in AddCarFormAction has happened. Can not get car list from DB. ", e);
             return JspPagePath.ERROR_PAGE;
         } finally {

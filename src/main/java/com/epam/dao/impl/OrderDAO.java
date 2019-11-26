@@ -3,7 +3,6 @@ package com.epam.dao.impl;
 import com.epam.dao.IOrderDAO;
 import com.epam.entity.*;
 import com.epam.entity.Driver;
-import org.apache.log4j.Logger;
 
 import java.sql.*;
 import java.text.ParseException;
@@ -14,7 +13,6 @@ import java.util.List;
 import static com.epam.constant.ConstantField.*;
 
 public class OrderDAO implements IOrderDAO {
-    private static final Logger LOG = Logger.getLogger(OrderDAO.class);
     private static final String SQL_SELECT_ALL_FROM_ORDER = "SELECT car_rent.order.order_id, car_rent.order.user_id, " +
             "car_rent.order.car_id, car_rent.order.status_id, car_rent.order.start_date, car_rent.order.end_date, " +
             "car_rent.order.payment_sum, car_rent.brand.name AS brand_name, car_rent.model.name AS model_name, " +
@@ -79,7 +77,7 @@ public class OrderDAO implements IOrderDAO {
     private static final String SQL_UPDATE_ORDER_STATUS = "update car_rent.order set status_id = ? where order_id = ?";
 
     @Override
-    public void insert(Order order, Connection connection) {
+    public void insert(Order order, Connection connection) throws SQLException, ParseException {
         try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_INSERT_NEW_ORDER)) {
             preparedStatement.setLong(1, order.getUser().getId());
             preparedStatement.setLong(2, order.getCar().getId());
@@ -93,19 +91,15 @@ public class OrderDAO implements IOrderDAO {
             preparedStatement.setDate(5, sqlOrderEnd);
             preparedStatement.setDouble(6, order.getPaymentSum());
             preparedStatement.executeUpdate();
-        } catch (SQLException | ParseException e) {
-            LOG.error("Exception in OrderDAO.insert() has happened. ", e);
         }
     }
 
     @Override
-    public void update(Order order, Connection connection) {
+    public void update(Order order, Connection connection) throws SQLException {
         try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_UPDATE_ORDER_STATUS)) {
             preparedStatement.setLong(1, order.getStatus().getId());
             preparedStatement.setLong(2, order.getId());
             preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            LOG.error("Exception in OrderDAO.update() has happened. ", e);
         }
     }
 
@@ -115,7 +109,7 @@ public class OrderDAO implements IOrderDAO {
     }
 
     @Override
-    public Order getById(Long id, Connection connection) {
+    public Order getById(Long id, Connection connection) throws SQLException {
         Order order = new Order();
         try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_SELECT_ORDER_BY_ID)) {
             preparedStatement.setLong(1, id);
@@ -124,14 +118,12 @@ public class OrderDAO implements IOrderDAO {
                     order = getOrderInfoForOperator(resultSet);
                 }
             }
-        } catch (SQLException e) {
-            LOG.error("Exception in OrderDAO.getById() has happened. ", e);
         }
         return order;
     }
 
     @Override
-    public List<Order> getAll(Connection connection) {
+    public List<Order> getAll(Connection connection) throws SQLException {
         List<Order> orderList = new ArrayList<>();
         try (Statement statement = connection.createStatement()) {
             try (ResultSet resultSet = statement.executeQuery(SQL_SELECT_ALL_FROM_ORDER)) {
@@ -139,14 +131,12 @@ public class OrderDAO implements IOrderDAO {
                     orderList.add(getOrderInfo(resultSet));
                 }
             }
-        } catch (SQLException e) {
-            LOG.error("Exception in OrderDAO.getAll() has happened. ", e);
         }
         return orderList;
     }
 
     @Override
-    public List<Order> getAllByUserId(Long id, Connection connection) {
+    public List<Order> getAllByUserId(Long id, Connection connection) throws SQLException {
         List<Order> orderList = new ArrayList<>();
         try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_SELECT_ORDERS_BY_USER_ID)) {
             preparedStatement.setLong(1, id);
@@ -155,14 +145,12 @@ public class OrderDAO implements IOrderDAO {
                     orderList.add(getOrderInfo(resultSet));
                 }
             }
-        } catch (SQLException e) {
-            LOG.error("Exception in OrderDAO.getAllByUserId() has happened. ", e);
         }
         return orderList;
     }
 
     @Override
-    public List<Order> getAllForOperator(Connection connection) {
+    public List<Order> getAllForOperator(Connection connection) throws SQLException {
         List<Order> orderList = new ArrayList<>();
         try (Statement statement = connection.createStatement()) {
             try (ResultSet resultSet = statement.executeQuery(SQL_SELECT_ORDER_FOR_OPERATOR)) {
@@ -170,44 +158,38 @@ public class OrderDAO implements IOrderDAO {
                     orderList.add(getOrderInfoForOperator(resultSet));
                 }
             }
-        } catch (SQLException e) {
-            LOG.error("Exception in OrderDAO.getAllForOperator() has happened. ", e);
         }
         return orderList;
     }
 
     @Override
-    public Order getOrderInfo(ResultSet resultSet) {
+    public Order getOrderInfo(ResultSet resultSet) throws SQLException {
         Order order = new Order();
-        try {
-            order.setId(resultSet.getLong(RESULTSET_ORDER_ID));
-            User user = new User();
-            user.setId(resultSet.getLong(RESULTSET_USER_ID));
-            order.setUser(user);
-            Car car = new Car();
-            Brand brand = new Brand();
-            Model model = new Model();
-            brand.setName(resultSet.getString(BRAND_NAME));
-            model.setBrand(brand);
-            model.setName(resultSet.getString(MODEL_NAME));
-            car.setId(resultSet.getLong(RESULTSET_CAR_ID));
-            car.setModel(model);
-            order.setCar(car);
-            Status status = new Status();
-            status.setId(resultSet.getInt(RESULTSET_STATUS_ID));
-            status.setName(resultSet.getString(RESULTSET_STATUS_NAME));
-            order.setStatus(status);
-            order.setStartDate(resultSet.getDate(RESULTSET_START_DATE));
-            order.setEndDate(resultSet.getDate(RESULTSET_END_DATE));
-            order.setPaymentSum(resultSet.getDouble(RESULTSET_PAYMENT_SUM));
-        } catch (SQLException e) {
-            LOG.error("Exception in OrderDAO.getOrderInfo() has happened. ", e);
-        }
+        order.setId(resultSet.getLong(RESULTSET_ORDER_ID));
+        User user = new User();
+        user.setId(resultSet.getLong(RESULTSET_USER_ID));
+        order.setUser(user);
+        Car car = new Car();
+        Brand brand = new Brand();
+        Model model = new Model();
+        brand.setName(resultSet.getString(BRAND_NAME));
+        model.setBrand(brand);
+        model.setName(resultSet.getString(MODEL_NAME));
+        car.setId(resultSet.getLong(RESULTSET_CAR_ID));
+        car.setModel(model);
+        order.setCar(car);
+        Status status = new Status();
+        status.setId(resultSet.getInt(RESULTSET_STATUS_ID));
+        status.setName(resultSet.getString(RESULTSET_STATUS_NAME));
+        order.setStatus(status);
+        order.setStartDate(resultSet.getDate(RESULTSET_START_DATE));
+        order.setEndDate(resultSet.getDate(RESULTSET_END_DATE));
+        order.setPaymentSum(resultSet.getDouble(RESULTSET_PAYMENT_SUM));
         return order;
     }
 
     @Override
-    public Order getOrderByUserAndCar(Order order, Connection connection) {
+    public Order getOrderByUserAndCar(Order order, Connection connection) throws SQLException {
         try (PreparedStatement preparedStatement = connection.prepareStatement(
                 SQL_SELECT_ORDER_BY_USER_CAR_STATUS)) {
             preparedStatement.setLong(1, order.getUser().getId());
@@ -218,59 +200,53 @@ public class OrderDAO implements IOrderDAO {
                     order.setId(resultSet.getLong(RESULTSET_ORDER_ID));
                 }
             }
-        } catch (SQLException e) {
-            LOG.error("Exception in OrderDAO.getOrderByUserAndCar() has happened. ", e);
         }
         return order;
     }
 
     @Override
-    public Order getOrderInfoForOperator(ResultSet resultSet) {
+    public Order getOrderInfoForOperator(ResultSet resultSet) throws SQLException {
         Order order = new Order();
-        try {
-            Driver driver = new Driver();
-            Passport passport = new Passport();
-            DrivingLicence drivingLicence = new DrivingLicence();
-            driver.setId(resultSet.getLong(DRIVER_ID));
-            driver.setName(resultSet.getString(RESULTSET_DRIVER_NAME));
-            driver.setSurname(resultSet.getString(RESULTSET_DRIVER_SURNAME));
-            driver.setDateOfBirth(resultSet.getDate(RESULTSET_DRIVER_BIRTH_DATE));
-            driver.setPhoneNumber(resultSet.getString(RESULTSET_DRIVER_PHONE_NUMBER));
-            passport.setNumber(resultSet.getString(RESULTSET_DRIVER_PASSPORT_NUMBER));
-            passport.setDateOfIssue(resultSet.getDate(RESULTSET_PASSPORT_ISSUE_DATE));
-            passport.setDateOfExpiry(resultSet.getDate(RESULTSET_PASSPORT_EXPIRY_DATE));
-            passport.setAuthority(resultSet.getString(RESULTSET_PASSPORT_AUTHORITY));
-            driver.setPassport(passport);
-            drivingLicence.setNumber(resultSet.getString(RESULTSET_LICENCE_NUMBER));
-            drivingLicence.setDateOfIssue(resultSet.getDate(RESULTSET_LICENCE_ISSUE_DATE));
-            drivingLicence.setDateOfExpiry(resultSet.getDate(RESULTSET_LICENCE_EXPIRY_DATE));
-            drivingLicence.setAuthority(resultSet.getString(RESULTSET_LICENCE_AUTHORITY));
-            drivingLicence.setCategory(resultSet.getString(RESULTSET_LICENCE_CATEGORY));
-            driver.setDrivingLicence(drivingLicence);
-            order.setId(resultSet.getLong(RESULTSET_ORDER_ID));
-            User user = new User();
-            user.setId(resultSet.getLong(RESULTSET_USER_ID));
-            order.setUser(user);
-            Car car = new Car();
-            car.setId(resultSet.getLong(RESULTSET_CAR_ID));
-            order.setStartDate(resultSet.getDate(RESULTSET_START_DATE));
-            order.setEndDate(resultSet.getDate(RESULTSET_END_DATE));
-            order.setPaymentSum(resultSet.getDouble(RESULTSET_PAYMENT_SUM));
-            Brand brand = new Brand();
-            Model model = new Model();
-            brand.setName(resultSet.getString(BRAND_NAME));
-            model.setBrand(brand);
-            model.setName(resultSet.getString(MODEL_NAME));
-            car.setModel(model);
-            order.setCar(car);
-            Status status = new Status();
-            status.setId(resultSet.getInt(RESULTSET_STATUS_ID));
-            status.setName(resultSet.getString(RESULTSET_STATUS_NAME));
-            order.setStatus(status);
-            order.setDriver(driver);
-        } catch (SQLException e) {
-            LOG.error("Exception in OrderDAO.getOrderInfoForOperator() has happened. ", e);
-        }
+        Driver driver = new Driver();
+        Passport passport = new Passport();
+        DrivingLicence drivingLicence = new DrivingLicence();
+        driver.setId(resultSet.getLong(DRIVER_ID));
+        driver.setName(resultSet.getString(RESULTSET_DRIVER_NAME));
+        driver.setSurname(resultSet.getString(RESULTSET_DRIVER_SURNAME));
+        driver.setDateOfBirth(resultSet.getDate(RESULTSET_DRIVER_BIRTH_DATE));
+        driver.setPhoneNumber(resultSet.getString(RESULTSET_DRIVER_PHONE_NUMBER));
+        passport.setNumber(resultSet.getString(RESULTSET_DRIVER_PASSPORT_NUMBER));
+        passport.setDateOfIssue(resultSet.getDate(RESULTSET_PASSPORT_ISSUE_DATE));
+        passport.setDateOfExpiry(resultSet.getDate(RESULTSET_PASSPORT_EXPIRY_DATE));
+        passport.setAuthority(resultSet.getString(RESULTSET_PASSPORT_AUTHORITY));
+        driver.setPassport(passport);
+        drivingLicence.setNumber(resultSet.getString(RESULTSET_LICENCE_NUMBER));
+        drivingLicence.setDateOfIssue(resultSet.getDate(RESULTSET_LICENCE_ISSUE_DATE));
+        drivingLicence.setDateOfExpiry(resultSet.getDate(RESULTSET_LICENCE_EXPIRY_DATE));
+        drivingLicence.setAuthority(resultSet.getString(RESULTSET_LICENCE_AUTHORITY));
+        drivingLicence.setCategory(resultSet.getString(RESULTSET_LICENCE_CATEGORY));
+        driver.setDrivingLicence(drivingLicence);
+        order.setId(resultSet.getLong(RESULTSET_ORDER_ID));
+        User user = new User();
+        user.setId(resultSet.getLong(RESULTSET_USER_ID));
+        order.setUser(user);
+        Car car = new Car();
+        car.setId(resultSet.getLong(RESULTSET_CAR_ID));
+        order.setStartDate(resultSet.getDate(RESULTSET_START_DATE));
+        order.setEndDate(resultSet.getDate(RESULTSET_END_DATE));
+        order.setPaymentSum(resultSet.getDouble(RESULTSET_PAYMENT_SUM));
+        Brand brand = new Brand();
+        Model model = new Model();
+        brand.setName(resultSet.getString(BRAND_NAME));
+        model.setBrand(brand);
+        model.setName(resultSet.getString(MODEL_NAME));
+        car.setModel(model);
+        order.setCar(car);
+        Status status = new Status();
+        status.setId(resultSet.getInt(RESULTSET_STATUS_ID));
+        status.setName(resultSet.getString(RESULTSET_STATUS_NAME));
+        order.setStatus(status);
+        order.setDriver(driver);
         return order;
     }
 }

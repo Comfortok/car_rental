@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 
 import static com.epam.constant.ConstantField.*;
 
@@ -45,7 +46,7 @@ public class LoginAction implements IAction {
                     session.setAttribute(USER_ROLE_ATTRIBUTE, user.getRole().getId());
                     session.setAttribute(USER_ID, user.getId());
                 }
-            } catch (Exception e) {
+            } catch (SQLException e) {
                 LOG.error("Exception in LoginAction has happened. Can not get a user by email. ", e);
                 return JspPagePath.ERROR_PAGE;
             } finally {

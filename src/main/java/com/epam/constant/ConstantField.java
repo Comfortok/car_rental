@@ -19,7 +19,9 @@ public class ConstantField {
     public static final String CAR_PRODUCTION_YEAR = "year";
     public static final String CAR_IMAGE = "image";
     public static final String CAR_IMAGE_FOLDER = "img/car/";
-    public static final String CAR_IMAGE_FORMAT = ".jpg";
+    public static final String IMAGE_FORMAT_JPG = ".jpg";
+    public static final String IMAGE_FORMAT_JPEG = ".jpeg";
+    public static final String IMAGE_FORMAT_PNG = ".png";
     public static final String BRAND_LIST = "brandList";
     public static final String MODEL_LIST = "modelList";
     public static final String COLOR_LIST = "colorList";
@@ -143,13 +145,11 @@ public class ConstantField {
     public static final String ERROR_MESSAGE = "errorMessage";
     public static final String JAVA_TEMP_DIR = "java.io.tmpdir";
     public static final String APP_PATH_SLASH = "/";
-    public static final String APP_PATH_REPLACE_PART = "target\\car-rental-webapp\\";
-    public static final String EMPTY_STRING = "";
-    public static final String IMAGE_FOLDER = "src\\main\\webapp\\img\\car";
-    public static final String IMAGE_CAR_FOLDER = "img/car";
+    public static final String IMAGE_CAR_FOLDER = "img\\car";
     public static final String CAR_CATEGORY_LIST = "categoryList";
     public static final String CAR_CATEGORY_DB_NAME = "name";
-    public static final String DEFAULT_IMAGE_NAME = "empty";
+    public static final String ERROR_FORMAT = "errorFormat";
+    public static final String ERROR_FORMAT_MESSAGE = "Can not upload that type of file";
 
     private ConstantField() {
     }

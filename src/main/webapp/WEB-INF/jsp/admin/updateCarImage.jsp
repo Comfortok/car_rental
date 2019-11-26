@@ -27,6 +27,7 @@
                         <input type="file" name="image" class="custom-file-input" id="image" required>
                         <label class="custom-file-label" for="image">
                             <fmt:message key="car.image.choose" bundle="${loc}"/></label>
+
                     </div>
                 </div>
                 <input type="hidden" name="carId" value="${requestScope.carId}"/>
@@ -40,11 +41,6 @@
     <c:when test="${not empty requestScope.errorEmpty}">
         <div class="alert alert-primary" role="alert">
             <fmt:message key="error.empty" bundle="${loc}"/>
-        </div>
-    </c:when>
-    <c:when test="${not empty requestScope.result}">
-        <div class="alert alert-primary" role="alert">
-            <c:out value="${requestScope.result}"/>
         </div>
     </c:when>
 </c:choose>

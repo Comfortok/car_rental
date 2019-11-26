@@ -9,6 +9,7 @@ import org.apache.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,7 +29,7 @@ public class ShowCategoryPriceAction implements IAction {
             CarDAO carDAO = new CarDAO();
             List<CarCategory> categoryList = new ArrayList<>(carDAO.getCarCategory(connection));
             request.setAttribute(CAR_CATEGORY_LIST, categoryList);
-        } catch (Exception e) {
+        } catch (SQLException e) {
             LOG.error("Exception in ShowCategoryPrice has happened. Can not get car list from DB. ", e);
             ShowAllCarsAction action = new ShowAllCarsAction();
             return action.execute(request, response);

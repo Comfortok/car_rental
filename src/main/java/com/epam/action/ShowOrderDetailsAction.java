@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 
 import static com.epam.constant.ConstantField.*;
 
@@ -35,7 +36,7 @@ public class ShowOrderDetailsAction implements IAction {
             Passport passport = driver.getPassport();
             DrivingLicence drivingLicence = driver.getDrivingLicence();
             setDriverAttributes(request, driver, passport, drivingLicence, orderId, statusId);
-        } catch (Exception e) {
+        } catch (SQLException e) {
             LOG.error("Exception in ShowOrderDetailsAction has happened. Can not get order from DB. ", e);
             return JspPagePath.ERROR_PAGE;
         } finally {

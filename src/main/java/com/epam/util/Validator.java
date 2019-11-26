@@ -4,6 +4,8 @@ import java.util.regex.Pattern;
 
 import org.apache.log4j.Logger;
 
+import static com.epam.constant.ConstantField.*;
+
 public class Validator {
     private static final Logger LOG = Logger.getLogger(Validator.class);
     private static final String EMAIL_REGEX = "^[-\\w.]+@([A-z0-9][-A-z0-9]+\\.)+[A-z]{2,4}$";
@@ -35,6 +37,16 @@ public class Validator {
                 result = true;
                 break;
             }
+        }
+        return result;
+    }
+
+    public static boolean checkImageFormat(String image) {
+        LOG.debug("Checking input image type.");
+        boolean result = false;
+        if (image.endsWith(IMAGE_FORMAT_JPG) || image.endsWith(IMAGE_FORMAT_JPEG)
+                || image.endsWith(IMAGE_FORMAT_PNG)) {
+            result = true;
         }
         return result;
     }

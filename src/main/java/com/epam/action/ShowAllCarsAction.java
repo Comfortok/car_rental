@@ -9,6 +9,7 @@ import org.apache.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.List;
 
 import static com.epam.constant.ConstantField.ALL_CARS_LIST;
@@ -29,7 +30,7 @@ public class ShowAllCarsAction implements IAction {
             connection = connectionPool.getConnection();
             cars = carDAO.getAll(connection);
             request.setAttribute(ALL_CARS_LIST, cars);
-        } catch (Exception e) {
+        } catch (SQLException e) {
             LOG.error("Exception in ShowAllCarsAction has happened. Can not get cars from DB. ", e);
             return JspPagePath.ERROR_PAGE;
         } finally {

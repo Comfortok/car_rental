@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 
 import static com.epam.constant.ConstantField.*;
 
@@ -49,7 +50,7 @@ public class UpdateCarAction implements IAction {
             connectionPool = ConnectionPool.getInstance();
             connection = connectionPool.getConnection();
             carDao.update(car, connection);
-        } catch (Exception e) {
+        } catch (SQLException e) {
             LOG.error("Exception in UpdateCarAction has happened. Can not update car info. ", e);
             return JspPagePath.ERROR_PAGE;
         } finally {

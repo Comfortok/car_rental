@@ -42,7 +42,7 @@ public class OrderPaymentAction implements IAction {
                 orderDAO.update(order, connection);
                 connection.commit();
                 LOG.debug("execute method ends in OrderPaymentAction. Committing...");
-            } catch (ParseException e) {
+            } catch (ParseException | SQLException e) {
                 connection.rollback();
                 LOG.error("Exception in OrderFormAction has happened. Can not parse date, " +
                         "insert invoice or update order. " +

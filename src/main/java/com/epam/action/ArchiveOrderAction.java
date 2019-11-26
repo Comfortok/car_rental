@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 
 import static com.epam.constant.ConstantField.*;
 
@@ -34,7 +35,7 @@ public class ArchiveOrderAction implements IAction {
             connectionPool = ConnectionPool.getInstance();
             connection = connectionPool.getConnection();
             orderDAO.update(order, connection);
-        } catch (Exception e) {
+        } catch (SQLException e) {
             LOG.error("Exception in ArchiveOrderAction has happened. Can not update an order. ", e);
             return JspPagePath.ERROR_PAGE;
         } finally {

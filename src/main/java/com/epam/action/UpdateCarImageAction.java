@@ -8,9 +8,9 @@ import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 
 import static com.epam.constant.ConstantField.*;
 
@@ -20,9 +20,8 @@ public class UpdateCarImageAction implements IAction {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
         LOG.debug("UpdateCarImageAction execute starts.");
-        HttpSession session = request.getSession();
-        String image = (String) session.getAttribute(CAR_IMAGE);
-        long carId = Long.parseLong((String) session.getAttribute(CAR_ID));
+        String image = (String) request.getAttribute(CAR_IMAGE);
+        long carId = Long.parseLong((String) request.getAttribute(CAR_ID));
         String forward;
         if (image.isEmpty()) {
             request.setAttribute(EMPTY_FIELD_ERROR, EMPTY_FIELD_ERROR_MESSAGE);
@@ -43,7 +42,7 @@ public class UpdateCarImageAction implements IAction {
                 carDao.updateImage(car, connection);
                 ShowAllCarsAction showAllCarsAction = new ShowAllCarsAction();
                 forward = showAllCarsAction.execute(request, response);
-            } catch (Exception e) {
+            } catch (SQLException e) {
                 LOG.error("Exception in ConfirmOrderAction has happened. Can not update an order. ", e);
                 return JspPagePath.ERROR_PAGE;
             } finally {

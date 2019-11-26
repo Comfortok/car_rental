@@ -9,8 +9,10 @@ import org.apache.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.List;
 
+import static com.epam.constant.ConstantField.ERROR_MESSAGE;
 import static com.epam.constant.ConstantField.ORDER_LIST;
 
 public class ShowAllAdminOrdersAction implements IAction {
@@ -28,7 +30,7 @@ public class ShowAllAdminOrdersAction implements IAction {
             connection = connectionPool.getConnection();
             orders = orderDAO.getAllForOperator(connection);
             request.setAttribute(ORDER_LIST, orders);
-        } catch (Exception e) {
+        } catch (SQLException e) {
             LOG.error("Exception in ShowAllAdminOrdersAction has happened. Can not get orders from DB. ", e);
             return JspPagePath.ERROR_PAGE;
         } finally {

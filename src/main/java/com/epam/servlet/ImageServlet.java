@@ -1,6 +1,9 @@
 package com.epam.servlet;
 
+import com.epam.action.AddCarAction;
+import com.epam.action.ShowAllCarsAction;
 import com.epam.action.UpdateCarImageAction;
+import com.epam.util.Validator;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
@@ -10,7 +13,6 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.*;
 import java.io.*;
-import java.nio.file.Files;
 import java.util.List;
 
 import static com.epam.constant.ConstantField.*;
@@ -34,41 +36,56 @@ public class ImageServlet extends HttpServlet {
         ServletFileUpload upload = new ServletFileUpload(factory);
         upload.setFileSizeMax(MAX_FILE_SIZE);
         upload.setSizeMax(MAX_REQUEST_SIZE);
-        HttpSession session = request.getSession();
         ServletContext app = getServletContext();
         String uploadPath = app.getRealPath(APP_PATH_SLASH);
-        String uploadTargetPath = app.getRealPath(APP_PATH_SLASH).concat(IMAGE_CAR_FOLDER);
-        uploadPath = uploadPath.replace(APP_PATH_REPLACE_PART, EMPTY_STRING);
-        uploadPath = uploadPath.concat(IMAGE_FOLDER);
         File uploadDir = new File(uploadPath);
         if (!uploadDir.exists()) {
             uploadDir.mkdir();
         }
+        String command = null;
+        String fileName = null;
+        String filePath;
         try {
-            String fileName;
-            String filePath;
-            String fileTargetPath;
             List<FileItem> formItems = upload.parseRequest(request);
             if (formItems != null && formItems.size() > 0) {
                 for (FileItem item : formItems) {
                     if (!item.isFormField()) {
                         fileName = new File(item.getName()).getName();
-                        filePath = uploadPath + File.separator + fileName;
-                        fileTargetPath = uploadTargetPath + File.separator + fileName;
+                        filePath = uploadPath + IMAGE_CAR_FOLDER + File.separator + fileName;
                         File storeFile = new File(filePath);
-                        File storeFile2 = new File(fileTargetPath);
                         item.write(storeFile);
-                        session.setAttribute(CAR_IMAGE, fileName);
-                        Files.copy(storeFile.toPath(), storeFile2.toPath());
+                        request.setAttribute(CAR_IMAGE, fileName);
+                    } else {
+                        String name = item.getFieldName();
+                        String value = item.getString();
+                        request.setAttribute(name, value);
+                        if (name.equalsIgnoreCase(COMMAND)) {
+                            command = value;
+                        }
                     }
                 }
-
+            }
+            if (!Validator.checkImageFormat(fileName)) {
+                request.setAttribute(ERROR_FORMAT, ERROR_FORMAT_MESSAGE);
+                ShowAllCarsAction action = new ShowAllCarsAction();
+                String forward = action.execute(request, response);
+                getServletContext().getRequestDispatcher(forward).forward(request, response);
+                return;
             }
         } catch (Exception e) {
             LOG.error("Exception in ImageServlet has happened. Can not write an image. ", e);
+            getServletContext().getRequestDispatcher(ERROR_PAGE).forward(request, response);
+            return;
         }
-        UpdateCarImageAction action = new UpdateCarImageAction();
-        String forward = action.execute(request, response);
-        getServletContext().getRequestDispatcher(forward).forward(request, response);
+        String forward;
+        if (command != null) {
+            AddCarAction action = new AddCarAction();
+            forward = action.execute(request, response);
+            getServletContext().getRequestDispatcher(forward).forward(request, response);
+        } else {
+            UpdateCarImageAction action = new UpdateCarImageAction();
+            forward = action.execute(request, response);
+            getServletContext().getRequestDispatcher(forward).forward(request, response);
+        }
     }
 }
